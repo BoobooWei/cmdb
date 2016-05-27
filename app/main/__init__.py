@@ -5,7 +5,6 @@ __author__ = 'eric'
 from flask import Blueprint
 main = Blueprint('main',__name__)
 from . import views, errors
-print __name__
 
 from ..models import Permission
 
