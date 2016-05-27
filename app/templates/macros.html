@@ -1,0 +1,7 @@
+{% macro print_form_errors(errors) %}
+    {% if errors %}
+        {% for error in errors %}
+            <span style="color: goldenrod">{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

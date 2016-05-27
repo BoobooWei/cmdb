@@ -1,15 +1,79 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+{% import "macros.html" as macros %}
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:39 GMT -->
 
-{% block title %}Flasky - Login{% endblock %}
+    {% include "_header_css.html" %}
 
-{% block page_content %}
-<div class="page-header">
-    <h1>Login</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-    <br>
-    <p>Forgot your password? <a href="{{ url_for('auth.reset_password_request') }}">Click here to reset it</a>.</p>
-</div>
-{% endblock %}
+    <body>
+
+        <div class="wrapper-page animated fadeInDown">
+
+            <div class="panel panel-color panel-primary">
+                <div class="panel-heading"> 
+                   <h3 class="text-center m-t-10"> Sign In to <strong>CMDB</strong> </h3>
+                </div> 
+
+                <form class="form-horizontal m-t-40" action="{{ url_for('auth.login') }}" method="POST">
+                {{ form.csrf_token }}
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            {{ form.email(class='form-control', placeholder='请输入您的电子邮件') }}
+                            {{ macros.print_form_errors(form.errors.email) }}
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        
+                        <div class="col-xs-12">
+                            {{ form.password(class='form-control', placeholder='请输入您的密码') }}
+                            {{ macros.print_form_errors(form.errors.password) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label class="cr-styled">
+                                {{ form.remember_me }}
+                                <i class="fa"></i>
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group text-right">
+                        <div class="col-xs-12">
+                            {{ form.submit(class="btn btn-purple w-md") }}
+                        </div>
+                    </div>
+                    <div class="form-group m-t-30">
+                        <div class="col-sm-7">
+                            <a href="{{ url_for("auth.reset_password_request") }}"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                        </div>
+                        <div class="col-sm-5 text-right">
+                            <a href="register.html">Create an account</a>
+                        </div>
+                    </div>
+
+                </form>
+            <div>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <a href="#" id="back" style="color: #985f0d">{{ message }}</a>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            </div>
+        </div>
+
+        <!-- js placed at the end of the document so the pages load faster -->
+
+        {% include "_end_scripts.html" %}
+    
+    </body>
+
+<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:39 GMT -->
+</html>
+
