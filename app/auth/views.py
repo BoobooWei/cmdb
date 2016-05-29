@@ -11,24 +11,9 @@ from . import auth
 from .. import db
 from ..models import User
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm, ResetPasswordRequestForm, ResetPasswordForm, \
-    ChangeEmailRequestForm
+from .forms import LoginForm, ChangePasswordForm, ResetPasswordRequestForm, ResetPasswordForm, ChangeEmailRequestForm
 
 
-@auth.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.username.data,
-                    password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        token = user.generate_confirmation_token()
-        send_email(user.email,'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
-        flash('A confirmation email has been send to your by email.')
-        return redirect(url_for('main.index'))
-    return render_template('auth/register.html', form=form)
 
 
 

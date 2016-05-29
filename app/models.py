@@ -1,32 +1,32 @@
+# -*- coding:utf-8 -*-
+
 __author__ = 'eric'
 
 import hashlib
-import bleach
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask.ext.login import UserMixin, AnonymousUserMixin
+from flask.ext.login import UserMixin
 from flask import current_app, request
-from markdown import markdown
 from . import db
 from . import login_manager
 
 
+
+
 class Permission:
-    FOLLOW = 0x01
-    COMMENT = 0x02  b
-    WRITE_ARTICLES = 0x04
-    MODERATE_COMMENTS = 0x08
+    USER_EDIT = 0x001
+
+    DEVICE_LOOK = 0x002
+    DEVICE_EDIT = 0x004
+
+    RACK_LOOK = 0x008
+    RACK_EDIT = 0x010
+
+    IDC_LOOK = 0x020
+    IDC_EDIT = 0x040
+
     ADMINISTER = 0x80
-
-
-class Permission:
-    USER_ADD = 0x001
-    USER_DELETE = 0x002
-
-    ASSET_ADD = 0x004
-    ASSDT_EDIT = 0x008
-    ASSET_DELETE = 0x004
 
 
 
@@ -41,19 +41,17 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.FOLLOW |
-                     Permission.COMMENT |
-                     Permission.WRITE_ARTICLES, True),
+            'User': (Permission.DEVICE_LOOK |
+                     Permission.RACK_LOOK |
+                     Permission.IDC_LOOK, True),
 
-            'Moderator': (Permission.FOLLOW |
-                          Permission.COMMENT |
-                          Permission.WRITE_ARTICLES |
-                          Permission.MODERATE_COMMENTS, False),
-
-            'Administrator': (Permission.FOLLOW |
-                              Permission.COMMENT |
-                              Permission.WRITE_ARTICLES |
-                              Permission.MODERATE_COMMENTS |
+            'Administrator': (Permission.USER_EDIT |
+                              Permission.DEVICE_LOOK |
+                              Permission.DEVICE_EDIT |
+                              Permission.RACK_LOOK |
+                              Permission.RACK_EDIT |
+                              Permission.IDC_LOOK  |
+                              Permission.IDC_EDIT  |
                               Permission.ADMINISTER, False)
         }
 
@@ -71,44 +69,24 @@ class Role(db.Model):
         return '<Role %r>' %self.name
 
 
-class Follow(db.Model):
-    __tablename__ = 'follows'
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
 
 
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key=True)
-    email = db.Column(db.String(64),unique=True,index=True)
-    username = db.Column(db.String(64),unique=True,index=True)
-    password_hash = db.Column(db.String(128))
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-    name = db.Column(db.String(64))
-    location = db.Column(db.String(64))
-    about_me = db.Column(db.Text())
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
-    confirmed = db.Column(db.Boolean, default=False)
-    avatar_hash = db.Column(db.String(32))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    email = db.Column(db.String(64),unique=True,index=True)             # Email Address
+    username = db.Column(db.String(64),unique=True,index=True)          # Username
+    password_hash = db.Column(db.String(128))                           # password Md5 Hash
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))           # Role 关联 Role table
+    name = db.Column(db.String(64))                                     # 真实姓名
+    location = db.Column(db.String(64))                                 # 地址
+    about_me = db.Column(db.Text())                                     # 关于我
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)    # 注册时间
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)       # 最后登录时间
+    confirmed = db.Column(db.Boolean, default=False)                    # 账户状态
+    avatar_hash = db.Column(db.String(32))                              # 头像
 
-    # followed = db.relationship('Follow', foreign_keys=[Follow.follower_id], backref=db.backref('follower', lazy='joined'),lazy='dynamic', cascade='all, delete-orphan')
-    # followers = db.relationship('Follow', foreign_keys=[Follow.followed_id], backref=db.backref('followed', lazy='joined'),lazy='dynamic', cascade='all, delete-orphan')
 
-    followed = db.relationship('Follow',
-                               foreign_keys=[Follow.follower_id],
-                               backref=db.backref('follower', lazy='joined'),
-                               lazy='dynamic',
-                               cascade='all, delete-orphan')
-    followers = db.relationship('Follow',
-                                foreign_keys=[Follow.followed_id],
-                                backref=db.backref('followed', lazy='joined'),
-                                lazy='dynamic',
-                                cascade='all, delete-orphan')
 
 
     def __init__(self,**kwargs):
@@ -123,7 +101,6 @@ class User(UserMixin,db.Model):
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(self.email.encode('UTF-8')).hexdigest()
 
-        self.followed.append(Follow(followed=self))
 
     @staticmethod
     def generate_fake(count=1000):
@@ -147,14 +124,6 @@ class User(UserMixin,db.Model):
             except IntegrityError:
                 print "db commit email : {0} Error".format(u.email)
                 db.session.rollback()
-
-    @staticmethod
-    def add_self_follows():
-        for user in User.query.all():
-            if not user.is_following(user):
-                user.follow(user)
-                db.session.add(user)
-                db.session.commit()
 
 
 
@@ -259,102 +228,143 @@ class User(UserMixin,db.Model):
         return True
 
 
-    def follow(self, user):
-        if not self.is_following(user):
-            f = Follow(followed=user)
-            self.followed.append(f)
-
-    def unfollow(self, user):
-        f = self.followed.filter_by(followed_id=user.id).first()
-        if f:
-            self.followed.remove(f)
-
-    def is_following(self, user):
-        return self.followed.filter_by(
-            followed_id=user.id).first() is not None
-
-    def is_followed_by(self, user):
-        return self.followers.filter_by(
-            follower_id=user.id).first() is not None
-
-    @property
-    def followed_posts(self):
-        return Post.query.join(Follow, Follow.followed_id == Post.author_id).filter(Follow.follower_id == self.id)
-
 
     def __repr__(self):
         return '<User %r>' %self.username
 
 
-class Post(db.Model):
-    __tablename__ = 'posts'
 
+class AssetType(db.Model):
+    __tablename__ = 'assettype'
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.Text)
-    body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime(), index=True, default=datetime.utcnow())
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    name = db.Column(db.String(64), unique=True,index=True)             # 资产类名
+    remarks = db.Column(db.Text)                                 # 资产类说明
+    assets = db.relationship('Asset',backref='asset',lazy='dynamic')    # 关联 Asset table
+
+    def __repr__(self):
+        return '<AssetType %r>' %self.name
 
 
-    @staticmethod
-    def generate_fake(count=100):
-        from random import seed, randint
-        import forgery_py
-
-        seed()
-        user_count = User.query.count()
-        for i in range(count):
-            u = User.query.offset(randint(0, user_count - 1)).first()
-            p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 5)),
-                     timestamp=forgery_py.date.date(True),
-                     author=u)
-            db.session.add(p)
-            db.session.commit()
 
 
-    @staticmethod
-    def on_changed_body(target, value, oldvalue, initiator):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
-                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-                        'h1', 'h2', 'h3', 'p']
-        target.body_html = bleach.linkify(bleach.clean(
-            markdown(value, output_format='html'),
-            tags=allowed_tags, strip=True))
 
-db.event.listen(Post.body, 'set', Post.on_changed_body)
 
-class Comment(db.Model):
-    __tablename__ = 'comments'
+class Asset(db.Model):
+    __tablename__ = 'assets'
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.Text)
-    body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    disabled = db.Column(db.Boolean)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    assetclass_id = db.Column(db.ForeignKey('assettype.id'))   # 资产类别   关联AssetType table
+    an = db.Column(db.String(64), unique=True,index=True)   # AN 企业资产编号
+    sn = db.Column(db.String(64), unique=True,index=True)                           # SN 设备序列号
+    onstatus = db.Column(db.Integer)                        # 使用状态
+    flowstatus = db.Column(db.Integer)                      # 流程状态
+    dateofmanufacture = db.Column(db.DateTime)              # 生产时间
+    manufacturer = db.Column(db.String(64))                 # 生产商
+    brand = db.Column(db.String(64))                        # 品牌
+    model = db.Column(db.String(64))                        # 型号
+    site = db.Column(db.String(64))                         # 位置
+    devices = db.relationship('Device',backref='asset',lazy='dynamic')    # 关联设备表  Device Table
+    usedept = db.Column(db.String(64))                      # 使用部门
+    usestaff = db.Column(db.String(64))                     # 部门使用人
+    usestarttime = db.Column(db.DateTime)                   # 使用开始时间
+    useendtime = db.Column(db.DateTime)                     # 使用结束时间
+    mainuses = db.Column(db.String(128))                    # 主要用途
+    managedept = db.Column(db.String(64))                   # 管理部门
+    managestaff = db.Column(db.String(64))                  # 管理人
+    instaff = db.Column(db.String(64))                      # 录入人
+    intime = db.Column(db.DateTime, default=datetime.now)   # 录入时间
+    koriyasustarttime = db.Column(db.DateTime)              # 维保开始时间
+    koriyasuendtime = db.Column(db.DateTime)                # 维保结束时间
+    equipprice = db.Column(db.Integer)                      # 设备价格
+    remarks = db.Column(db.Text)                            # 备注
 
-    @staticmethod
-    def on_changed_body(target, value, oldvalue, initiator):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'code', 'em', 'i',
-                        'strong']
-        target.body_html = bleach.linkify(bleach.clean(
-            markdown(value, output_format='html'),
-            tags=allowed_tags, strip=True))
 
-db.event.listen(Comment.body, 'set', Comment.on_changed_body)
+    def __repr__(self):
+        return '<Asset %r>' %self.id
 
 
+class Device(db.Model):
+    __tablename__ = 'devices'
+    id = db.Column(db.Integer, primary_key=True)
+    hostname = db.Column(db.String(64))                     # Hostname
+    private_ip = db.Column(db.String(15))                   # 内外IP地址
+    private_mac = db.Column(db.String(20))
+    public_ip = db.Column(db.String(15))                    # 公网IP地址
+    public_mac = db.Column(db.String(20))
+    other_ip = db.Column(db.String(64))                     # 其他IP地址， 用“，”分隔多个
+    #idcname = db.Column(db.ForeignKey('idcs.id'))   # 关联IDC table id
+    rack_id = db.Column(db.ForeignKey('racks.id'))                         # 关联Rack table id
+    idc = db.Column(db.String(64))                          # 关联IDC table id
+    is_virtualization = db.Column(db.Boolean)               # 是否跑虚拟化  （如 OpenStack Compute）
+    asset_id = db.Column(db.ForeignKey('assets.id'))           # 关联Asset 主表 id
+    cpumodel = db.Column(db.String(64))                     # CPU 型号
+    cpucount = db.Column(db.Integer)                        # CPU 核数
+    memsize = db.Column(db.Integer)                      # 内存容量
+    singlemem = db.Column(db.Integer)                       # 单根内存大小
+    raidmodel = db.Column(db.String(64))                    # RAID 级别
+    disksize = db.Column(db.Integer)                        # 磁盘容量
+    remotecardip = db.Column(db.String(64))                 # 远控卡IP地址
+    networkportcount = db.Column(db.Integer)                # 网卡端口数量
+    os = db.Column(db.String(64))                           # os类型
+    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
+    remarks = db.Column(db.Text)                            # 备注
+    instaff = db.Column(db.String(64))                      # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
+    remarks = db.Column(db.Text)                            # 备注
+
+    def __repr__(self):
+        return '<Device %r>' %self.hostname
 
 
-class AnonymousUser(AnonymousUserMixin):
-    def can(self,permissions):
-        return False
+class Idc(db.Model):
+    __tablename__ = 'idcs'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    ispid = db.Column(db.String(64))                        # 运营商名称
+    racks = db.relationship('Rack',backref='idcname',lazy='dynamic')     # 关联Rack
+    contactid = db.Column(db.String(64))                    # 联系人
+    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
+    nettype = db.Column(db.String(64))                      # 网络类型
+    netout = db.Column(db.String(64))                       # 出口带宽
+    address = db.Column(db.String(128))                     # 机房地址
+    city = db.Column(db.String(64))                         # 城市
+    adnature = db.Column(db.String(64))                     # 机房性质
+    instaff = db.Column(db.String(64))                      # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
+    remarks = db.Column(db.Text)                            # 备注
 
-    def is_administrator(self):
-        return False
+    def __repr__(self):
+        return '<Idc %r>' %self.idcname
 
-login_manager.anonymous_user = AnonymousUser
+
+class Rack(db.Model):
+    __tablename__ = 'racks'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    staff = db.Column(db.String(64))                        # 机柜负责人
+    idcname_id = db.Column(db.ForeignKey('idcs.id'))   # 关联IDC table id
+    devices = db.relationship('Device',backref='rack',lazy='dynamic')
+    site = db.Column(db.String(64))                         # 机柜位置
+    racktype = db.Column(db.String(64))                     # 机柜类型
+    usesize = db.Column(db.Integer)                      # 已用空间（u）
+    remainsize = db.Column(db.Integer)                   # 剩余空间（U）
+    electrictype = db.Column(db.String(32))                 # 电力类型
+    electricno = db.Column(db.String(32))                   # 电力路数
+    electriccapacity = db.Column(db.Integer)             # 电力容量
+    leftelectric = db.Column(db.Integer)                 # 剩余电力
+    renttime = db.Column(db.DateTime)                       # 租用时间
+    expiretime = db.Column(db.DateTime)                     # 过期时间
+    nextpaytime = db.Column(db.DateTime)                    # 下次支付时间
+    money = db.Column(db.Integer)                        # 支付金额
+    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
+    remarks = db.Column(db.Text)                            # 备注
+    instaff = db.Column(db.String(64))                      # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
+
+    def __repr__(self):
+        return '<Rack %r>' %self.idcname
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):

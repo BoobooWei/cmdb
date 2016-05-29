@@ -1,12 +1,12 @@
 #coding:utf8
 
-from flask import render_template, session, redirect, url_for, flash, current_app, abort, request, make_response
+from flask import render_template, redirect, url_for, flash, current_app, abort, request, make_response
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
-from .forms import PostForm, CommentForm,EditProfileForm, EditProfileAdminForm
+from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditAssetForm
 from .. import db
-from ..models import User,Role,Post,Comment,Permission
+from ..models import User,Role,Permission, Device, Idc, Asset, AssetType, Rack
 from ..email import send_email
 
 
@@ -24,63 +24,7 @@ def user(username):
 
 
 
-@main.route('/post/<int:id>', methods=['GET', 'POST'])
-def post(id):
-    post = Post.query.get_or_404(id)
-    form =CommentForm()
-    if form.validate_on_submit():
-        comment = Comment(body=form.body.data,
-                          author=current_user._get_current_object(),
-                          post=post)
-        db.session.add(comment)
-        db.session.commit()
-        flash(u'评论成功!')
-        return redirect(url_for('main.post',id=post.id, page=-1))
-    page = request.args.get('page',1, type=int)
-    if page == -1:
-        page = (post.comments.count() -1 ) / current_app.config['FLASK_POSTS_PER_PAGE'] +1
-    pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
-        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'], error_out=False
-    )
 
-    comments = pagination.items
-    return render_template('post.html', posts=[post], form=form, comments=comments, pagination=pagination)
-
-
-@main.route('/moderate')
-@login_required
-@permission_required(Permission.MODERATE_COMMENTS)
-def moderate():
-    page = request.args.get('page', 1, type=int)
-    pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'], error_out=False
-    )
-    comments = pagination.items
-    return render_template('moderate.html', comments=comments, pagination=pagination, page=page)
-
-
-@main.route('/moderate/enable/<int:id>')
-@login_required
-@permission_required(Permission.MODERATE_COMMENTS)
-def moderate_enable(id):
-    comment = Comment.query.get_or_404(id)
-    comment.disabled = False
-    print comment.disabled
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('main.moderate', page=request.args.get('ppage', 1, type=int)))
-
-
-@main.route('/moderate/disable/<int:id>')
-@login_required
-@permission_required(Permission.MODERATE_COMMENTS)
-def moderate_disable(id):
-    comment = Comment.query.get_or_404(id)
-    comment.disabled = True
-    print comment.disabled
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('main.moderate', page=request.args.get('page', 1, type=int)))
 
 
 @main.route('/edit-post/<int:id>', methods=['GET', 'POST'])
@@ -123,140 +67,12 @@ def edit_profile():
 #@login_required
 def index():
 
-    form = PostForm()
-    if current_user.can(Permission.WRITE_ARTICLES) and form.validate_on_submit():
-        post = Post(body=form.body.data, author=current_user._get_current_object())
-        db.session.add(post)
-        return redirect(url_for('main.index'))
-    #posts = Post.query.order_by(Post.timestamp.desc()).all()
+    form = EditDeviceForm()
+    if form.validate_on_submit():
+        print form.cpucount.data
+    return render_template('index.html', form=form)
 
 
-    show_followed = False
-    if current_user.is_authenticated:
-        show_followed = bool(request.cookies.get('show_followed', ''))
-        print show_followed
-    if show_followed:
-        query = current_user.followed_posts
-    else:
-        query = Post.query
-
-    page = request.args.get('page', 1, type=int)
-    pagination = query.order_by(Post.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'], error_out=False
-    )
-    posts = pagination.items
-    return render_template('index.html', form=form, posts=posts, endpoint='main.index', pagination=pagination, show_followed=show_followed)
-
-
-@main.route('/all')
-@login_required
-def show_all():
-    resp = make_response(redirect(url_for('.index')))
-    resp.set_cookie('show_followed', '', max_age=30*24*60*60)
-    return resp
-
-
-@main.route('/followed')
-@login_required
-def show_followed():
-    resp = make_response(redirect(url_for('.index')))
-    resp.set_cookie('show_followed', '1', max_age=30*24*60*60)
-    return resp
-
-
-@main.route('/follow/<username>')
-@login_required
-@permission_required(Permission.FOLLOW)
-def follow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('Invalid User.')
-        return redirect(url_for('main.index'))
-    if current_user.is_following(user):
-        flash(u'你已经关注这个用户了.')
-        return redirect(url_for('main.user', username=username))
-    current_user.follow(user)
-    flash(u'你关注了: {0}'.format(username))
-    return redirect(url_for('main.user', username=username))
-
-
-
-
-
-@main.route('/unfollow/<username>')
-@login_required
-@permission_required(Permission.FOLLOW)
-def unfollow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('Invalid User.')
-        return redirect(url_for('main.index'))
-    if not current_user.is_following(user):
-        flash(u'你没有关注{0}'.format(username))
-        return redirect(url_for('main.user', username=username))
-    current_user.unfollow(user)
-    flash(u'你取消了对 {0} 关注'.format(username))
-    return redirect(url_for('main.user', username=username))
-
-
-
-@main.route('/followers/<username>')
-@login_required
-@permission_required(Permission.FOLLOW)
-def followers(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('Invalid User.')
-        return redirect('main.index')
-    page = request.args.get('page', 1 , type=int)
-    pagination = user.followers.paginate(
-        page, per_page=current_app.config['FLASK_FOLLOWERS_PER_PAGE'],
-        error_out=False
-    )
-    follows = [ {'user': item.follower, 'timestamp': item.timestamp } for item in pagination.items if item.follower.username != username ]
-    return render_template('followers.html', user=user, title=u'关注你的人', endpoint='main.followers', pagination=pagination, follows=follows)
-
-
-@main.route('/following/<username>')
-@login_required
-@permission_required(Permission.FOLLOW)
-def following(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('Invalid User.')
-        return redirect(url_for('main.user'))
-    page = request.args.get('page', 1, type=int)
-    pagination = user.followed.paginate(
-        page, per_page=current_app.config['FLASK_FOLLOWERS_PER_PAGE'],
-        error_out=False
-    )
-    follows = [ {'user': item.followed, 'timestamp': item.timestamp } for item in pagination.items if item.followed.username != username ]
-    return render_template('followers.html', user=user, title=u'你关注的人', endpoint='main.following', pagination=pagination, follows=follows)
-
-
-# @main.route('/index',methods=['POST','GET'])
-# @login_required
-# def index():
-#     form = NameForm()
-#     form.name.data = 'kefatong@qq.com'
-    # if form.validate_on_submit():
-    #     user = User.query.filter_by(username=form.name.data).first()
-    #
-    #     if not user:
-    #         print user
-    #         if current_app.config['FLASK_ADMIN']:
-    #             send_email(current_app.config['FLASK_ADMIN'],'New User','email/user', user=form.name.data)
-    #         user = User(username=form.name.data)
-    #         db.session.add(user)
-    #         session['known'] = False
-    #         flash('pleased to meet you.')
-    #     else:
-    #         session['known'] = True
-    #         flash('happy to see you again!')
-    #
-    #     session['name'] = form.name.data
-    #     return redirect(url_for('main.index'))
-    # return render_template('index.html', name=session.get('name'), form=form, known=session.get('known', False))
 
 
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
@@ -296,7 +112,7 @@ def for_admins_only():
 
 @main.route('/moderator')
 @login_required
-@permission_required(Permission.MODERATE_COMMENTS)
+@permission_required(Permission.ADMINISTER)
 def for_moderators_only():
     return 'For moderators!'
 

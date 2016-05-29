@@ -1,13 +1,11 @@
 __author__ = 'eric'
 
 
-from flask import Flask, render_template
+from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.mail import Mail
-from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
-from flask.ext.pagedown import PageDown
 from config import config
 
 
@@ -19,9 +17,7 @@ login_manager.login_view = 'auth.login'
 
 bootstrap = Bootstrap()
 mail = Mail()
-moment = Moment()
 db = SQLAlchemy()
-pagedown = PageDown()
 
 
 
@@ -32,9 +28,7 @@ def create_app(config_name):
 
     bootstrap.init_app(app)
     mail.init_app(app)
-    moment.init_app(app)
     db.init_app(app)
-    pagedown.init_app(app)
     login_manager.init_app(app)
 
 
