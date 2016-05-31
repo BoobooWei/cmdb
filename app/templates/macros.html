@@ -1,7 +1,18 @@
-{% macro print_form_errors(errors) %}
+{% macro print_form_messages(errors) %}
     {% if errors %}
         {% for error in errors %}
             <span style="color: goldenrod">{{ error }}</span>
         {% endfor %}
     {% endif %}
+{% endmacro %}
+
+
+{% macro print_flash_messages() %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <a class="btn btn-success autohidebut" href="javascript:;" onclick="$.Notification.autoHideNotify('success', 'top right', 'I will be closed in 5 seconds...','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.')"></a>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endmacro %}

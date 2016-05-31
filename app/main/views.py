@@ -51,15 +51,23 @@ def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.name = form.name.data
+        print current_user.name
+        current_user.username = form.username.data
+        print current_user.username
+        current_user.qq = form.qq.data
+        current_user.phone = form.phone.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
         db.session.add(current_user)
         flash(u'提交成功!')
-        return redirect(url_for('main.user',username=current_user.username))
+        return redirect(url_for('main.edit_profile',username=current_user.username))
 
     form.name.data = current_user.name
+    form.username.data = current_user.username
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me
+    form.qq.data = current_user.qq
+    form.phone.data = current_user.phone
     return render_template('edit_profile.html',form=form)
 
 
@@ -67,11 +75,37 @@ def edit_profile():
 #@login_required
 def index():
 
-    form = EditDeviceForm()
+    form = EditProfileForm()
     if form.validate_on_submit():
         print form.cpucount.data
     return render_template('index.html', form=form)
 
+
+
+@main.route('/test', methods=['GET', 'POST'])
+#@login_required
+def test():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        print current_user.name
+        current_user.username = form.username.data
+        print current_user.username
+        current_user.qq = form.qq.data
+        current_user.phone = form.phone.data
+        current_user.location = form.location.data
+        current_user.about_me = form.about_me.data
+        db.session.add(current_user)
+        flash(u'提交成功!')
+        return redirect(url_for('main.test',username=current_user.username))
+
+    form.name.data = current_user.name
+    form.username.data = current_user.username
+    form.location.data = current_user.location
+    form.about_me.data = current_user.about_me
+    form.qq.data = current_user.qq
+    form.phone.data = current_user.phone
+    return render_template('test.html',form=form)
 
 
 
