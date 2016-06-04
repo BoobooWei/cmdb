@@ -78,7 +78,128 @@ def edit_assettype():
         flash(u'设备类型添加成功')
         return redirect(url_for('main.index'))
 
-    return render_template('edit_assettype.html', form=form)
+    return render_template('test.html', form=form)
+
+
+@main.route('/edit-rack', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.RACK_EDIT)
+def edit_rack():
+    form = EditRackForm()
+    if form.validate_on_submit():
+        rack = Rack(name=form.name.data,
+                    staff=form.staff.data,
+                    idcname=Idc.query.get(form.idcname.data),
+                    site=form.site.data,
+                    racktype=form.racktype.data,
+                    usesize=form.usesize.data,
+                    remainsize=form.remainsize.data,
+                    electrictype=form.electrictype.data,
+                    electricno=form.electricno.data,
+                    leftelectric=form.leftelectric.data,
+                    renttime=form.renttime.data,
+                    expiretime=form.expiretime.data,
+                    nextpaytime=form.nextpaytime.data,
+                    money=form.money.data,
+                    remarks=form.remarks.data)
+        db.session.add(rack)
+
+        #log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
+        #db.session.add(log)
+        db.session.commit()
+        flash(u'机柜添加成功')
+        return redirect(url_for('main.index'))
+
+    return render_template('test.html', form=form)
+
+
+@main.route('/edit-idc', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.IDC_EDIT)
+def edit_idc():
+    form = EditIdcForm()
+    if form.validate_on_submit():
+        idc = Idc(name=form.name.data,
+                  ispid=form.ispid.data,
+                  city=form.city.data,
+                  address=form.address.data,
+                  contactid=form.contactid.data,
+                  nettype=form.nettype.data,
+                  netout=form.netout.data,
+                  adnature=form.adnature.data,
+                  remarks=form.remarks.data)
+        db.session.add(idc)
+
+        #log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
+        #db.session.add(log)
+        db.session.commit()
+        flash(u'机房添加成功')
+        return redirect(url_for('main.index'))
+
+    return render_template('test.html', form=form)
+
+
+@main.route('/edit-device', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_device():
+    form = EditDeviceForm()
+    if form.validate_on_submit():
+
+        device = Device(Devicetype=DeviceType.query.get(form.Devicetype.data),
+                  an=form.an.data,
+                  sn=form.sn.data,
+                  onstatus=form.onstatus.data,
+                  flowstatus=form.flowstatus.data,
+                  dateofmanufacture=form.dateofmanufacture.data,
+                  manufacturer=form.manufacturer.data,
+                  brand=form.brand.data,
+                  model=form.model.data,
+                  site=form.site.data,
+                  usedept=form.usedept.data,
+                  usestarttime=form.usestarttime.data,
+                  useendtime=form.useendtime.data,
+                  mainuses=form.mainuses.data,
+                  managedept=form.managedept.data,
+                  managestaff=form.managestaff.data,
+                  koriyasustarttime=form.koriyasustarttime.data,
+                  koriyasuendtime=form.koriyasuendtime.data,
+                  equipprice=form.equipprice.data,
+
+                  hostname=form.hostname.data,
+                  private_ip=form.private_ip.data,
+                  private_mac=form.private_mac.data,
+                  public_ip=form.public_ip.data,
+                  public_mac=form.public_mac.data,
+                  other_ip=form.other_ip.data,
+                  other_mac=form.other_mac.data,
+                  rack=Rack.query.get(form.rack.data),
+
+                  is_virtualization=form.is_virtualization.data,
+                  cpumodel=form.cpumodel.data,
+                  cpucount=form.cpucount.data,
+                  memsize=form.memsize.data,
+                  singlemem=form.singlemem.data,
+                  raidmodel=form.raidmodel.data,
+                  #disks=form.disks.data,
+
+                  powermanage_enable=form.powermanage_enable.data,
+                  powermanage_ip=form.powermanage_ip.data,
+                  powermanage_user=form.powermanage_user.data,
+                  powermanage_id=form.powermanage_id.data,
+
+                  networkportcount=form.networkportcount.data,
+                  os=form.os.data,
+                  remarks=form.remarks.data)
+        db.session.add(device)
+
+        #log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
+        #db.session.add(log)
+        db.session.commit()
+        flash(u'设备添加成功')
+        return redirect(url_for('main.index'))
+
+    return render_template('test.html', form=form)
 
 
 @main.route('/show-devicetype', methods=['GET', 'POST'])
@@ -109,34 +230,42 @@ def show_devices():
     return render_template('show_devices.html', items=items, endpoint='main.show_assettype', pagination=pagination)
 
 
+@main.route('/show-devices', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_racks():
+    page = request.args.get('page', 1, type=int)
+    pagination = Rack.query.order_by(Rack.name.desc()).paginate(
+        page=page, per_page=20, error_out=False
+    )
+
+    items = pagination.items
+    return render_template('show_racks.html', items=items, endpoint='main.show_racks', pagination=pagination)
 
 
-
-
-
-@main.route('/test', methods=['GET', 'POST'])
-#@login_required
-def test():
-    form = EditProfileForm()
-    if form.validate_on_submit():
-        current_user.name = form.name.data
-        current_user.username = form.username.data
-        current_user.qq = form.qq.data
-        current_user.phone = form.phone.data
-        current_user.location = form.location.data
-        current_user.about_me = form.about_me.data
-        db.session.add(current_user)
-        flash(u'提交成功!')
-        return redirect(url_for('main.test',username=current_user.username))
-
-    form.name.data = current_user.name
-    form.username.data = current_user.username
-    form.location.data = current_user.location
-    form.about_me.data = current_user.about_me
-    form.qq.data = current_user.qq
-    form.phone.data = current_user.phone
-    return render_template('test.html',form=form)
-
+# @main.route('/test', methods=['GET', 'POST'])
+# @login_required
+# def test():
+#     form = EditProfileForm()
+#     if form.validate_on_submit():
+#         current_user.name = form.name.data
+#         current_user.username = form.username.data
+#         current_user.qq = form.qq.data
+#         current_user.phone = form.phone.data
+#         current_user.location = form.location.data
+#         current_user.about_me = form.about_me.data
+#         db.session.add(current_user)
+#         flash(u'提交成功!')
+#         return redirect(url_for('main.test',username=current_user.username))
+#
+#     form.name.data = current_user.name
+#     form.username.data = current_user.username
+#     form.location.data = current_user.location
+#     form.about_me.data = current_user.about_me
+#     form.qq.data = current_user.qq
+#     form.phone.data = current_user.phone
+#     return render_template('test.html',form=form)
+#
 
 
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
