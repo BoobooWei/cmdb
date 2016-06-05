@@ -4,9 +4,9 @@ _author__ = 'eric'
 
 
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
-from wtforms.validators import Email, Length, Regexp, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
-from ..models import Role, Rack, Asset, Idc, Device
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
+from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
+from ..models import Role, Rack, Asset,AssetType, Idc, Device
 
 class NameForm(Form):
     name = StringField('what is your name?', validators=[InputRequired()])
@@ -14,7 +14,11 @@ class NameForm(Form):
 
 
 class EditProfileForm(Form):
-    name = StringField(u'真实姓名', validators=[Length(0,64)])
+    username = StringField('Username', validators=[InputRequired(), Length(0,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
+    name = StringField(u'真实姓名', validators=[InputRequired(), Length(0,64)])
+    position = StringField(u'工作职位', validators=[InputRequired(), Length(0,64)])
+    qq = StringField(u'QQ号码')
+    phone = StringField(u'手机号码')
     location = StringField(u'位置', validators=[Length(0,64)])
     about_me = TextAreaField(u'关于我')
     submit = SubmitField(u'提交')
@@ -44,13 +48,13 @@ class EditProfileAdminForm(Form):
                 raise ValidationError('Username already registered')
 
 
-class EditAssetTypeForm():
+class EditAssetTypeForm(Form):
     name = StringField(u'资产类名', validators=[InputRequired() ,Length(1,64)])             # 资产类名
-    rremarks = TextAreaField(u'备注')
+    remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
     def validate_name(self,field):
-        if Asset.query.filter_by(name=field.data).first():
+        if AssetType.query.filter_by(name=field.data).first():
             raise ValidationError('资产类名:{0}已经被使用了'.format(self.name))
 
 

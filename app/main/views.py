@@ -4,9 +4,9 @@ from flask import render_template, redirect, url_for, flash, current_app, abort,
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditAssetForm
+from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditAssetForm, EditAssetTypeForm
 from .. import db
-from ..models import User,Role,Permission, Device, Idc, Asset, AssetType, Rack
+from ..models import User,Role,Permission, Device, Idc, Asset, AssetType, Rack, Logger
 from ..email import send_email
 
 
@@ -25,53 +25,117 @@ def user(username):
 
 
 
-
-
-@main.route('/edit-post/<int:id>', methods=['GET', 'POST'])
-@login_required
-def edit(id):
-    post = Post.query.get_or_404(id)
-    if current_user != post.author and not current_user.can(Permission.WRITE_ARTICLES):
-        abort(403)
-
-    form = PostForm()
-    if form.validate_on_submit():
-        post.body = form.body.data
-        db.session.add(post)
-        flash(u'文档已更新!')
-        return redirect(url_for('main.post', id=post.id))
-    form.body.data = post.body
-    return render_template('edit_post.html', form=form)
-
-
-
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm()
+    logs = Logger.query.order_by(Logger.logtime.desc()).all()
     if form.validate_on_submit():
         current_user.name = form.name.data
+        current_user.username = form.username.data
+        current_user.position = form.position.data
+        current_user.qq = form.qq.data
+        current_user.phone = form.phone.data
+        current_user.location = form.location.data
+        current_user.about_me = form.about_me.data
+        db.session.add(current_user)
+        # action  [ 1: add , 2: edit, 3: del ]
+        log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
+        db.session.add(log)
+        db.session.commit()
+        flash(u'提交成功!')
+        return redirect(url_for('main.edit_profile',username=current_user.username, logs=logs))
+
+    form.name.data = current_user.name
+    form.username.data = current_user.username
+    form.position.data = current_user.position
+    form.location.data = current_user.location
+    form.about_me.data = current_user.about_me
+    form.qq.data = current_user.qq
+    form.phone.data = current_user.phone
+    return render_template('edit_profile.html',form=form, username=current_user.username, logs=logs)
+
+
+@main.route('/index', methods=['GET', 'POST'])
+@login_required
+def index():
+    return render_template('index.html')
+
+
+
+@main.route('/edit-assettype', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.ASSET_EDIT)
+def edit_assettype():
+    form = EditAssetTypeForm()
+    if form.validate_on_submit():
+        asset_type = AssetType(name=form.name.data, remarks=form.remarks.data)
+        db.session.add(asset_type)
+
+        #log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
+        #db.session.add(log)
+        db.session.commit()
+        flash(u'资产类型添加成功')
+        return redirect(url_for('main.index'))
+
+    return render_template('edit_assettype.html', form=form)
+
+
+@main.route('/show-assettype', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.ASSET_LOOK)
+def show_assettype():
+    page = request.args.get('page', 1, type=int)
+    pagination = AssetType.query.order_by(AssetType.name.desc()).paginate(
+        page=page, per_page=20, error_out=False
+    )
+
+    items = pagination.items
+    return render_template('show_assettype.html', items=items, endpoint='main.show_assettype', pagination=pagination)
+
+
+
+
+@main.route('/show-devices', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_devices():
+    page = request.args.get('page', 1, type=int)
+    pagination = Device.query.order_by(Device.powerstatus.desc()).paginate(
+        page=page, per_page=20, error_out=False
+    )
+
+    items = pagination.items
+    return render_template('show_devices.html', items=items, endpoint='main.show_assettype', pagination=pagination)
+
+
+
+
+
+
+
+@main.route('/test', methods=['GET', 'POST'])
+#@login_required
+def test():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.username = form.username.data
+        current_user.qq = form.qq.data
+        current_user.phone = form.phone.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
         db.session.add(current_user)
         flash(u'提交成功!')
-        return redirect(url_for('main.user',username=current_user.username))
+        return redirect(url_for('main.test',username=current_user.username))
 
     form.name.data = current_user.name
+    form.username.data = current_user.username
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html',form=form)
-
-
-@main.route('/index', methods=['GET', 'POST'])
-#@login_required
-def index():
-
-    form = EditDeviceForm()
-    if form.validate_on_submit():
-        print form.cpucount.data
-    return render_template('index.html', form=form)
-
+    form.qq.data = current_user.qq
+    form.phone.data = current_user.phone
+    return render_template('test.html',form=form)
 
 
 

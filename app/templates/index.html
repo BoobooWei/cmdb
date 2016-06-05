@@ -1,20 +1,13 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-    
-    {% include "_header_css.html" %}
+﻿            {% extends "common/base.html" %}
 
-
-    <body>
-
-            {% include "_header.html" %}
-
+            {% block page_content %}
 
             <!-- Page Content Start -->
             <!-- ================== -->
 
             <div class="wraper container-fluid">
-                <div class="page-title"> 
-                    <h3 class="title">Welcome !</h3> 
+                <div class="page-title">
+                    <h3 class="title">Welcome !</h3>
                 </div>
 
 
@@ -22,28 +15,28 @@
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget-panel widget-style-2 white-bg">
-                            <i class="ion-eye text-pink"></i> 
+                            <i class="ion-eye text-pink"></i>
                             <h2 class="m-0 counter">50</h2>
                             <div>Daily Visits</div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget-panel widget-style-2 white-bg">
-                            <i class="ion-wifi text-purple"></i> 
+                            <i class="ion-wifi text-purple"></i>
                             <h2 class="m-0 counter">8956</h2>
                             <div>Sales</div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget-panel widget-style-2 white-bg">
-                            <i class="ion-ios7-pricetag text-info"></i> 
+                            <i class="ion-ios7-pricetag text-info"></i>
                             <h2 class="m-0 counter">1268</h2>
                             <div>New Orders</div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="widget-panel widget-style-2 white-bg">
-                            <i class="ion-android-contacts text-success"></i> 
+                            <i class="ion-android-contacts text-success"></i>
                             <h2 class="m-0 counter">145</h2>
                             <div>New Users</div>
                         </div>
@@ -53,7 +46,7 @@
 
 
                 <div class="row">
-                    
+
 
                     <div class="col-lg-6">
                         <div class="portlet"><!-- /primary heading -->
@@ -94,7 +87,7 @@
                                 </div>
                             </div>
                         </div> <!-- /Portlet -->
-                        
+
                     </div>
 
 
@@ -166,7 +159,7 @@
                                 <div class="portlet-body todoapp">
                                     <div class="row">
                                         <div class="col-sm-8">
-                                            <h4 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h4> 
+                                            <h4 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h4>
                                         </div>
                                         <div class="col-sm-4">
                                             <a href="#" class="pull-right btn btn-primary btn-sm" id="btn-archive">Archive</a>
@@ -289,7 +282,7 @@
                                                     <td><span class="label label-warning">Coming soon</span></td>
                                                     <td>Coderthemes</td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -298,7 +291,7 @@
                         </div>
                     </div> <!-- end col -->
 
-                    
+
                 </div> <!-- End row -->
 
 
@@ -306,37 +299,4 @@
             <!-- Page Content Ends -->
             <!-- ================== -->
 
-            <!-- Footer Start -->
-            <footer class="footer">
-                2015 © Velonic.
-            </footer>
-            <!-- Footer Ends -->
-
-
-
-        </section>
-        <!-- Main Content Ends -->
-        
-
-
-
-        {% include "_end_scripts.html" %}
-
-
-        <script type="text/javascript">
-        /* ==============================================
-             Counter Up
-             =============================================== */
-            jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1200
-                });
-            });
-        </script>
-    
-
-    </body>
-
-<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:52:31 GMT -->
-</html>
+            {% endblock %}

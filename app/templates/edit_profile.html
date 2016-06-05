@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    
-<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:32 GMT -->
-<head>
+            {% extends "common/base.html" %}
 
-        <title>Velonic - Responsive Admin Dashboard Template</title>
-
-        <!-- Bootstrap core CSS -->
-
-
-        {% include "_header_css.html" %}
-
-
-
-    </head>
-
-
-    <body>
-
-        {% include '_header.html' %}
-            <!-- Header Ends -->
-
+            {% block page_content %}
 
             <!-- Page Content Start -->
             <!-- ================== -->
@@ -64,26 +44,26 @@
                 <div class="row m-t-30">
                     <div class="col-sm-12">
                         <div class="panel panel-default p-0">
-                            <div class="panel-body p-0"> 
+                            <div class="panel-body p-0">
                                 <ul class="nav nav-tabs profile-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#aboutme">About Me</a></li>
-                                    <li class=""><a data-toggle="tab" href="#user-activities">Activities</a></li>
-                                    <li class=""><a data-toggle="tab" href="#edit-profile">Settings</a></li>
-                                    <li class=""><a data-toggle="tab" href="#projects">Projects</a></li>
-                                </ul>
+                                    <li class="active"><a data-toggle="tab" href="#aboutme">个人信息</a></li>
+                                    <li class=""><a data-toggle="tab" href="#user-activities">历史记录</a></li>
+                                    <li class=""><a data-toggle="tab" href="#edit-profile">个人设置</a></li>
+                                    <li class=""><a data-toggle="tab" href="#projects">个人资产</a></li>
 
-                                <div class="tab-content m-0"> 
+                                </ul>
+                                <div class="tab-content m-0">
 
                                     <div id="aboutme" class="tab-pane active">
                                     <div class="profile-desk">
                                         <h1>{{ current_user.username }}</h1>
-                                        {% if current_user.about_me %}
-                                            <span class="designation">{{ current_user.about_me }}</span>
+                                        {% if current_user.position %}
+                                            <span class="designation">{{ current_user.position }}</span>
                                         {% endif %}
-                                        <p>
-                                            I have 10 years of experience designing for the web, and specialize in the areas of user interface design, interaction design, visual design and prototyping. I’ve worked with notable startups including Pearl Street Software.
-                                        </p>
-                                        <a class="btn btn-primary m-t-20" href="#"> <i class="fa fa-check"></i> Following</a>
+
+                                        {% if current_user.about_me %}
+                                            <p>{{ current_user.about_me }}</p>
+                                        {% endif %}
 
                                         <table class="table table-condensed">
                                             <thead>
@@ -93,30 +73,38 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><b>Url</b></td>
+                                                    <td><b>姓名</b></td>
                                                     <td>
                                                     <a href="#" class="ng-binding">
-                                                        www.example.com
+                                                        {{ current_user.name }}
                                                     </a></td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>Email</b></td>
                                                     <td>
                                                     <a href="#" class="ng-binding">
-                                                        jonathandeo@example.com
+                                                        {{ current_user.email }}
                                                     </a></td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>Phone</b></td>
-                                                    <td class="ng-binding">(123)-456-7890</td>
+                                                    <td class="ng-binding">{{ current_user.phone }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Skype</b></td>
+                                                    <td><b>QQ</b></td>
                                                     <td>
                                                     <a href="#" class="ng-binding">
-                                                        jonathandeo123
+                                                        {{ current_user.qq }}
                                                     </a></td>
                                                 </tr>
+                                                <tr>
+                                                    <td><b>上次登录时间</b></td>
+                                                    <td>
+                                                    <a href="#" class="ng-binding">
+                                                        {{ current_user.last_seen }}
+                                                    </a></td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div> <!-- end profile-desk -->
@@ -126,83 +114,58 @@
                                 <!-- Activities -->
                                 <div id="user-activities" class="tab-pane">
                                     <div class="timeline-2">
+                                        {% for log in logs %}
                                         <div class="time-item">
                                             <div class="item-info">
-                                                <div class="text-muted">5 minutes ago</div>
-                                                <p><strong><a href="#" class="text-info">John Doe</a></strong> Uploaded a photo <strong>"DSC000586.jpg"</strong></p>
+                                                <div class="text-muted">{{ log.logtime }}</div>
+                                                <p><strong><a href="#" class="text-info">{{ log.user.username }}</a></strong> {{ log.content }}</p>
                                             </div>
                                         </div>
-
-                                        <div class="time-item">
-                                            <div class="item-info">
-                                                <div class="text-muted">30 minutes ago</div>
-                                                <p><a href="#" class="text-info">Lorem</a> commented your post.</p>
-                                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                            </div>
-                                        </div>
-
-                                        <div class="time-item">
-                                            <div class="item-info">
-                                                <div class="text-muted">59 minutes ago</div>
-                                                <p><a href="#" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                            </div>
-                                        </div>
-
-                                        <div class="time-item">
-                                            <div class="item-info">
-                                                <div class="text-muted">5 minutes ago</div>
-                                                <p><strong><a href="#" class="text-info">John Doe</a></strong>Uploaded 2 new photos</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="time-item">
-                                            <div class="item-info">
-                                                <div class="text-muted">30 minutes ago</div>
-                                                <p><a href="#" class="text-info">Lorem</a> commented your post.</p>
-                                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                            </div>
-                                        </div>
-
-                                        <div class="time-item">
-                                            <div class="item-info">
-                                                <div class="text-muted">59 minutes ago</div>
-                                                <p><a href="#" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
 
                                 <!-- settings -->
                                 <div id="edit-profile" class="tab-pane">
                                     <div class="user-profile-content">
-                                        <form role="form">
+                                        <form class="form-horizontal m-t-40" action="{{ url_for('main.edit_profile') }}" method="POST">
+                                            {{ form.csrf_token }}
                                             <div class="form-group">
-                                                <label for="FullName">Full Name</label>
-                                                <input type="text" value="John Doe" id="FullName" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Email">Email</label>
-                                                <input type="email" value="first.last@example.com" id="Email" class="form-control">
+                                                <label for="FullName">真实姓名</label>
+                                                {{ form.name(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.name) }}
                                             </div>
                                             <div class="form-group">
                                                 <label for="Username">Username</label>
-                                                <input type="text" value="john" id="Username" class="form-control">
+                                                {{ form.username(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.username) }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="Password">Password</label>
-                                                <input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control">
+                                                <label for="Username">工作职位</label>
+                                                {{ form.position(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.position) }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="RePassword">Re-Password</label>
-                                                <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
+                                                <label for="Username">QQ号码</label>
+                                                {{ form.qq(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.qq) }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="AboutMe">About Me</label>
-                                                <textarea style="height: 125px;" id="AboutMe" class="form-control">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</textarea>
+                                                <label for="Username">手机号码</label>
+                                                {{ form.phone(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.phone) }}
                                             </div>
-                                            <button class="btn btn-primary" type="submit">Save</button>
+                                            <div class="form-group">
+                                                <label for="Username">地理位置</label>
+                                                {{ form.location(class='form-control') }}
+                                                {{ macros.print_form_messages(form.errors.location) }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="AboutMe">关于我</label>
+                                                {{ form.about_me(class='form-control', style='height: 125px;') }}
+                                                {{ macros.print_form_messages(form.errors.about_me) }}
+                                            </div>
+                                            {{ form.submit(class="btn btn-primary") }}
                                         </form>
                                     </div>
                                 </div>
@@ -268,7 +231,7 @@
                                                                         <td><span class="label label-warning">Coming soon</span></td>
                                                                         <td>Coderthemes</td>
                                                                     </tr>
-                                                                    
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -279,51 +242,12 @@
                                     </div>
                                 </div>
                             </div>
-             
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
-
-            
-
-            
-
-
         </div>
 
         <!-- Page Content Ends -->
         <!-- ================== -->
-
-        <!-- Footer Start -->
-        <footer class="footer">
-            2015 © Velonic.
-        </footer>
-        <!-- Footer Ends -->
-
-
-
-    </section>
-    <!-- Main Content Ends -->
-        
-
-
-
-
-    <!-- js placed at the end of the document so the pages load faster -->
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/pace.min.js"></script>
-        <script src="js/modernizr.min.js"></script>
-        <script src="js/wow.min.js"></script>
-        <script src="js/jquery.scrollTo.min.js"></script>
-        <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    
-        <script src="js/jquery.app.js"></script>
-
-        {% include "_end_scripts.html" %}
-
-  </body>
-
-<!-- Mirrored from coderthemes.com/velonic_3.0/admin_3/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2016 14:53:32 GMT -->
-</html>
+        {% endblock %}

@@ -26,7 +26,10 @@ class Permission:
     IDC_LOOK = 0x020
     IDC_EDIT = 0x040
 
-    ADMINISTER = 0x80
+    ASSET_LOOK = 0x80
+    ASSET_EDIT = 0x100
+
+    ADMINISTER = 0x200
 
 
 
@@ -52,6 +55,8 @@ class Role(db.Model):
                               Permission.RACK_EDIT |
                               Permission.IDC_LOOK  |
                               Permission.IDC_EDIT  |
+                              Permission.ASSET_LOOK |
+                              Permission.ASSET_EDIT |
                               Permission.ADMINISTER, False)
         }
 
@@ -77,16 +82,18 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(64),unique=True,index=True)             # Email Address
     username = db.Column(db.String(64),unique=True,index=True)          # Username
     password_hash = db.Column(db.String(128))                           # password Md5 Hash
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))           # Role 关联 Role table
-    name = db.Column(db.String(64))                                     # 真实姓名
-    location = db.Column(db.String(64))                                 # 地址
-    about_me = db.Column(db.Text())                                     # 关于我
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)    # 注册时间
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)       # 最后登录时间
-    confirmed = db.Column(db.Boolean, default=False)                    # 账户状态
-    avatar_hash = db.Column(db.String(32))                              # 头像
-
-
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))           # Role 鍏宠仈 Role table
+    name = db.Column(db.String(64))                                     # 鐪熷疄濮撳悕
+    location = db.Column(db.String(64))                                 # 鍦板潃
+    position = db.Column(db.String(64))                                 # 职位
+    about_me = db.Column(db.Text())                                     # 鍏充簬鎴�
+    phone = db.Column(db.String(11))                                       # 手机号码
+    qq = db.Column(db.String(13))                                          # QQ号码
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)    # 娉ㄥ唽鏃堕棿
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)       # 鏈�鍚庣櫥褰曟椂闂�
+    confirmed = db.Column(db.Boolean, default=False)                    # 璐︽埛鐘舵��
+    avatar_hash = db.Column(db.String(32))                              # 澶村儚
+    logs = db.relationship('Logger',backref='user',lazy='dynamic')
 
 
     def __init__(self,**kwargs):
@@ -116,6 +123,7 @@ class User(UserMixin,db.Model):
                      confirmed = True,
                      name = forgery_py.name.full_name(),
                      location = forgery_py.address.city(),
+                     position = forgery_py.lorem_ipsum.sentence(),
                      about_me = forgery_py.lorem_ipsum.sentence(),
                      member_since = forgery_py.date.date(True))
             db.session.add(u)
@@ -237,9 +245,9 @@ class User(UserMixin,db.Model):
 class AssetType(db.Model):
     __tablename__ = 'assettype'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True,index=True)             # 资产类名
-    remarks = db.Column(db.Text)                                 # 资产类说明
-    assets = db.relationship('Asset',backref='asset',lazy='dynamic')    # 关联 Asset table
+    name = db.Column(db.String(64), unique=True,index=True)             # 璧勪骇绫诲悕
+    remarks = db.Column(db.Text)                                 # 璧勪骇绫昏鏄�
+    assets = db.relationship('Asset',backref='asset',lazy='dynamic')    # 鍏宠仈 Asset table
 
     def __repr__(self):
         return '<AssetType %r>' %self.name
@@ -252,30 +260,30 @@ class AssetType(db.Model):
 class Asset(db.Model):
     __tablename__ = 'assets'
     id = db.Column(db.Integer, primary_key=True)
-    assetclass_id = db.Column(db.ForeignKey('assettype.id'))   # 资产类别   关联AssetType table
-    an = db.Column(db.String(64), unique=True,index=True)   # AN 企业资产编号
-    sn = db.Column(db.String(64), unique=True,index=True)                           # SN 设备序列号
-    onstatus = db.Column(db.Integer)                        # 使用状态
-    flowstatus = db.Column(db.Integer)                      # 流程状态
-    dateofmanufacture = db.Column(db.DateTime)              # 生产时间
-    manufacturer = db.Column(db.String(64))                 # 生产商
-    brand = db.Column(db.String(64))                        # 品牌
-    model = db.Column(db.String(64))                        # 型号
-    site = db.Column(db.String(64))                         # 位置
-    devices = db.relationship('Device',backref='asset',lazy='dynamic')    # 关联设备表  Device Table
-    usedept = db.Column(db.String(64))                      # 使用部门
-    usestaff = db.Column(db.String(64))                     # 部门使用人
-    usestarttime = db.Column(db.DateTime)                   # 使用开始时间
-    useendtime = db.Column(db.DateTime)                     # 使用结束时间
-    mainuses = db.Column(db.String(128))                    # 主要用途
-    managedept = db.Column(db.String(64))                   # 管理部门
-    managestaff = db.Column(db.String(64))                  # 管理人
-    instaff = db.Column(db.String(64))                      # 录入人
-    intime = db.Column(db.DateTime, default=datetime.now)   # 录入时间
-    koriyasustarttime = db.Column(db.DateTime)              # 维保开始时间
-    koriyasuendtime = db.Column(db.DateTime)                # 维保结束时间
-    equipprice = db.Column(db.Integer)                      # 设备价格
-    remarks = db.Column(db.Text)                            # 备注
+    assetclass_id = db.Column(db.ForeignKey('assettype.id'))   # 璧勪骇绫诲埆   鍏宠仈AssetType table
+    an = db.Column(db.String(64), unique=True,index=True)   # AN 浼佷笟璧勪骇缂栧彿
+    sn = db.Column(db.String(64), unique=True,index=True)                           # SN 璁惧搴忓垪鍙�
+    onstatus = db.Column(db.Integer)                        # 浣跨敤鐘舵��
+    flowstatus = db.Column(db.Integer)                      # 娴佺▼鐘舵��
+    dateofmanufacture = db.Column(db.DateTime)              # 鐢熶骇鏃堕棿
+    manufacturer = db.Column(db.String(64))                 # 鐢熶骇鍟�
+    brand = db.Column(db.String(64))                        # 鍝佺墝
+    model = db.Column(db.String(64))                        # 鍨嬪彿
+    site = db.Column(db.String(64))                         # 浣嶇疆
+    devices = db.relationship('Device',backref='asset',lazy='dynamic')    # 鍏宠仈璁惧琛�  Device Table
+    usedept = db.Column(db.String(64))                      # 浣跨敤閮ㄩ棬
+    usestaff = db.Column(db.String(64))                     # 閮ㄩ棬浣跨敤浜�
+    usestarttime = db.Column(db.DateTime)                   # 浣跨敤寮�濮嬫椂闂�
+    useendtime = db.Column(db.DateTime)                     # 浣跨敤缁撴潫鏃堕棿
+    mainuses = db.Column(db.String(128))                    # 涓昏鐢ㄩ��
+    managedept = db.Column(db.String(64))                   # 绠＄悊閮ㄩ棬
+    managestaff = db.Column(db.String(64))                  # 绠＄悊浜�
+    instaff = db.Column(db.String(64))                      # 褰曞叆浜�
+    intime = db.Column(db.DateTime, default=datetime.now)   # 褰曞叆鏃堕棿
+    koriyasustarttime = db.Column(db.DateTime)              # 缁翠繚寮�濮嬫椂闂�
+    koriyasuendtime = db.Column(db.DateTime)                # 缁翠繚缁撴潫鏃堕棿
+    equipprice = db.Column(db.Integer)                      # 璁惧浠锋牸
+    remarks = db.Column(db.Text)                            # 澶囨敞
 
 
     def __repr__(self):
@@ -286,30 +294,31 @@ class Device(db.Model):
     __tablename__ = 'devices'
     id = db.Column(db.Integer, primary_key=True)
     hostname = db.Column(db.String(64))                     # Hostname
-    private_ip = db.Column(db.String(15))                   # 内外IP地址
+    private_ip = db.Column(db.String(15))                   # 鍐呭IP鍦板潃
     private_mac = db.Column(db.String(20))
-    public_ip = db.Column(db.String(15))                    # 公网IP地址
+    public_ip = db.Column(db.String(15))                    # 鍏綉IP鍦板潃
     public_mac = db.Column(db.String(20))
-    other_ip = db.Column(db.String(64))                     # 其他IP地址， 用“，”分隔多个
-    #idcname = db.Column(db.ForeignKey('idcs.id'))   # 关联IDC table id
-    rack_id = db.Column(db.ForeignKey('racks.id'))                         # 关联Rack table id
-    idc = db.Column(db.String(64))                          # 关联IDC table id
-    is_virtualization = db.Column(db.Boolean)               # 是否跑虚拟化  （如 OpenStack Compute）
-    asset_id = db.Column(db.ForeignKey('assets.id'))           # 关联Asset 主表 id
-    cpumodel = db.Column(db.String(64))                     # CPU 型号
-    cpucount = db.Column(db.Integer)                        # CPU 核数
-    memsize = db.Column(db.Integer)                      # 内存容量
-    singlemem = db.Column(db.Integer)                       # 单根内存大小
-    raidmodel = db.Column(db.String(64))                    # RAID 级别
-    disksize = db.Column(db.Integer)                        # 磁盘容量
-    remotecardip = db.Column(db.String(64))                 # 远控卡IP地址
-    networkportcount = db.Column(db.Integer)                # 网卡端口数量
-    os = db.Column(db.String(64))                           # os类型
-    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
-    remarks = db.Column(db.Text)                            # 备注
-    instaff = db.Column(db.String(64))                      # 录入人
-    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
-    remarks = db.Column(db.Text)                            # 备注
+    other_ip = db.Column(db.String(64))                     # 鍏朵粬IP鍦板潃锛� 鐢ㄢ�滐紝鈥濆垎闅斿涓�
+    #idcname = db.Column(db.ForeignKey('idcs.id'))   # 鍏宠仈IDC table id
+    rack_id = db.Column(db.ForeignKey('racks.id'))                         # 鍏宠仈Rack table id
+    idc = db.Column(db.String(64))                          # 鍏宠仈IDC table id
+    is_virtualization = db.Column(db.Boolean)               # 鏄惁璺戣櫄鎷熷寲  锛堝 OpenStack Compute锛�
+    asset_id = db.Column(db.ForeignKey('assets.id'))           # 鍏宠仈Asset 涓昏〃 id
+    cpumodel = db.Column(db.String(64))                     # CPU 鍨嬪彿
+    cpucount = db.Column(db.Integer)                        # CPU 鏍告暟
+    memsize = db.Column(db.Integer)                      # 鍐呭瓨瀹归噺
+    singlemem = db.Column(db.Integer)                       # 鍗曟牴鍐呭瓨澶у皬
+    raidmodel = db.Column(db.String(64))                    # RAID 绾у埆
+    disksize = db.Column(db.Integer)                        # 纾佺洏瀹归噺
+    remotecardip = db.Column(db.String(64))                 # 杩滄帶鍗P鍦板潃
+    networkportcount = db.Column(db.Integer)                # 缃戝崱绔彛鏁伴噺
+    os = db.Column(db.String(64))                           # os绫诲瀷
+    powerstatus = db.Column(db.Boolean)                     # 电源状态
+    isdelete = db.Column(db.Boolean, default=False)                        # 鏄惁鍒犻櫎
+    remarks = db.Column(db.Text)                            # 澶囨敞
+    instaff = db.Column(db.String(64))                      # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)                            # 澶囨敞
 
     def __repr__(self):
         return '<Device %r>' %self.hostname
@@ -319,18 +328,18 @@ class Idc(db.Model):
     __tablename__ = 'idcs'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    ispid = db.Column(db.String(64))                        # 运营商名称
-    racks = db.relationship('Rack',backref='idcname',lazy='dynamic')     # 关联Rack
-    contactid = db.Column(db.String(64))                    # 联系人
-    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
-    nettype = db.Column(db.String(64))                      # 网络类型
-    netout = db.Column(db.String(64))                       # 出口带宽
-    address = db.Column(db.String(128))                     # 机房地址
-    city = db.Column(db.String(64))                         # 城市
-    adnature = db.Column(db.String(64))                     # 机房性质
-    instaff = db.Column(db.String(64))                      # 录入人
-    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
-    remarks = db.Column(db.Text)                            # 备注
+    ispid = db.Column(db.String(64))                        # 杩愯惀鍟嗗悕绉�
+    racks = db.relationship('Rack',backref='idcname',lazy='dynamic')     # 鍏宠仈Rack
+    contactid = db.Column(db.String(64))                    # 鑱旂郴浜�
+    isdelete = db.Column(db.Boolean, default=False)                        # 鏄惁鍒犻櫎
+    nettype = db.Column(db.String(64))                      # 缃戠粶绫诲瀷
+    netout = db.Column(db.String(64))                       # 鍑哄彛甯﹀
+    address = db.Column(db.String(128))                     # 鏈烘埧鍦板潃
+    city = db.Column(db.String(64))                         # 鍩庡競
+    adnature = db.Column(db.String(64))                     # 鏈烘埧鎬ц川
+    instaff = db.Column(db.String(64))                      # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)                            # 澶囨敞
 
     def __repr__(self):
         return '<Idc %r>' %self.idcname
@@ -340,31 +349,43 @@ class Rack(db.Model):
     __tablename__ = 'racks'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    staff = db.Column(db.String(64))                        # 机柜负责人
-    idcname_id = db.Column(db.ForeignKey('idcs.id'))   # 关联IDC table id
+    staff = db.Column(db.String(64))                        # 鏈烘煖璐熻矗浜�
+    idcname_id = db.Column(db.ForeignKey('idcs.id'))   # 鍏宠仈IDC table id
     devices = db.relationship('Device',backref='rack',lazy='dynamic')
-    site = db.Column(db.String(64))                         # 机柜位置
-    racktype = db.Column(db.String(64))                     # 机柜类型
-    usesize = db.Column(db.Integer)                      # 已用空间（u）
-    remainsize = db.Column(db.Integer)                   # 剩余空间（U）
-    electrictype = db.Column(db.String(32))                 # 电力类型
-    electricno = db.Column(db.String(32))                   # 电力路数
-    electriccapacity = db.Column(db.Integer)             # 电力容量
-    leftelectric = db.Column(db.Integer)                 # 剩余电力
-    renttime = db.Column(db.DateTime)                       # 租用时间
-    expiretime = db.Column(db.DateTime)                     # 过期时间
-    nextpaytime = db.Column(db.DateTime)                    # 下次支付时间
-    money = db.Column(db.Integer)                        # 支付金额
-    isdelete = db.Column(db.Boolean, default=False)                        # 是否删除
-    remarks = db.Column(db.Text)                            # 备注
-    instaff = db.Column(db.String(64))                      # 录入人
-    inputtime = db.Column(db.DateTime, default=datetime.now)    # 录入时间
+    site = db.Column(db.String(64))                         # 鏈烘煖浣嶇疆
+    racktype = db.Column(db.String(64))                     # 鏈烘煖绫诲瀷
+    usesize = db.Column(db.Integer)                      # 宸茬敤绌洪棿锛坲锛�
+    remainsize = db.Column(db.Integer)                   # 鍓╀綑绌洪棿锛圲锛�
+    electrictype = db.Column(db.String(32))                 # 鐢靛姏绫诲瀷
+    electricno = db.Column(db.String(32))                   # 鐢靛姏璺暟
+    electriccapacity = db.Column(db.Integer)             # 鐢靛姏瀹归噺
+    leftelectric = db.Column(db.Integer)                 # 鍓╀綑鐢靛姏
+    renttime = db.Column(db.DateTime)                       # 绉熺敤鏃堕棿
+    expiretime = db.Column(db.DateTime)                     # 杩囨湡鏃堕棿
+    nextpaytime = db.Column(db.DateTime)                    # 涓嬫鏀粯鏃堕棿
+    money = db.Column(db.Integer)                        # 鏀粯閲戦
+    isdelete = db.Column(db.Boolean, default=False)                        # 鏄惁鍒犻櫎
+    remarks = db.Column(db.Text)                            # 澶囨敞
+    instaff = db.Column(db.String(64))                      # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)    # 褰曞叆鏃堕棿
 
     def __repr__(self):
         return '<Rack %r>' %self.idcname
 
 
+class Logger(db.Model):
+    __tablename__ = 'logs'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    logtime = db.Column(db.DateTime, default=datetime.now())
+    content = db.Column(db.String(256))
+    # action  [ 1: add , 2: edit, 3: del ]
+    action = db.Column(db.String(32))
+    logobjtype = db.Column(db.String(64))
+    logobj_id = db.Column(db.Integer)
 
+    def __repr__(self):
+        return '<Logs %r>' %self.user_id
 
 @login_manager.user_loader
 def load_user(user_id):
