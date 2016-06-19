@@ -310,7 +310,10 @@ class Device(db.Model):
     singlemem = db.Column(db.Integer)                       # 鍗曟牴鍐呭瓨澶у皬
     raidmodel = db.Column(db.String(64))                    # RAID 绾у埆
     disksize = db.Column(db.Integer)                        # 纾佺洏瀹归噺
-    remotecardip = db.Column(db.String(64))                 # 杩滄帶鍗P鍦板潃
+    powermanage_ip = db.Column(db.String(64))                 # 杩滄帶鍗P鍦板潃
+    powermanage_user = db.Column(db.String(64))
+    powermanage_password = db.Column(db.String(64))
+    powermanage_id = db.Column(db.String(256))
     networkportcount = db.Column(db.Integer)                # 缃戝崱绔彛鏁伴噺
     os = db.Column(db.String(64))                           # os绫诲瀷
     powerstatus = db.Column(db.Boolean)                     # 电源状态
