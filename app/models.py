@@ -242,25 +242,38 @@ class User(UserMixin,db.Model):
 
 
 
-class AssetType(db.Model):
-    __tablename__ = 'assettype'
+class DeviceType(db.Model):
+    __tablename__ = 'devicetype'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True,index=True)             # 璧勪骇绫诲悕
     remarks = db.Column(db.Text)                                 # 璧勪骇绫昏鏄�
-    assets = db.relationship('Asset',backref='asset',lazy='dynamic')    # 鍏宠仈 Asset table
+    devices = db.relationship('Device',backref='Devicetype',lazy='dynamic')    # 鍏宠仈 Asset table
 
     def __repr__(self):
-        return '<AssetType %r>' %self.name
+        return '<DeviceType %r>' %self.name
 
 
-
-
-
-
-class Asset(db.Model):
-    __tablename__ = 'assets'
+class Disks(db.Model):
+    __tablename__ = 'disks'
     id = db.Column(db.Integer, primary_key=True)
-    assetclass_id = db.Column(db.ForeignKey('assettype.id'))   # 璧勪骇绫诲埆   鍏宠仈AssetType table
+    slot_id = db.Column(db.Integer)
+    SN = db.Column(db.String(64))
+    Size = db.Column(db.String(32))
+    Status = db.Column(db.Integer)
+    Physics_error = db.Column(db.Integer)
+    Logic_error = db.Column(db.Integer)
+    device_id = db.Column(db.ForeignKey('devices.id'))
+
+    def __repr__(self):
+        return '<Disk %r>' %self.SN
+
+
+
+class Device(db.Model):
+    __tablename__ = 'devices'
+    id = db.Column(db.Integer, primary_key=True)
+
+    devicetype_id = db.Column(db.ForeignKey('devicetype.id'))   # 璧勪骇绫诲埆   鍏宠仈AssetType table
     an = db.Column(db.String(64), unique=True,index=True)   # AN 浼佷笟璧勪骇缂栧彿
     sn = db.Column(db.String(64), unique=True,index=True)                           # SN 璁惧搴忓垪鍙�
     onstatus = db.Column(db.Integer)                        # 浣跨敤鐘舵��
@@ -270,7 +283,6 @@ class Asset(db.Model):
     brand = db.Column(db.String(64))                        # 鍝佺墝
     model = db.Column(db.String(64))                        # 鍨嬪彿
     site = db.Column(db.String(64))                         # 浣嶇疆
-    devices = db.relationship('Device',backref='asset',lazy='dynamic')    # 鍏宠仈璁惧琛�  Device Table
     usedept = db.Column(db.String(64))                      # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))                     # 閮ㄩ棬浣跨敤浜�
     usestarttime = db.Column(db.DateTime)                   # 浣跨敤寮�濮嬫椂闂�
@@ -278,21 +290,10 @@ class Asset(db.Model):
     mainuses = db.Column(db.String(128))                    # 涓昏鐢ㄩ��
     managedept = db.Column(db.String(64))                   # 绠＄悊閮ㄩ棬
     managestaff = db.Column(db.String(64))                  # 绠＄悊浜�
-    instaff = db.Column(db.String(64))                      # 褰曞叆浜�
-    intime = db.Column(db.DateTime, default=datetime.now)   # 褰曞叆鏃堕棿
     koriyasustarttime = db.Column(db.DateTime)              # 缁翠繚寮�濮嬫椂闂�
     koriyasuendtime = db.Column(db.DateTime)                # 缁翠繚缁撴潫鏃堕棿
     equipprice = db.Column(db.Integer)                      # 璁惧浠锋牸
-    remarks = db.Column(db.Text)                            # 澶囨敞
 
-
-    def __repr__(self):
-        return '<Asset %r>' %self.id
-
-
-class Device(db.Model):
-    __tablename__ = 'devices'
-    id = db.Column(db.Integer, primary_key=True)
     hostname = db.Column(db.String(64))                     # Hostname
     private_ip = db.Column(db.String(15))                   # 鍐呭IP鍦板潃
     private_mac = db.Column(db.String(20))
@@ -303,19 +304,20 @@ class Device(db.Model):
     rack_id = db.Column(db.ForeignKey('racks.id'))                         # 鍏宠仈Rack table id
     idc = db.Column(db.String(64))                          # 鍏宠仈IDC table id
     is_virtualization = db.Column(db.Boolean)               # 鏄惁璺戣櫄鎷熷寲  锛堝 OpenStack Compute锛�
-    asset_id = db.Column(db.ForeignKey('assets.id'))           # 鍏宠仈Asset 涓昏〃 id
+    os = db.Column(db.String(64))                           # os绫诲瀷
     cpumodel = db.Column(db.String(64))                     # CPU 鍨嬪彿
     cpucount = db.Column(db.Integer)                        # CPU 鏍告暟
     memsize = db.Column(db.Integer)                      # 鍐呭瓨瀹归噺
     singlemem = db.Column(db.Integer)                       # 鍗曟牴鍐呭瓨澶у皬
     raidmodel = db.Column(db.String(64))                    # RAID 绾у埆
-    disksize = db.Column(db.Integer)                        # 纾佺洏瀹归噺
+    disks = db.relationship('Disks',backref='disks',lazy='dynamic')    # 鍏宠仈 Asset table
+    powermanage_enable = db.Column(db.Boolean, default=False)
     powermanage_ip = db.Column(db.String(64))                 # 杩滄帶鍗P鍦板潃
     powermanage_user = db.Column(db.String(64))
     powermanage_password = db.Column(db.String(64))
     powermanage_id = db.Column(db.String(256))
     networkportcount = db.Column(db.Integer)                # 缃戝崱绔彛鏁伴噺
-    os = db.Column(db.String(64))                           # os绫诲瀷
+
     powerstatus = db.Column(db.Boolean)                     # 电源状态
     isdelete = db.Column(db.Boolean, default=False)                        # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)                            # 澶囨敞

@@ -6,7 +6,7 @@ _author__ = 'eric'
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
-from ..models import Role, Rack, Asset,AssetType, Idc, Device
+from ..models import Role, Rack, Device,DeviceType, Idc, Device
 
 class NameForm(Form):
     name = StringField('what is your name?', validators=[InputRequired()])
@@ -48,57 +48,14 @@ class EditProfileAdminForm(Form):
                 raise ValidationError('Username already registered')
 
 
-class EditAssetTypeForm(Form):
+class EditDeviceTypeForm(Form):
     name = StringField(u'资产类名', validators=[InputRequired() ,Length(1,64)])             # 资产类名
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
     def validate_name(self,field):
-        if AssetType.query.filter_by(name=field.data).first():
+        if DeviceType.query.filter_by(name=field.data).first():
             raise ValidationError('资产类名:{0}已经被使用了'.format(self.name))
-
-
-class EditAssetForm(Form):
-    assetclass = SelectField(u'资产类型', coerce=int)   # 资产类别   关联AssetType table
-    an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
-    sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
-    onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
-    flowstatus = SelectField(u'流程状态', coerce=int)                      # 流程状态
-    dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
-    manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
-    brand = StringField(u'品牌', validators=[Length(1,64)])                        # 品牌
-    model = StringField(u'型号', validators=[Length(1,64)])                        # 型号
-    site = StringField(u'位置', validators=[Length(1,64)])                         # 位置
-    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
-    usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
-    usestarttime = DateTimeField(u'使用开始时间')                   # 使用开始时间
-    useendtime = DateTimeField(u'使用结束时间')                     # 使用结束时间
-    mainuses = StringField(u'部门使用人', validators=[Length(1,128)])                    # 主要用途
-    managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
-    managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
-    koriyasustarttime = DateTimeField(u'维保开始时间')              # 维保开始时间
-    koriyasuendtime = DateTimeField(u'维保结束时间')                # 维保结束时间
-    equipprice = IntegerField(u'设备价格', validators=[NumberRange(0,10,message=u'麻烦输入正确的值好嘛?')])                      # 设备价格
-    remarks = TextAreaField(u'备注')                            # 备注
-    submit = SubmitField(u'提交')
-
-    def __init__(self, *args, **kwargs):
-        super(EditAssetForm, self).__init__(*args, **kwargs)
-
-        self.assetclass.choices = [(1, u'还没设计')]
-
-        self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
-
-        self.flowstatus.choices = [(1, u'正在审批'), (2, u'未审批')]
-
-    def validate_an(self,field):
-        if Asset.query.filter_by(an=field.data).first():
-            raise ValidationError('AN:{0}已经被使用了'.format(self.an))
-
-    def validate_sn(self,field):
-        if Asset.query.filter_by(sn=field.data).first():
-            raise ValidationError('SN:{0}已经被使用了'.format(self.sn))
-
 
 
 
@@ -129,6 +86,29 @@ class EditIdcForm(Form):
 
 
 class EditDeviceForm(Form):
+
+    devicetype = SelectField(u'设备类型', coerce=int)   # 资产类别   关联AssetType table
+    an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
+    sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
+    onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
+    flowstatus = SelectField(u'流程状态', coerce=int)                      # 流程状态
+    dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
+    manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
+    brand = StringField(u'品牌', validators=[Length(1,64)])                        # 品牌
+    model = StringField(u'型号', validators=[Length(1,64)])                        # 型号
+    site = StringField(u'位置', validators=[Length(1,64)])                         # 位置
+    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
+    usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
+    usestarttime = DateTimeField(u'使用开始时间')                   # 使用开始时间
+    useendtime = DateTimeField(u'使用结束时间')                     # 使用结束时间
+    mainuses = StringField(u'部门使用人', validators=[Length(1,128)])                    # 主要用途
+    managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
+    managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
+    koriyasustarttime = DateTimeField(u'维保开始时间')              # 维保开始时间
+    koriyasuendtime = DateTimeField(u'维保结束时间')                # 维保结束时间
+    equipprice = IntegerField(u'设备价格', validators=[NumberRange(0,10,message=u'麻烦输入正确的值好嘛?')])
+
+
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
     private_ip = StringField(u'内网IP', validators=[IPAddress(message=u'麻烦输入IP地址好嘛?'), Length(0,15)])
     private_mac = StringField(u'内网MAC', validators=[MacAddress(message=u'麻烦输入MAC地址好嘛?'), Length(0,20)])
@@ -145,7 +125,13 @@ class EditDeviceForm(Form):
     singlemem = IntegerField(u'单根大小(GB)',validators=[NumberRange(0,4,message=u'麻烦输入正确的值好嘛?')])                       # 单根内存大小
     raidmodel = StringField(u'Raid级别', validators=[Length(0,16)])                    # RAID 级别
     disksize = IntegerField(u'磁盘大小(GB)', validators=[NumberRange(0,10,message=u'麻烦输入正确的值好嘛?')])                        # 磁盘容量
-    remotecardip = StringField(u'远控卡IP', validators=[Length(0,15)])                 # 远控卡IP地址
+
+    powermanage_enable = BooleanField(u'启用电源管理')
+    powermanage_ip = StringField(u'电源管理IP', validators=[Length(0,15)])                 # 远控卡IP地址
+    powermanage_user = StringField(u'电源管理用户', validators=[Length(0,64)])
+    powermanage_password = StringField(u'电源管理密码', validators=[Length(0,64)])
+    powermanage_id = StringField(u'设备ID', validators=[Length(0,64)])          # 缃戝崱绔彛鏁伴噺
+
     networkportcount = IntegerField(u'网卡端口(个)',validators=[NumberRange(0,3,message=u'麻烦输入正确的值好嘛?')])                # 网卡端口数量
     os = StringField(u'系统类型', validators=[IPAddress(message=u'麻烦输入IP地址好嘛?'), Length(0,64)])                           # os类型
     remarks = TextAreaField(u'备注')                          # 备注
@@ -154,14 +140,27 @@ class EditDeviceForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
+        self.devicetype.choices = [(1, u'还没设计')]
+
+        self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
+
+        self.flowstatus.choices = [(1, u'正在审批'), (2, u'未审批')]
+
+
         self.idc.choices = [(idc.id, idc.name)
                              for idc in Idc.query.order_by(Idc.name).all()]
 
         self.rack.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
 
-        self.asset.choices = [(asset.id, asset.sn)
-                             for asset in Asset.query.order_by(Asset.sn).all()]
+
+    def validate_an(self,field):
+        if Device.query.filter_by(an=field.data).first():
+            raise ValidationError('AN:{0}已经被使用了'.format(self.an))
+
+    def validate_sn(self,field):
+        if Device.query.filter_by(sn=field.data).first():
+            raise ValidationError('SN:{0}已经被使用了'.format(self.sn))
 
 
     def validate_privateIP(self, field):

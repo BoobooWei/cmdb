@@ -4,9 +4,9 @@ from flask import render_template, redirect, url_for, flash, current_app, abort,
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditAssetForm, EditAssetTypeForm
+from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditDeviceTypeForm
 from .. import db
-from ..models import User,Role,Permission, Device, Idc, Asset, AssetType, Rack, Logger
+from ..models import User,Role,Permission, Device, Idc, Device, DeviceType, Rack, Logger
 from ..email import send_email
 
 
@@ -63,30 +63,30 @@ def index():
 
 
 
-@main.route('/edit-assettype', methods=['GET', 'POST'])
+@main.route('/edit-devicetype', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.ASSET_EDIT)
 def edit_assettype():
-    form = EditAssetTypeForm()
+    form = EditDeviceTypeForm()
     if form.validate_on_submit():
-        asset_type = AssetType(name=form.name.data, remarks=form.remarks.data)
-        db.session.add(asset_type)
+        devicetype = DeviceType(name=form.name.data, remarks=form.remarks.data)
+        db.session.add(devicetype)
 
         #log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
         #db.session.add(log)
         db.session.commit()
-        flash(u'资产类型添加成功')
+        flash(u'设备类型添加成功')
         return redirect(url_for('main.index'))
 
     return render_template('edit_assettype.html', form=form)
 
 
-@main.route('/show-assettype', methods=['GET', 'POST'])
+@main.route('/show-devicetype', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.ASSET_LOOK)
 def show_assettype():
     page = request.args.get('page', 1, type=int)
-    pagination = AssetType.query.order_by(AssetType.name.desc()).paginate(
+    pagination = AssetType.query.order_by(DeviceType.name.desc()).paginate(
         page=page, per_page=20, error_out=False
     )
 
