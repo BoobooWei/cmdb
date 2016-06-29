@@ -74,37 +74,22 @@ class EditIdcForm(Form):
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, idc, *args, **kwargs):
         super(EditIdcForm, self).__init__(*args, **kwargs)
 
         self.nettype.choices = [(1, u'单电信'), (2, u'单联通'), (3, u'双BGP'), (4, u'联通电信双线')]
 
         self.adnature.choices = [(1, u'租用'), (2, u'自建'), (3, u'合作'), (4, u'其他')]
 
-
-class CreateIdcForm(Form):
-    name = StringField(u'Idc名称', validators=[InputRequired() ,Length(1,64)])
-    ispid = StringField(u'运营商名称', validators=[InputRequired() ,Length(1,64)])                        # 运营商名称
-    city = StringField(u'城市', validators=[InputRequired() ,Length(1,64)])                         # 城市
-    address = StringField(u'机房地址', validators=[InputRequired() ,Length(1,64)])                     # 机房地址
-    contactname = StringField(u'联系人', validators=[InputRequired() ,Length(1,64)])
-    contactphone = StringField(u'联系电话', validators=[InputRequired() ,Length(1,64)])
-    nettype = SelectField(u'网络类型', coerce=int)                      # 网络类型
-    netout = StringField(u'出口带宽', validators=[InputRequired() ,Length(1,64)])                       # 出口带宽
-    adnature = SelectField(u'机房类型', coerce=int)                     # 机房性质
-    remarks = TextAreaField(u'备注')
-    submit = SubmitField(u'提交')
-
-    def __init__(self, *args, **kwargs):
-        super(CreateIdcForm, self).__init__(*args, **kwargs)
-
-        self.nettype.choices = [(1, u'单电信'), (2, u'单联通'), (3, u'双BGP'), (4, u'联通电信双线')]
-
-        self.adnature.choices = [(1, u'租用'), (2, u'自建'), (3, u'合作'), (4, u'其他')]
+        self.idc = idc
 
     def validate_name(self,field):
-        if Idc.query.filter_by(name=field.data).first():
-            raise ValidationError(u'Idc名称已经被使用了')
+        if not self.idc:
+            if Idc.query.filter_by(name=field.data).first():
+                raise ValidationError(u'机房名称已经被使用了')
+        else:
+            if field.data != self.idc.name and Idc.query.filter_by(name=field.data).first():
+                raise ValidationError(u'机房名称已经被使用了')
 
 
 class EditDeviceForm(Form):
@@ -199,6 +184,8 @@ class EditDeviceForm(Form):
                 raise ValidationError(u'远控卡IP已经用了')
 
 
+
+
 class EditRackForm(Form):
     name = StringField(u'机柜名称', validators=[InputRequired(), Length(1,64)])
     staff = StringField(u'管理人', validators=[Length(0,64)])                        # 机柜负责人
@@ -218,7 +205,7 @@ class EditRackForm(Form):
     remarks = TextAreaField(u'备注')                            # 备注
     submit = SubmitField(u'提交')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, rack,*args, **kwargs):
         super(EditRackForm, self).__init__(*args, **kwargs)
 
         self.idcname.choices = [(idc.id, idc.name)
@@ -230,7 +217,12 @@ class EditRackForm(Form):
 
         self.electricno.choices = [(1, u'单路'), (1, u'双路')]
 
+        self.rack = rack
 
     def validate_name(self, field):
-        if Rack.query.filter_by(name=field.data).first():
-                raise ValidationError(u'Idc名已经创建了')
+        if not self.rack:
+            if Rack.query.filter_by(name=field.data).first():
+                raise ValidationError(u'机柜名已经创建了')
+        else:
+            if field.data != self.rack.name and Rack.query.filter_by(name=field.data).first():
+                raise ValidationError(u'机柜名已经创建了')

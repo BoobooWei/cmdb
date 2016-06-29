@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, current_app, abort,
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, CreateIdcForm, EditRackForm, EditDeviceTypeForm
+from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditDeviceTypeForm
 from .. import db
 from ..models import User, Role, Permission, Device, Idc, Device, DeviceType, Rack, Logger
 from ..email import send_email
@@ -120,7 +120,7 @@ def edit_device():
         # log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
         # db.session.add(log)
         db.session.commit()
-        flash(u'设备添加成功')
+        flash(u'设备添加完成')
         return redirect(url_for('main.index'))
 
     return render_template('test.html', form=form)
@@ -142,7 +142,7 @@ def show_devices():
     return render_template('show_devices.html', devices=devices)
 
 
-@main.route('/manage-racks', methods=['GET', 'POST'])
+@main.route('/show-racks', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.RACK_LOOK)
 def show_racks():
@@ -158,12 +158,12 @@ def show_racks():
     return render_template('show_racks.html', racks=racks)
 
 
-@main.route('/edit-rack/int:id', methods=['GET', 'POST'])
+@main.route('/edit-rack/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.RACK_EDIT)
 def edit_rack(id):
     rack = Rack.query.get_or_404(id)
-    form = EditRackForm()
+    form = EditRackForm(rack)
     if form.validate_on_submit():
         rack.name=form.name.data
         rack.staff=form.staff.data
@@ -174,6 +174,7 @@ def edit_rack(id):
         rack.remainsize=form.remainsize.data
         rack.electrictype=form.electrictype.data
         rack.electricno=form.electricno.data
+        rack.electriccapacity = form.electriccapacity.data
         rack.leftelectric=form.leftelectric.data
         rack.renttime=form.renttime.data
         rack.expiretime=form.expiretime.data
@@ -183,7 +184,7 @@ def edit_rack(id):
         db.session.add(rack)
 
         db.session.commit()
-        flash(u'机柜添加成功')
+        flash(u'机柜:{0} 修改完成'.format(rack.name))
         return redirect(url_for('main.show_racks'))
 
     form.name.data = rack.name
@@ -195,13 +196,14 @@ def edit_rack(id):
     form.remainsize.data = rack.remainsize
     form.electrictype.data = rack.electrictype
     form.electricno.data = rack.electricno
+    form.electriccapacity.data = rack.electriccapacity
     form.leftelectric.data = rack.leftelectric
     form.renttime.data = rack.renttime
     form.expiretime.data = rack.expiretime
-    form.nextpaytime.data = form.nextpaytime
-    form.money.data = form.money
-    form.remarks.data = form.remarks
-    return render_template('edit_rack.html', form=form)
+    form.nextpaytime.data = rack.nextpaytime
+    form.money.data = rack.money
+    form.remarks.data = rack.remarks
+    return render_template('edit_rack.html', form=form, rack=rack)
 
 
 
@@ -209,7 +211,7 @@ def edit_rack(id):
 @login_required
 @permission_required(Permission.RACK_EDIT)
 def create_rack():
-    form = EditRackForm()
+    form = EditRackForm(rack=None)
     if form.validate_on_submit():
         rack = Rack(name=form.name.data,
                     staff=form.staff.data,
@@ -227,15 +229,21 @@ def create_rack():
                     money=form.money.data,
                     remarks=form.remarks.data)
         db.session.add(rack)
-
-        # log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
-        # db.session.add(log)
         db.session.commit()
-        flash(u'机柜添加成功')
-        return redirect(url_for('main.index'))
+        flash(u'机柜: {0} 添加完成'.format(form.name.data))
+        return redirect(url_for('main.show_racks'))
 
     return render_template('create_rack.html', form=form)
 
+
+@main.route('/delete-rack/<int:id>', methods=['GET', 'POST'])
+@login_required
+#@permission_required(Permission.RACK_DEL)
+def delete_rack(id):
+    rack = Rack.query.get_or_404(id)
+    db.session.delete(rack)
+    flash(u'机柜: {0} 已删除!'.format(rack.name))
+    return redirect(url_for('main.show_racks'))
 
 
 
@@ -251,7 +259,7 @@ def show_idcs():
 @login_required
 @permission_required(Permission.IDC_EDIT)
 def create_idc():
-    form = CreateIdcForm()
+    form = EditIdcForm(idc=None)
     if form.validate_on_submit():
         idc = Idc(name=form.name.data,
                   ispid=form.ispid.data,
@@ -268,7 +276,7 @@ def create_idc():
         # log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
         # db.session.add(log)
         db.session.commit()
-        flash(u'机房添加成功')
+        flash(u'机房:{0} 添加完成'.format(form.name.data))
         return redirect(url_for('main.show_idcs'))
     return render_template('create_idc.html', form=form)
 
@@ -278,7 +286,7 @@ def create_idc():
 @permission_required(Permission.IDC_EDIT)
 def edit_idc(id):
     idc = Idc.query.get_or_404(id)
-    form = EditIdcForm()
+    form = EditIdcForm(idc=idc)
 
     if form.validate_on_submit():
         idc.name = form.name.data
@@ -293,7 +301,7 @@ def edit_idc(id):
         idc.remarks = form.remarks.data
         db.session.add(idc)
         db.session.commit()
-        flash(u'机房添加成功')
+        flash(u'机房:{0} 修改完成'.format(idc.name))
         return redirect(url_for('main.show_idcs'))
 
     form.name.data = idc.name
@@ -315,12 +323,12 @@ def edit_idc(id):
 def delete_idc(id):
     idc = Idc.query.get_or_404(id)
     db.session.delete(idc)
-    flash(u'机房: {0}已删除!'.format(idc.name))
+    flash(u'机房: {0} 已删除!'.format(idc.name))
     return redirect(url_for('main.show_idcs'))
 
 @main.route('/xxx')
 def xxx():
-    return render_template('xxx.html')
+    return render_template('form-advanced1.html')
 
 
 # @main.route('/test', methods=['GET', 'POST'])
