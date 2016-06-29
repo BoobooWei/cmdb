@@ -17,17 +17,17 @@ class Permission:
 
     DEVICE_LOOK = 0x002
     DEVICE_EDIT = 0x004
+    DEVICE_DEL = 0x008
 
-    RACK_LOOK = 0x008
-    RACK_EDIT = 0x010
+    RACK_LOOK = 0x010
+    RACK_EDIT = 0x020
+    RACK_DEL = 0x040
 
-    IDC_LOOK = 0x020
-    IDC_EDIT = 0x040
+    IDC_LOOK = 0x080
+    IDC_EDIT = 0x100
+    IDC_DEL = 0x200
 
-    ASSET_LOOK = 0x80
-    ASSET_EDIT = 0x100
-
-    ADMINISTER = 0x200
+    ADMINISTER = 0x400
 
 
 class Role(db.Model):
@@ -45,6 +45,14 @@ class Role(db.Model):
                      Permission.RACK_LOOK |
                      Permission.IDC_LOOK, True),
 
+            'manager': (Permission.USER_EDIT |
+                        Permission.DEVICE_LOOK |
+                        Permission.DEVICE_EDIT |
+                        Permission.RACK_LOOK |
+                        Permission.RACK_EDIT |
+                        Permission.IDC_LOOK |
+                        Permission.IDC_EDIT, False ),
+
             'Administrator': (Permission.USER_EDIT |
                               Permission.DEVICE_LOOK |
                               Permission.DEVICE_EDIT |
@@ -52,8 +60,6 @@ class Role(db.Model):
                               Permission.RACK_EDIT |
                               Permission.IDC_LOOK |
                               Permission.IDC_EDIT |
-                              Permission.ASSET_LOOK |
-                              Permission.ASSET_EDIT |
                               Permission.ADMINISTER, False)
         }
 
@@ -243,6 +249,7 @@ class DeviceType(db.Model):
     name = db.Column(db.String(64), unique=True, index=True)  # 璧勪骇绫诲悕
     remarks = db.Column(db.Text)  # 璧勪骇绫昏鏄�
     devices = db.relationship('Device', backref='Devicetype', lazy='dynamic')  # 鍏宠仈 Asset table
+    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
 
     def __repr__(self):
         return '<DeviceType %r>' % self.name
@@ -258,6 +265,7 @@ class Disks(db.Model):
     Physics_error = db.Column(db.Integer)
     Logic_error = db.Column(db.Integer)
     device_id = db.Column(db.ForeignKey('devices.id'))
+    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
 
     def __repr__(self):
         return '<Disk %r>' % self.SN
@@ -391,13 +399,14 @@ class Idc(db.Model):
     name = db.Column(db.String(64))
     ispid = db.Column(db.String(64))  # 杩愯惀鍟嗗悕绉�
     racks = db.relationship('Rack', backref='idcname', lazy='dynamic')  # 鍏宠仈Rack
-    contactid = db.Column(db.String(64))  # 鑱旂郴浜�
+    contactname = db.Column(db.String(64))
+    contactphone = db.Column(db.String(64))  # 鑱旂郴浜�
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
-    nettype = db.Column(db.String(64))  # 缃戠粶绫诲瀷
+    nettype = db.Column(db.Integer)  # 缃戠粶绫诲瀷
     netout = db.Column(db.String(64))  # 鍑哄彛甯﹀
     address = db.Column(db.String(128))  # 鏈烘埧鍦板潃
     city = db.Column(db.String(64))  # 鍩庡競
-    adnature = db.Column(db.String(64))  # 鏈烘埧鎬ц川
+    adnature = db.Column(db.Integer)  # 鏈烘埧鎬ц川
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞

@@ -1,0 +1,130 @@
+{% import "macros.html" as macros %}
+{% extends "common/base.html" %}
+
+
+{% block page_content %}
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <div class="page-title">
+            <h3 class="title">修改机柜</h3>
+        </div>
+
+        <div class="row">
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">机柜信息</h3></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_idc', id=idc.id) }}" method="POST">
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">机柜名称</label>
+
+                                <div class="col-md-6">
+                                    {{ form.name(class='form-control', placeholder='机房名称') }}
+                                    {{ macros.print_form_messages(form.errors.name) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="example-email">运营商名称</label>
+
+                                <div class="col-md-6">
+                                    {{ form.ispid(class='form-control', placeholder='运营商名称') }}
+                                    {{ macros.print_form_messages(form.errors.ispid) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">所在城市</label>
+
+                                <div class="col-md-6">
+                                    {{ form.city(class='form-control', placeholder='所在城市') }}
+                                    {{ macros.print_form_messages(form.errors.city) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">联系人</label>
+
+                                <div class="col-md-6">
+                                    {{ form.contactname(class='form-control', placeholder='联系人') }}
+                                    {{ macros.print_form_messages(form.errors.contactname) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">联系电话</label>
+
+                                <div class="col-md-6">
+                                    {{ form.contactphone(class='form-control', placeholder='联系电话') }}
+                                    {{ macros.print_form_messages(form.errors.contactphone) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">网络类型</label>
+
+                                <div class="col-md-6">
+                                    {{ form.nettype(class='form-control', placeholder='网络类型') }}
+                                    {{ macros.print_form_messages(form.errors.nettype) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">出口带宽(MB)</label>
+
+                                <div class="col-md-6">
+                                    {{ form.netout(class='form-control', placeholder='出口带宽') }}
+                                    {{ macros.print_form_messages(form.errors.netout) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">运营商名称</label>
+
+                                <div class="col-md-6">
+                                    {{ form.adnature(class='form-control', placeholder='运营商名称') }}
+                                    {{ macros.print_form_messages(form.errors.ispid) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">机房地址</label>
+
+                                <div class="col-md-6">
+                                    {{ form.address(class='form-control', placeholder='机房地址') }}
+                                    {{ macros.print_form_messages(form.errors.address) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">备注</label>
+
+                                <div class="col-md-6">
+                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
+                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+
+                                <div class="col-md-6">
+                                    {{ form.submit(class='btn btn-info') }}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- panel-body -->
+                </div>
+                <!-- panel -->
+            </div>
+            <!-- col -->
+        </div>
+        <!-- End row -->
+
+
+    </div>
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+{% endblock %}

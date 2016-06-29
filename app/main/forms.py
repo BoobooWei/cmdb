@@ -7,6 +7,8 @@ from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
 from ..models import Role, Rack, Device,DeviceType, Idc, Device
+from wtforms import ValidationError
+
 
 class NameForm(Form):
     name = StringField('what is your name?', validators=[InputRequired()])
@@ -55,7 +57,7 @@ class EditDeviceTypeForm(Form):
 
     def validate_name(self,field):
         if DeviceType.query.filter_by(name=field.data).first():
-            raise ValidationError(u'资产类名:{0}已经被使用了'.format(self.name))
+            raise ValidationError(u'资产类名已经被使用了')
 
 
 
@@ -64,7 +66,8 @@ class EditIdcForm(Form):
     ispid = StringField(u'运营商名称', validators=[InputRequired() ,Length(1,64)])                        # 运营商名称
     city = StringField(u'城市', validators=[InputRequired() ,Length(1,64)])                         # 城市
     address = StringField(u'机房地址', validators=[InputRequired() ,Length(1,64)])                     # 机房地址
-    contactid = StringField(u'联系人', validators=[InputRequired() ,Length(1,64)])
+    contactname = StringField(u'联系人姓名', validators=[InputRequired() ,Length(1,64)])
+    contactphone = StringField(u'联系人电话', validators=[InputRequired() ,Length(1,64)])
     nettype = SelectField(u'网络类型', coerce=int)                      # 网络类型
     netout = StringField(u'出口带宽', validators=[InputRequired() ,Length(1,64)])                       # 出口带宽
     adnature = SelectField(u'机房类型', coerce=int)                     # 机房性质
@@ -74,16 +77,34 @@ class EditIdcForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditIdcForm, self).__init__(*args, **kwargs)
 
-        self.nettype.choices = [(1, u'单电信，单联通，双BGP，联通电信双线')]
+        self.nettype.choices = [(1, u'单电信'), (2, u'单联通'), (3, u'双BGP'), (4, u'联通电信双线')]
 
-        self.adnature.choices = [(1, u'租用，自建，合作，其他')]
+        self.adnature.choices = [(1, u'租用'), (2, u'自建'), (3, u'合作'), (4, u'其他')]
+
+
+class CreateIdcForm(Form):
+    name = StringField(u'Idc名称', validators=[InputRequired() ,Length(1,64)])
+    ispid = StringField(u'运营商名称', validators=[InputRequired() ,Length(1,64)])                        # 运营商名称
+    city = StringField(u'城市', validators=[InputRequired() ,Length(1,64)])                         # 城市
+    address = StringField(u'机房地址', validators=[InputRequired() ,Length(1,64)])                     # 机房地址
+    contactname = StringField(u'联系人', validators=[InputRequired() ,Length(1,64)])
+    contactphone = StringField(u'联系电话', validators=[InputRequired() ,Length(1,64)])
+    nettype = SelectField(u'网络类型', coerce=int)                      # 网络类型
+    netout = StringField(u'出口带宽', validators=[InputRequired() ,Length(1,64)])                       # 出口带宽
+    adnature = SelectField(u'机房类型', coerce=int)                     # 机房性质
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateIdcForm, self).__init__(*args, **kwargs)
+
+        self.nettype.choices = [(1, u'单电信'), (2, u'单联通'), (3, u'双BGP'), (4, u'联通电信双线')]
+
+        self.adnature.choices = [(1, u'租用'), (2, u'自建'), (3, u'合作'), (4, u'其他')]
 
     def validate_name(self,field):
         if Idc.query.filter_by(name=field.data).first():
-            raise ValidationError(u'Idc名称:{0}已经被使用了'.format(self.name))
-
-
-
+            raise ValidationError(u'Idc名称已经被使用了')
 
 
 class EditDeviceForm(Form):
@@ -158,24 +179,24 @@ class EditDeviceForm(Form):
 
     def validate_an(self,field):
         if Device.query.filter_by(an=field.data).first():
-            raise ValidationError(u'AN:{0}已经被使用了'.format(self.an))
+            raise ValidationError(u'AN已经被使用了')
 
     def validate_sn(self,field):
         if Device.query.filter_by(sn=field.data).first():
-            raise ValidationError(u'SN:{0}已经被使用了'.format(self.sn))
+            raise ValidationError(u'SN已经被使用了')
 
 
     def validate_privateIP(self, field):
         if Device.query.filter_by(private_ip=field.data).first():
-                raise ValidationError(u'内网IP: {0} 已经用了.'.format(self.private_ip))
+                raise ValidationError(u'内网IP已经用了')
 
     def validate_public_ip(self, field):
         if Device.query.filter_by(public_ip=field.data).first():
-                raise ValidationError(u'公网IP: {0} 已经用了.'.format(self.public_ip))
+                raise ValidationError(u'公网IP已经用了')
 
     def validate_remotecardip(self, field):
         if Device.query.filter_by(remotecardip=field.data).first():
-                raise ValidationError(u'远控卡IP: {0} 已经用了.'.format(self.remotecardip))
+                raise ValidationError(u'远控卡IP已经用了')
 
 
 class EditRackForm(Form):
@@ -187,7 +208,7 @@ class EditRackForm(Form):
     usesize = IntegerField(u'已用(u)')                      # 已用空间（u）
     remainsize = IntegerField(u'可用(u)')                   # 剩余空间（U）
     electrictype = SelectField(u'电力类型', coerce=int)                 # 电力类型
-    electricno = SelectField(u'电力路数(单, 双)', coerce=int)                   # 电力路数
+    electricno = SelectField(u'电力路数', coerce=int)                   # 电力路数
     electriccapacity = IntegerField(u'电力容量(A)')             # 电力容量
     leftelectric = IntegerField(u'剩余容量(A)')                 # 剩余电力
     renttime = DateTimeField(u'租用时间')                   # 租用时间
@@ -212,4 +233,4 @@ class EditRackForm(Form):
 
     def validate_name(self, field):
         if Rack.query.filter_by(name=field.data).first():
-                raise ValidationError(u'Idc名称: {0} 已经创建了.'.format(self.name))
+                raise ValidationError(u'Idc名已经创建了')
