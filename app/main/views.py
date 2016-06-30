@@ -74,12 +74,10 @@ def create_device():
                         an = form.an.data,
                         sn = form.sn.data,
                         onstatus = form.onstatus.data,
-                        flowstatus = form.flowstatus.data,
                         dateofmanufacture = form.dateofmanufacture.data,
                         manufacturer = form.manufacturer.data,
                         brand = form.brand.data,
                         model = form.model.data,
-                        site = form.site.data,
                         usedept = form.usedept.data,
                         usestarttime = form.usestarttime.data,
                         useendtime = form.useendtime.data,
@@ -91,19 +89,12 @@ def create_device():
                         equipprice = form.equipprice.data,
 
                         hostname = form.hostname.data,
-                        private_ip = form.private_ip.data,
-                        private_mac = form.private_mac.data,
-                        public_ip = form.public_ip.data,
-                        public_mac = form.public_mac.data,
-                        other_ip = form.other_ip.data,
-                        other_mac = form.other_mac.data,
                         rack = Rack.query.get(form.rack.data),
 
                         is_virtualization = form.is_virtualization.data,
                         cpumodel = form.cpumodel.data,
                         cpucount = form.cpucount.data,
                         memsize = form.memsize.data,
-                        singlemem = form.singlemem.data,
                         raidmodel = form.raidmodel.data,
                         # disks=form.disks.data,
 
@@ -112,7 +103,6 @@ def create_device():
                         powermanage_user = form.powermanage_user.data,
                         powermanage_id = form.powermanage_id.data,
 
-                        networkportcount = form.networkportcount.data,
                         os = form.os.data,
                         remarks = form.remarks.data)
         db.session.add(device)

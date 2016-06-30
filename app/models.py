@@ -271,6 +271,31 @@ class Disks(db.Model):
         return '<Disk %r>' % self.SN
 
 
+class DevicePort(db.Model):
+    __tablename__ = 'devicePorts'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    ip = db.Column(db.String(64), unique=True, index=True)
+    mac = db.Column(db.String(64), unique=True, index=True)
+    port_type = db.Column(db.Integer)     #（公网，内网， 上联接口）
+    device_id = db.Column(db.ForeignKey('devices.id'))
+
+    def __repr__(self):
+        return '<DevicePort %r>' % self.id
+
+
+class DeviceMemory(db.Model):
+    __tablename__ = 'deviceMemorys'
+    id = db.Column(db.Integer, primary_key=True)
+    slot_id = db.Column(db.Integer)
+    SN = db.Column(db.String(64))
+    Size = db.Column(db.String(64))
+    device_id = db.Column(db.ForeignKey('devices.id'))
+
+    def __repr__(self):
+        return '<DeviceMemory>' % self.id
+
+
 class Device(db.Model):
     __tablename__ = 'devices'
     id = db.Column(db.Integer, primary_key=True)
@@ -279,12 +304,10 @@ class Device(db.Model):
     an = db.Column(db.String(64), unique=True, index=True)  # AN 浼佷笟璧勪骇缂栧彿
     sn = db.Column(db.String(64), unique=True, index=True)  # SN 璁惧搴忓垪鍙�
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
-    flowstatus = db.Column(db.Integer)  # 娴佺▼鐘舵��
     dateofmanufacture = db.Column(db.DateTime)  # 鐢熶骇鏃堕棿
     manufacturer = db.Column(db.String(64))  # 鐢熶骇鍟�
     brand = db.Column(db.String(64))  # 鍝佺墝
     model = db.Column(db.String(64))  # 鍨嬪彿
-    site = db.Column(db.String(64))  # 浣嶇疆
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
     usestarttime = db.Column(db.DateTime)  # 浣跨敤寮�濮嬫椂闂�
@@ -297,29 +320,23 @@ class Device(db.Model):
     equipprice = db.Column(db.Integer)  # 璁惧浠锋牸
 
     hostname = db.Column(db.String(64))  # Hostname
-    private_ip = db.Column(db.String(15))  # 鍐呭IP鍦板潃
-    private_mac = db.Column(db.String(64))
-    public_ip = db.Column(db.String(15))  # 鍏綉IP鍦板潃
-    public_mac = db.Column(db.String(64))
-    other_ip = db.Column(db.String(15))  # 鍏朵粬IP鍦板潃锛� 鐢ㄢ�滐紝鈥濆垎闅斿涓�
-    other_mac = db.Column(db.String(64))
-    # idcname = db.Column(db.ForeignKey('idcs.id'))   # 鍏宠仈IDC table id
+    devicePorts = db.relationship('DevicePort', backref='device', lazy='dynamic')
     rack_id = db.Column(db.ForeignKey('racks.id'))  # 鍏宠仈Rack table id
-    idc = db.Column(db.String(64))  # 鍏宠仈IDC table id
     is_virtualization = db.Column(db.Boolean)  # 鏄惁璺戣櫄鎷熷寲  锛堝 OpenStack Compute锛�
     os = db.Column(db.String(64))  # os绫诲瀷
     cpumodel = db.Column(db.String(64))  # CPU 鍨嬪彿
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
-    singlemem = db.Column(db.Integer)  # 鍗曟牴鍐呭瓨澶у皬
+    memorys = db.relationship('DeviceMemory', backref='device', lazy='dynamic')
     raidmodel = db.Column(db.String(64))  # RAID 绾у埆
-    disks = db.relationship('Disks', backref='disks', lazy='dynamic')  # 鍏宠仈 Asset table
+    disksize = db.Column(db.String(64))
+    disks = db.relationship('Disks', backref='device', lazy='dynamic')  # 鍏宠仈 Asset table
     powermanage_enable = db.Column(db.Boolean, default=False)
     powermanage_ip = db.Column(db.String(64))  # 杩滄帶鍗P鍦板潃
     powermanage_user = db.Column(db.String(64))
     powermanage_password = db.Column(db.String(64))
     powermanage_id = db.Column(db.String(256))
-    networkportcount = db.Column(db.Integer)  # 缃戝崱绔彛鏁伴噺
+
 
     powerstatus = db.Column(db.Boolean)  # 电源状态
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎

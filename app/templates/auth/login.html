@@ -60,6 +60,7 @@
                     <div class="form-group text-right">
                         <div class="col-xs-12">
                             {{ form.submit(class="btn btn-purple w-md") }}
+                            {{ macros.print_form_messages(form.errors.submit) }}
                         </div>
                     </div>
                     <div class="form-group m-t-30">
@@ -73,7 +74,7 @@
 
                 </form>
             <div>
-                {{ macros.print_flash_messages }}
+                {{ macros.print_flash_messages() }}
             </div>
 
             </div>

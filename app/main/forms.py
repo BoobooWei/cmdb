@@ -98,12 +98,10 @@ class EditDeviceForm(Form):
     an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
     sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
     onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
-    flowstatus = SelectField(u'流程状态', coerce=int)                      # 流程状态
     dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
     manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
     brand = StringField(u'品牌', validators=[Length(1,64)])                        # 品牌
     model = StringField(u'型号', validators=[Length(1,64)])                        # 型号
-    site = StringField(u'位置', validators=[Length(1,64)])                         # 位置
     usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
     usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
     usestarttime = DateTimeField(u'使用开始时间')                   # 使用开始时间
@@ -117,21 +115,18 @@ class EditDeviceForm(Form):
 
 
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
-    private_ip = StringField(u'内网IP')
-    private_mac = StringField(u'内网MAC')
-    public_ip = StringField(u'公网IP')                    # 公网IP地址
-    public_mac = StringField(u'公网MAC')
-    other_ip = StringField(u'其他IP', validators=[Length(0,64)])                        # 其他IP地址， 用“，”分隔多个
-    other_mac = StringField(u'其他MAC')
-    idc = SelectField(u'机房', coerce=int)                          # 关联IDC table id
     rack = SelectField(u'机柜', coerce=int)                  # 关联Rack table id
+    devicePorts = StringField(u'设备接口')
     is_virtualization = BooleanField(u'虚拟化')               # 是否跑虚拟化  （如 OpenStack Compute）
+    os = StringField(u'操作系统')
     cpumodel = StringField(u'CPU型号', validators=[Length(0,64)])                     # CPU 型号
     cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
     memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
-    singlemem = IntegerField(u'单根大小(GB)')                       # 单根内存大小
+    memorys = StringField(u'设备内存')
     raidmodel = StringField(u'Raid级别', validators=[Length(0,16)])                    # RAID 级别
-    #disks = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
+    disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
+    disks = StringField(u'设备磁盘')
+
 
     powermanage_enable = BooleanField(u'启用电源管理')
     powermanage_ip = StringField(u'电源管理IP', validators=[Length(0,15)])                 # 远控卡IP地址
@@ -139,8 +134,6 @@ class EditDeviceForm(Form):
     powermanage_password = StringField(u'电源管理密码', validators=[Length(0,64)])
     powermanage_id = StringField(u'设备ID', validators=[Length(0,64)])          # 缃戝崱绔彛鏁伴噺
 
-    networkportcount = IntegerField(u'网卡端口(个)')                # 网卡端口数量
-    os = StringField(u'系统类型', validators=[Length(0,64)])                           # os类型
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
@@ -151,12 +144,6 @@ class EditDeviceForm(Form):
                              for devicetype in DeviceType.query.order_by(DeviceType.name).all()]
 
         self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
-
-        self.flowstatus.choices = [(1, u'正在审批'), (2, u'未审批')]
-
-
-        self.idc.choices = [(idc.id, idc.name)
-                             for idc in Idc.query.order_by(Idc.name).all()]
 
         self.rack.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
@@ -169,15 +156,6 @@ class EditDeviceForm(Form):
     def validate_sn(self,field):
         if Device.query.filter_by(sn=field.data).first():
             raise ValidationError(u'SN已经被使用了')
-
-
-    def validate_privateIP(self, field):
-        if Device.query.filter_by(private_ip=field.data).first():
-                raise ValidationError(u'内网IP已经用了')
-
-    def validate_public_ip(self, field):
-        if Device.query.filter_by(public_ip=field.data).first():
-                raise ValidationError(u'公网IP已经用了')
 
     def validate_remotecardip(self, field):
         if Device.query.filter_by(remotecardip=field.data).first():
