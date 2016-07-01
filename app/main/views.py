@@ -64,66 +64,63 @@ def index():
 
 
 
-@main.route('/edit-device', methods=['GET', 'POST'])
+@main.route('/create-device', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
-def edit_device():
+def create_device():
     form = EditDeviceForm()
     if form.validate_on_submit():
-        device = Device(Devicetype=DeviceType.query.get(form.Devicetype.data),
-                        an=form.an.data,
-                        sn=form.sn.data,
-                        onstatus=form.onstatus.data,
-                        flowstatus=form.flowstatus.data,
-                        dateofmanufacture=form.dateofmanufacture.data,
-                        manufacturer=form.manufacturer.data,
-                        brand=form.brand.data,
-                        model=form.model.data,
-                        site=form.site.data,
-                        usedept=form.usedept.data,
-                        usestarttime=form.usestarttime.data,
-                        useendtime=form.useendtime.data,
-                        mainuses=form.mainuses.data,
-                        managedept=form.managedept.data,
-                        managestaff=form.managestaff.data,
-                        koriyasustarttime=form.koriyasustarttime.data,
-                        koriyasuendtime=form.koriyasuendtime.data,
-                        equipprice=form.equipprice.data,
+        device = Device(Devicetype = DeviceType.query.get(form.Devicetype.data),
+                        an = form.an.data,
+                        sn = form.sn.data,
+                        onstatus = form.onstatus.data,
+                        flowstatus = form.flowstatus.data,
+                        dateofmanufacture = form.dateofmanufacture.data,
+                        manufacturer = form.manufacturer.data,
+                        brand = form.brand.data,
+                        model = form.model.data,
+                        site = form.site.data,
+                        usedept = form.usedept.data,
+                        usestarttime = form.usestarttime.data,
+                        useendtime = form.useendtime.data,
+                        mainuses = form.mainuses.data,
+                        managedept = form.managedept.data,
+                        managestaff = form.managestaff.data,
+                        koriyasustarttime = form.koriyasustarttime.data,
+                        koriyasuendtime = form.koriyasuendtime.data,
+                        equipprice = form.equipprice.data,
 
-                        hostname=form.hostname.data,
-                        private_ip=form.private_ip.data,
-                        private_mac=form.private_mac.data,
-                        public_ip=form.public_ip.data,
-                        public_mac=form.public_mac.data,
-                        other_ip=form.other_ip.data,
-                        other_mac=form.other_mac.data,
-                        rack=Rack.query.get(form.rack.data),
+                        hostname = form.hostname.data,
+                        private_ip = form.private_ip.data,
+                        private_mac = form.private_mac.data,
+                        public_ip = form.public_ip.data,
+                        public_mac = form.public_mac.data,
+                        other_ip = form.other_ip.data,
+                        other_mac = form.other_mac.data,
+                        rack = Rack.query.get(form.rack.data),
 
-                        is_virtualization=form.is_virtualization.data,
-                        cpumodel=form.cpumodel.data,
-                        cpucount=form.cpucount.data,
-                        memsize=form.memsize.data,
-                        singlemem=form.singlemem.data,
-                        raidmodel=form.raidmodel.data,
+                        is_virtualization = form.is_virtualization.data,
+                        cpumodel = form.cpumodel.data,
+                        cpucount = form.cpucount.data,
+                        memsize = form.memsize.data,
+                        singlemem = form.singlemem.data,
+                        raidmodel = form.raidmodel.data,
                         # disks=form.disks.data,
 
-                        powermanage_enable=form.powermanage_enable.data,
-                        powermanage_ip=form.powermanage_ip.data,
-                        powermanage_user=form.powermanage_user.data,
-                        powermanage_id=form.powermanage_id.data,
+                        powermanage_enable = form.powermanage_enable.data,
+                        powermanage_ip = form.powermanage_ip.data,
+                        powermanage_user = form.powermanage_user.data,
+                        powermanage_id = form.powermanage_id.data,
 
-                        networkportcount=form.networkportcount.data,
-                        os=form.os.data,
-                        remarks=form.remarks.data)
+                        networkportcount = form.networkportcount.data,
+                        os = form.os.data,
+                        remarks = form.remarks.data)
         db.session.add(device)
-
-        # log = Logger(user=current_user._get_current_object(), content=u'你更新了个人设置.', action=2, logobjtype='users', logobj_id=current_user.id)
-        # db.session.add(log)
         db.session.commit()
         flash(u'设备添加完成')
         return redirect(url_for('main.index'))
 
-    return render_template('test.html', form=form)
+    return render_template('create_device.html', form=form)
 
 
 @main.route('/show-devices', methods=['GET', 'POST'])
@@ -328,7 +325,7 @@ def delete_idc(id):
 
 @main.route('/xxx')
 def xxx():
-    return render_template('form-advanced1.html')
+    return render_template('xxx.html')
 
 
 # @main.route('/test', methods=['GET', 'POST'])

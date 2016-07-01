@@ -2,105 +2,128 @@
 {% extends "common/base.html" %}
 
 
+{% block static %}
+    {{ super() }}
+           <!--Form Wizard-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/form-wizard/jquery.steps.css') }}" />
+
+
+{% endblock static %}
+
 {% block page_content %}
+
+
             <!-- Page Content Start -->
             <!-- ================== -->
 
             <div class="wraper container-fluid">
-                <div class="page-title"> 
-                    <h3 class="title">Modals</h3> 
+                <div class="page-title">
+                    <h3 class="title">Form Wizard</h3>
                 </div>
 
 
 
-
-
-
-                <!-- Custom Modals -->
+                <!-- Vertical Steps Example -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading"> 
-                                <h3 class="panel-title">Custom Modals</h3> 
-                            </div> 
-                            <div class="panel-body"> 
-                                <!-- sample modal content -->
-
-
-
-
-                                <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog"> 
-                                        <div class="modal-content"> 
-                                            <div class="modal-header"> 
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-                                                <h4 class="modal-title">Modal Content is Responsive</h4> 
-                                            </div> 
-                                            <div class="modal-body"> 
-                                                <div class="row"> 
-                                                    <div class="col-md-6"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-1" class="control-label">Name</label> 
-                                                            <input type="text" class="form-control" id="field-1" placeholder="John"> 
-                                                        </div> 
-                                                    </div> 
-                                                    <div class="col-md-6"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-2" class="control-label">Surname</label> 
-                                                            <input type="text" class="form-control" id="field-2" placeholder="Doe"> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                                <div class="row"> 
-                                                    <div class="col-md-12"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-3" class="control-label">Address</label> 
-                                                            <input type="text" class="form-control" id="field-3" placeholder="Address"> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                                <div class="row"> 
-                                                    <div class="col-md-4"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-4" class="control-label">City</label> 
-                                                            <input type="text" class="form-control" id="field-4" placeholder="Boston"> 
-                                                        </div> 
-                                                    </div> 
-                                                    <div class="col-md-4"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-5" class="control-label">Country</label> 
-                                                            <input type="text" class="form-control" id="field-5" placeholder="United States"> 
-                                                        </div> 
-                                                    </div> 
-                                                    <div class="col-md-4"> 
-                                                        <div class="form-group"> 
-                                                            <label for="field-6" class="control-label">Zip</label> 
-                                                            <input type="text" class="form-control" id="field-6" placeholder="123456"> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                                <div class="row"> 
-                                                    <div class="col-md-12"> 
-                                                        <div class="form-group no-margin"> 
-                                                            <label for="field-7" class="control-label">Personal Info</label> 
-                                                            <textarea class="form-control autogrow" id="field-7" placeholder="Write something about yourself" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;">                                                        </textarea> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                            <div class="modal-footer"> 
-                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
-                                                <button type="button" class="btn btn-info">Save changes</button> 
-                                            </div> 
-                                        </div> 
-                                    </div>
-                                </div><!-- /.modal -->
-
-
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">Responsive Modal</button>
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Vertical Steps Example</h3>
                             </div>
-                        </div>
-                    </div>
+                            <div class="panel-body">
+                                <div id="wizard-vertical">
+                                    <h3>Account</h3>
+                                    <section>
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="userName1">User name *</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control required" id="userName1" name="userName" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="password1"> Password *</label>
+                                            <div class="col-lg-10">
+                                                <input id="password1" name="password" type="text" class="required form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="confirm1">Confirm Password *</label>
+                                            <div class="col-lg-10">
+                                                <input id="confirm1" name="confirm" type="text" class="required form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-12 control-label ">(*) Mandatory</label>
+                                        </div>
+                                    </section>
+                                    <h3>Profile</h3>
+                                    <section>
+                                        <div class="form-group clearfix">
+
+                                            <label class="col-lg-2 control-label" for="name1"> First name *</label>
+                                            <div class="col-lg-10">
+                                                <input id="name1" name="name" type="text" class="required form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="surname1"> Last name *</label>
+                                            <div class="col-lg-10">
+                                                <input id="surname1" name="surname" type="text" class="required form-control">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="email1">Email *</label>
+                                            <div class="col-lg-10">
+                                                <input id="email1" name="email" type="text" class="required email form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label " for="address1">Address *</label>
+                                            <div class="col-lg-10">
+                                                <input id="address1" name="address" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-12 control-label ">(*) Mandatory</label>
+                                        </div>
+
+                                    </section>
+                                    <h3>Hints</h3>
+                                    <section>
+                                        <div class="form-group clearfix">
+                                            <div class="col-lg-12">
+                                                <ul>
+                                                    <li>Jonathan Smith </li>
+                                                    <li>Lab</li>
+                                                    <li>jonathan@smith.com</li>
+                                                    <li>Your city, Cityname</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <h3>Finish</h3>
+                                    <section>
+                                        <div class="form-group clearfix">
+                                            <div class="col-lg-12">
+                                                <label class="cr-styled">
+                                                    <input type="checkbox">
+                                                    <i class="fa"></i>
+                                                    I agree with the Terms and Conditions.
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div> <!-- End #wizard-vertical -->
+                            </div>  <!-- End panel-body -->
+                        </div> <!-- End panel -->
+
+                    </div> <!-- end col -->
+
                 </div> <!-- End row -->
 
 
@@ -109,4 +132,23 @@
             <!-- Page Content Ends -->
             <!-- ================== -->
 
-{% endblock %}
+
+
+
+
+{% endblock page_content %}
+
+{% block scripts %}
+
+    {{ super() }}
+            <!--Form Validation-->
+        <script src="{{ url_for('static', filename='assets/form-wizard/bootstrap-validator.min.js') }}" type="text/javascript"></script>
+
+        <!--Form Wizard-->
+        <script src="{{ url_for('static', filename='assets/form-wizard/jquery.steps.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='assets/jquery.validate/jquery.validate.min.js') }}"></script>
+
+        <!--wizard initialization-->
+        <script src="{{ url_for('static', filename='assets/form-wizard/wizard-init.js') }}" type="text/javascript"></script>
+
+{% endblock scripts %}
