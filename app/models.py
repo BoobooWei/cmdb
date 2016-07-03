@@ -27,6 +27,8 @@ class Permission:
     IDC_EDIT = 0x100
     IDC_DEL = 0x200
 
+    ASSET_EDIT = 0x800
+
     ADMINISTER = 0x400
 
 
@@ -51,7 +53,8 @@ class Role(db.Model):
                         Permission.RACK_LOOK |
                         Permission.RACK_EDIT |
                         Permission.IDC_LOOK |
-                        Permission.IDC_EDIT, False ),
+                        Permission.IDC_EDIT |
+                        Permission.ASSET_EDIT, False ),
 
             'Administrator': (Permission.USER_EDIT |
                               Permission.DEVICE_LOOK |
@@ -248,7 +251,7 @@ class DeviceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)  # 璧勪骇绫诲悕
     remarks = db.Column(db.Text)  # 璧勪骇绫昏鏄�
-    devices = db.relationship('Device', backref='Devicetype', lazy='dynamic')  # 鍏宠仈 Asset table
+    devices = db.relationship('Asset', backref='Devicetype', lazy='dynamic')  # 鍏宠仈 Asset table
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
 
     def __repr__(self):
@@ -277,7 +280,7 @@ class DevicePort(db.Model):
     name = db.Column(db.String(64))
     ip = db.Column(db.String(64), unique=True, index=True)
     mac = db.Column(db.String(64), unique=True, index=True)
-    port_type = db.Column(db.Integer)     #（公网，内网， 上联接口）
+    portType = db.Column(db.Integer)     #（公网，内网， 上联接口）
     device_id = db.Column(db.ForeignKey('devices.id'))
 
     def __repr__(self):
@@ -296,11 +299,12 @@ class DeviceMemory(db.Model):
         return '<DeviceMemory>' % self.id
 
 
-class Device(db.Model):
-    __tablename__ = 'devices'
-    id = db.Column(db.Integer, primary_key=True)
 
+class Asset(db.Model):
+    __tablename__ = 'assets'
+    id = db.Column(db.Integer, primary_key=True)
     deviceType_id = db.Column(db.ForeignKey('devicetype.id'))  # 璧勪骇绫诲埆   鍏宠仈AssetType table
+    device = db.relationship('Device', backref='asset', uselist=False)
     an = db.Column(db.String(64), unique=True, index=True)  # AN 浼佷笟璧勪骇缂栧彿
     sn = db.Column(db.String(64), unique=True, index=True)  # SN 璁惧搴忓垪鍙�
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
@@ -318,7 +322,48 @@ class Device(db.Model):
     koriyasustarttime = db.Column(db.DateTime)  # 缁翠繚寮�濮嬫椂闂�
     koriyasuendtime = db.Column(db.DateTime)  # 缁翠繚缁撴潫鏃堕棿
     equipprice = db.Column(db.Integer)  # 璁惧浠锋牸
+    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
+    remarks = db.Column(db.Text)  # 澶囨敞
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+
+    def to_json(self):
+
+        json_asset = {
+            #'url': url_for('api.get_device', id=self.id, _external=True),
+            #'deviceType': url_for('api.get_deviceType', id=self.id, _external=True),
+            'AN': self.an,
+            'SN': self.sn,
+            'onstatus': self.onstatus,
+            'flowstatus': self.flowstatus,
+            'dateofmanufacture': self.dateofmanufacture,
+            'manufacturer': self.manufacturer,
+            'brand': self.brand,
+            'model': self.model,
+            'site': self.site,
+            'usedept': self.usedept,
+            'usestaff': self.usestaff,
+            'usestarttime': self.usestarttime,
+            'useendtime': self.useendtime,
+            'mainuses': self.mainuses,
+            'managedept': self.managedept,
+            'managestaff': self.managestaff,
+            'koriyasustarttime': self.koriyasustarttime,
+            'koriyasuendtime': self.koriyasuendtime,
+        'equipprice': self.equipprice,
+            }
+        return json_asset
+
+    def __repr__(self):
+        return '<Asset %r>' %self.id
+
+
+
+class Device(db.Model):
+    __tablename__ = 'devices'
+    id = db.Column(db.Integer, primary_key=True)
+    asset_id = db.Column(db.Integer, db.ForeignKey('assets.id'))
     hostname = db.Column(db.String(64))  # Hostname
     devicePorts = db.relationship('DevicePort', backref='device', lazy='dynamic')
     rack_id = db.Column(db.ForeignKey('racks.id'))  # 鍏宠仈Rack table id
@@ -336,8 +381,6 @@ class Device(db.Model):
     powermanage_user = db.Column(db.String(64))
     powermanage_password = db.Column(db.String(64))
     powermanage_id = db.Column(db.String(256))
-
-
     powerstatus = db.Column(db.Boolean)  # 电源状态
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
@@ -346,29 +389,6 @@ class Device(db.Model):
 
     def to_json(self):
         json_device = {
-            'asset': {
-                #'url': url_for('api.get_device', id=self.id, _external=True),
-                #'deviceType': url_for('api.get_deviceType', id=self.id, _external=True),
-                'AN': self.an,
-                'SN': self.sn,
-                'onstatus': self.onstatus,
-                'flowstatus': self.flowstatus,
-                'dateofmanufacture': self.dateofmanufacture,
-                'manufacturer': self.manufacturer,
-                'brand': self.brand,
-                'model': self.model,
-                'site': self.site,
-                'usedept': self.usedept,
-                'usestaff': self.usestaff,
-                'usestarttime': self.usestarttime,
-                'useendtime': self.useendtime,
-                'mainuses': self.mainuses,
-                'managedept': self.managedept,
-                'managestaff': self.managestaff,
-                'koriyasustarttime': self.koriyasustarttime,
-                'koriyasuendtime': self.koriyasuendtime,
-                'equipprice': self.equipprice,
-            },
 
             'device': {
                 'hostname': self.hostname,

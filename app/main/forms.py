@@ -6,7 +6,7 @@ _author__ = 'eric'
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
-from ..models import Role, Rack, Device,DeviceType, Idc, Device
+from ..models import Role, Rack, Asset, Device, DeviceType, Idc, Device
 from wtforms import ValidationError
 
 
@@ -92,8 +92,7 @@ class EditIdcForm(Form):
                 raise ValidationError(u'机房名称已经被使用了')
 
 
-class EditDeviceForm(Form):
-
+class EditAssetForm(Form):
     Devicetype = SelectField(u'设备类型', coerce=int)   # 资产类别   关联AssetType table
     an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
     sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
@@ -112,8 +111,27 @@ class EditDeviceForm(Form):
     koriyasustarttime = DateTimeField(u'维保开始时间')              # 维保开始时间
     koriyasuendtime = DateTimeField(u'维保结束时间')                # 维保结束时间
     equipprice = IntegerField(u'设备价格')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(EditAssetForm, self).__init__(*args, **kwargs)
+
+        self.Devicetype.choices = [(devicetype.id, devicetype.name)
+                             for devicetype in DeviceType.query.order_by(DeviceType.name).all()]
+
+        self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
 
 
+    def validate_an(self,field):
+        if Device.query.filter_by(an=field.data).first():
+            raise ValidationError(u'AN已经被使用了')
+
+    def validate_sn(self,field):
+        if Device.query.filter_by(sn=field.data).first():
+            raise ValidationError(u'SN已经被使用了')
+
+
+class EditDeviceForm(Form):
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
     rack = SelectField(u'机柜', coerce=int)                  # 关联Rack table id
     devicePorts = StringField(u'设备接口')
@@ -126,8 +144,6 @@ class EditDeviceForm(Form):
     raidmodel = StringField(u'Raid级别', validators=[Length(0,16)])                    # RAID 级别
     disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
     disks = StringField(u'设备磁盘')
-
-
     powermanage_enable = BooleanField(u'启用电源管理')
     powermanage_ip = StringField(u'电源管理IP', validators=[Length(0,15)])                 # 远控卡IP地址
     powermanage_user = StringField(u'电源管理用户', validators=[Length(0,64)])
@@ -140,22 +156,8 @@ class EditDeviceForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
-        self.Devicetype.choices = [(devicetype.id, devicetype.name)
-                             for devicetype in DeviceType.query.order_by(DeviceType.name).all()]
-
-        self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
-
         self.rack.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
-
-
-    def validate_an(self,field):
-        if Device.query.filter_by(an=field.data).first():
-            raise ValidationError(u'AN已经被使用了')
-
-    def validate_sn(self,field):
-        if Device.query.filter_by(sn=field.data).first():
-            raise ValidationError(u'SN已经被使用了')
 
     def validate_remotecardip(self, field):
         if Device.query.filter_by(remotecardip=field.data).first():

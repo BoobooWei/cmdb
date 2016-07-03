@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, current_app, abort,
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, EditDeviceForm, EditIdcForm, EditRackForm, EditDeviceTypeForm
+from .forms import EditProfileForm, EditProfileAdminForm, EditAssetForm, EditDeviceForm, EditIdcForm, EditRackForm, EditDeviceTypeForm
 from .. import db
 from ..models import User, Role, Permission, Device, Idc, Device, DeviceType, Rack, Logger
 from ..email import send_email
@@ -63,14 +63,13 @@ def index():
 
 
 
-
-@main.route('/create-device', methods=['GET', 'POST'])
+@main.route('/create-asset', methods=['GET', 'POST'])
 @login_required
-@permission_required(Permission.DEVICE_EDIT)
-def create_device():
-    form = EditDeviceForm()
+@permission_required(Permission.ASSET_EDIT)
+def create_asset():
+    form = EditAssetForm()
     if form.validate_on_submit():
-        device = Device(Devicetype = DeviceType.query.get(form.Devicetype.data),
+        asset = Asset(Devicetype = DeviceType.query.get(form.Devicetype.data),
                         an = form.an.data,
                         sn = form.sn.data,
                         onstatus = form.onstatus.data,
@@ -87,8 +86,26 @@ def create_device():
                         koriyasustarttime = form.koriyasustarttime.data,
                         koriyasuendtime = form.koriyasuendtime.data,
                         equipprice = form.equipprice.data,
+                        os = form.os.data,
+                        remarks = form.remarks.data)
+        db.session.add(asset)
+        db.session.commit()
+        flash(u'设备添加完成')
+        return redirect(url_for('main.index'))
 
-                        hostname = form.hostname.data,
+    return render_template('create_asset.html', form=form)
+
+
+
+
+
+@main.route('/create-device', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_device():
+    form = EditDeviceForm()
+    if form.validate_on_submit():
+        device = Device(hostname = form.hostname.data,
                         rack = Rack.query.get(form.rack.data),
 
                         is_virtualization = form.is_virtualization.data,

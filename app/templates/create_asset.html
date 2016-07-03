@@ -23,91 +23,130 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">添加设备</h3>
+            <h3 class="title">添加资产</h3>
         </div>
 
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">设备信息</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">资产信息</h3></div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" action="{{ url_for('main.create_device') }}"
                               method="POST">
                             {{ form.csrf_token }}
                             <div class="form-group">
-                                <label class="col-md-2 control-label">主机名</label>
+                                <label class="col-md-2 control-label">设备类型</label>
 
                                 <div class="col-md-6">
-                                    {{ form.hostname(class='form-control', placeholder='主机名') }}
-                                    {{ macros.print_form_messages(form.errors.hostname) }}
+                                    {{ form.Devicetype(class='select2', placeholder='设备类型') }}
+                                    {{ macros.print_form_messages(form.errors.Devicetype) }}
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label class="col-md-2 control-label">机柜</label>
+                                <label class="col-md-2 control-label">AN号</label>
 
                                 <div class="col-md-6">
-                                    {{ form.rack(class='select2', placeholder='机柜') }}
-                                    {{ macros.print_form_messages(form.errors.rack) }}
+                                    {{ form.an(class='form-control', placeholder='AN号') }}
+                                    {{ macros.print_form_messages(form.errors.an) }}
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label class="col-md-2 control-label cr-styled">虚拟化</label>
+                                <label class="col-md-2 control-label">SN号</label>
 
-                                <div class="col-md-1">
-                                    <label class="cr-styled">
-                                        {{ form.is_virtualization(class='form-control', placeholder='虚拟化') }}
-                                        {{ macros.print_form_messages(form.errors.is_virtualization) }}
-                                        <i class="fa"></i>
-                                    </label>
+                                <div class="col-md-6">
+                                    {{ form.sn(class='form-control', placeholder='SN号') }}
+                                    {{ macros.print_form_messages(form.errors.sn) }}
                                 </div>
                             </div>
 
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">CPU型号</label>
+                                <label class="col-md-2 control-label">使用状态</label>
 
                                 <div class="col-md-6">
-                                    {{ form.cpumodel(type="text", class='form-control', placeholder='CPU型号', id="datepicker1") }}
-                                    {{ macros.print_form_messages(form.errors.cpumodel) }}
+                                    {{ form.onstatus(class='select2', placeholder='使用状态') }}
+                                    {{ macros.print_form_messages(form.errors.onstatus) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">CPU内核(个)</label>
+                                <label class="col-md-2 control-label">生产时间</label>
 
                                 <div class="col-md-6">
-                                    {{ form.cpucount(type="text", class='form-control', placeholder='CPU内核(个)', id="datepicker2") }}
-                                    {{ macros.print_form_messages(form.errors.cpucount) }}
+                                    {{ form.dateofmanufacture(class='form-control', placeholder='生产时间') }}
+                                    {{ macros.print_form_messages(form.errors.dateofmanufacture) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">生产商</label>
+
+                                <div class="col-md-6">
+                                    {{ form.manufacturer(class='form-control', placeholder='生产商') }}
+                                    {{ macros.print_form_messages(form.errors.manufacturer) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">内存大小(GB)</label>
+                                <label class="col-md-2 control-label">品牌</label>
 
                                 <div class="col-md-6">
-                                    {{ form.memsize(type="text", class='form-control', placeholder='内存大小(GB)', id="datepicker3") }}
-                                    {{ macros.print_form_messages(form.errors.memsize) }}
+                                    {{ form.brand(class='form-control', placeholder='品牌') }}
+                                    {{ macros.print_form_messages(form.errors.brand) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Raid级别</label>
+                                <label class="col-md-2 control-label">型号</label>
 
                                 <div class="col-md-6">
-                                    {{ form.raidmodel(type="text", class='form-control', placeholder='Raid级别', id="datepicker3") }}
-                                    {{ macros.print_form_messages(form.errors.raidmodel) }}
+                                    {{ form.model(class='form-control', placeholder='型号') }}
+                                    {{ macros.print_form_messages(form.errors.model) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">备注</label>
+                                <label class="col-md-2 control-label">使用部门</label>
 
                                 <div class="col-md-6">
-                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
-                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                    {{ form.usedept(type="text", class='form-control', placeholder='使用部门', id="datepicker1") }}
+                                    {{ macros.print_form_messages(form.errors.usedept) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">部门使用人</label>
+
+                                <div class="col-md-6">
+                                    {{ form.usestaff(type="text", class='form-control', placeholder='部门使用人', id="datepicker2") }}
+                                    {{ macros.print_form_messages(form.errors.usestaff) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">使用开始时间</label>
+
+                                <div class="col-md-6">
+                                    {{ form.usestarttime(type="text", class='form-control', placeholder='使用开始时间', id="datepicker3") }}
+                                    {{ macros.print_form_messages(form.errors.usestarttime) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">使用结束时间</label>
+
+                                <div class="col-md-6">
+                                    {{ form.useendtime(class='form-control', placeholder='使用结束时间') }}
+                                    {{ macros.print_form_messages(form.errors.useendtime) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">设备价格</label>
+
+                                <div class="col-md-6">
+                                    {{ form.equipprice(class='form-control', placeholder='设备价格') }}
+                                    {{ macros.print_form_messages(form.errors.equipprice) }}
                                 </div>
                             </div>
 
@@ -128,6 +167,7 @@
             <!-- col -->
         </div>
         <!-- End row -->
+
 
 
     </div>
