@@ -5,8 +5,9 @@ from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, EditAssetForm, EditDeviceForm, EditIdcForm, EditRackForm, EditDeviceTypeForm
+from .forms import EditDevicePortForm
 from .. import db
-from ..models import User, Role, Permission, Device, Idc, Device, DeviceType, Rack, Logger
+from ..models import User, Role, Permission, Device, DevicePorts, DeviceMemorys, Idc, Device, DeviceType, Rack, Logger
 from ..email import send_email
 
 
@@ -61,6 +62,88 @@ def index():
     return render_template('index.html')
 
 
+@main.route('/create-device.type', methods=['GET', 'POST'])
+@login_required
+def create_deviceType():
+    form = EditDeviceTypeForm(deviceType=None)
+    if form.validate_on_submit():
+        deviceType = DeviceType(name=form.name.data,
+                            remarks=form.remarks.data)
+        db.session.add(deviceType)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('test.html', form=form)
+
+
+
+@main.route('/edit-device.type/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_deviceType(id):
+    deviceType = DeviceType.query.get_or_404(id)
+    form = EditDeviceTypeForm(deviceType=deviceType)
+    if form.validate_on_submit():
+        deviceType.name=form.name.data
+        deviceType.remarks=form.remarks.data
+        db.session.add(deviceType)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+
+    form.name.data = deviceType.name
+    form.remarks.data = deviceType.remarks
+    return render_template('test.html', form=form)
+
+
+
+@main.route('/show-device.type', methods=['GET', 'POST'])
+@login_required
+def show_deviceType(id):
+    deviceType = DeviceType.query.all()
+    return render_template('test.html', deviceType=deviceType)
+
+
+
+@main.route('/create-device.ports', methods=['GET', 'POST'])
+@login_required
+def create_devicePorts():
+    form = EditDevicePortForm()
+    if form.validate_on_submit():
+        devicePorts = DevicePorts(name=form.name.data,
+                                    ip=form.ip.data,
+                                    mac=form.mac.data,
+                                    portType=form.portType.data,
+                                    device=Device.query.get(form.device.data),
+                                    remarks=form.remarks.data)
+        db.session.add(devicePorts)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('test.html', form=form)
+
+
+@main.route('/edit-device.ports/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_devicePorts(id):
+    devicePorts = DevicePorts.query.get_or_404(id)
+    form = EditDevicePortForm()
+    if form.validate_on_submit():
+        devicePorts.name=form.name.data,
+        devicePorts.ip=form.ip.data,
+        devicePorts.mac=form.mac.data,
+        devicePorts.portType=form.portType.data,
+        devicePorts.device=Device.query.get(form.device.data)
+        devicePorts.remarks=form.remarks.data
+        db.session.add(devicePorts)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+
+    form.name.data = devicePorts.name
+    form.ip.data = devicePorts.ip
+    form.mac.data = devicePorts.mac
+    form.portType.data = devicePorts.portType
+    form.device.data = devicePorts.device
+    form.remarks.data = devicePorts.remarks
+    return render_template('test.html', form=form)
+
+
 
 
 @main.route('/create-asset', methods=['GET', 'POST'])
@@ -97,34 +180,36 @@ def create_asset():
 
 
 
-
-
 @main.route('/create-device', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_device():
     form = EditDeviceForm()
     if form.validate_on_submit():
-        device = Device(hostname = form.hostname.data,
-                        rack = Rack.query.get(form.rack.data),
 
-                        is_virtualization = form.is_virtualization.data,
-                        cpumodel = form.cpumodel.data,
-                        cpucount = form.cpucount.data,
-                        memsize = form.memsize.data,
-                        raidmodel = form.raidmodel.data,
+        device = Device(hostname = form2.hostname.data,
+                        rack = Rack.query.get(form2.rack.data),
+
+                        is_virtualization = form2.is_virtualization.data,
+                        cpumodel = form2.cpumodel.data,
+                        cpucount = form2.cpucount.data,
+                        memsize = form2.memsize.data,
+                        raidmodel = form2.raidmodel.data,
                         # disks=form.disks.data,
 
-                        powermanage_enable = form.powermanage_enable.data,
-                        powermanage_ip = form.powermanage_ip.data,
-                        powermanage_user = form.powermanage_user.data,
-                        powermanage_id = form.powermanage_id.data,
+                        powermanage_enable = form2.powermanage_enable.data,
+                        powermanage_ip = form2.powermanage_ip.data,
+                        powermanage_user = form2.powermanage_user.data,
+                        powermanage_id = form2.powermanage_id.data,
 
-                        os = form.os.data,
-                        remarks = form.remarks.data)
+                        os = form2.os.data,
+                        remarks = form2.remarks.data)
+
         db.session.add(device)
         db.session.commit()
         flash(u'设备添加完成')
+
+
         return redirect(url_for('main.index'))
 
     return render_template('create_device.html', form=form)

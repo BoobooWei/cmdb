@@ -6,7 +6,7 @@ _author__ = 'eric'
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
-from ..models import Role, Rack, Asset, Device, DeviceType, Idc, Device
+from ..models import Role, Rack, Asset, Device, DeviceType, Idc, Device, DevicePorts, DeviceMemorys
 from wtforms import ValidationError
 
 
@@ -55,10 +55,17 @@ class EditDeviceTypeForm(Form):
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
-    def validate_name(self,field):
-        if DeviceType.query.filter_by(name=field.data).first():
-            raise ValidationError(u'资产类名已经被使用了')
+    def __init__(self, deviceType, *args, **kwargs):
+        super(EditDeviceTypeForm, self).__init__(*args, **kwargs)
+        self.deviceType = deviceType
 
+    def validate_name(self,field):
+        if not self.deviceType:
+            if DeviceType.query.filter_by(name=field.data).first():
+                raise ValidationError(u'资产类名已经被使用了')
+        else:
+            if field.data != self.deviceType.name and DeviceType.query.filter_by(name=field.data).first():
+                raise ValidationError(u'资产类名已经被使用了')
 
 
 class EditIdcForm(Form):
@@ -163,6 +170,25 @@ class EditDeviceForm(Form):
         if Device.query.filter_by(remotecardip=field.data).first():
                 raise ValidationError(u'远控卡IP已经用了')
 
+
+class EditDevicePortForm(Form):
+    name = StringField(u'接口名称', validators=[InputRequired(), Length(1,64)])
+    ip = StringField(u'IP地址')
+    mac = StringField(u'Mac地址')
+    portType = StringField(u'接口类型')
+    device = SelectField(u'设备', coerce=int)
+    to_device = SelectField(u'连接至')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(EditDevicePortForm, self).__init__(*args, **kwargs)
+
+        self.device.choices = [(device.id, device.hostname)
+                             for device in Device.query.order_by(Device.hostname).all()]
+
+        self.to_device.choices = [(ports.id, '{0}.{1}'.format(ports.device.hostname, ports.name))
+                             for ports in DevicePorts.query.order_by(DevicePorts.name).all() if not ports.to_device_src and not ports.to_device_dest]
 
 
 

@@ -274,7 +274,7 @@ class Disks(db.Model):
         return '<Disk %r>' % self.SN
 
 
-class DevicePort(db.Model):
+class DevicePorts(db.Model):
     __tablename__ = 'devicePorts'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
@@ -282,18 +282,22 @@ class DevicePort(db.Model):
     mac = db.Column(db.String(64), unique=True, index=True)
     portType = db.Column(db.Integer)     #（公网，内网， 上联接口）
     device_id = db.Column(db.ForeignKey('devices.id'))
+    to_device_src = db.relationship('DevicePorts', backref=db.backref('to_device_dest', remote_side=id), uselist=False)
+    to_device_id = db.Column(db.ForeignKey('devicePorts.id'))
+    remarks = db.Column(db.Text)  # 澶囨敞
 
     def __repr__(self):
         return '<DevicePort %r>' % self.id
 
 
-class DeviceMemory(db.Model):
+class DeviceMemorys(db.Model):
     __tablename__ = 'deviceMemorys'
     id = db.Column(db.Integer, primary_key=True)
     slot_id = db.Column(db.Integer)
     SN = db.Column(db.String(64))
     Size = db.Column(db.String(64))
     device_id = db.Column(db.ForeignKey('devices.id'))
+    remarks = db.Column(db.Text)  # 澶囨敞
 
     def __repr__(self):
         return '<DeviceMemory>' % self.id
@@ -312,6 +316,7 @@ class Asset(db.Model):
     manufacturer = db.Column(db.String(64))  # 鐢熶骇鍟�
     brand = db.Column(db.String(64))  # 鍝佺墝
     model = db.Column(db.String(64))  # 鍨嬪彿
+    devicePorts = db.relationship('DevicePorts', backref='device', lazy='dynamic')
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
     usestarttime = db.Column(db.DateTime)  # 浣跨敤寮�濮嬫椂闂�
@@ -365,14 +370,14 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     asset_id = db.Column(db.Integer, db.ForeignKey('assets.id'))
     hostname = db.Column(db.String(64))  # Hostname
-    devicePorts = db.relationship('DevicePort', backref='device', lazy='dynamic')
+
     rack_id = db.Column(db.ForeignKey('racks.id'))  # 鍏宠仈Rack table id
     is_virtualization = db.Column(db.Boolean)  # 鏄惁璺戣櫄鎷熷寲  锛堝 OpenStack Compute锛�
     os = db.Column(db.String(64))  # os绫诲瀷
     cpumodel = db.Column(db.String(64))  # CPU 鍨嬪彿
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
-    memorys = db.relationship('DeviceMemory', backref='device', lazy='dynamic')
+    memorys = db.relationship('DeviceMemorys', backref='device', lazy='dynamic')
     raidmodel = db.Column(db.String(64))  # RAID 绾у埆
     disksize = db.Column(db.String(64))
     disks = db.relationship('Disks', backref='device', lazy='dynamic')  # 鍏宠仈 Asset table
