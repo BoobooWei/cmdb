@@ -106,6 +106,14 @@
                     <li><a href="nestable-list.html">防火墙管理</a></li>
                 </ul>
             </li>
+
+            <li class="has-submenu"><a href="#"><i class="ion-settings"></i> <span class="nav-label">虚拟机管理</span><span
+                    class="badge bg-success">New</span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('main.show_virtmachine') }}">虚拟机</a></li>
+                </ul>
+            </li>
+
             <li class="has-submenu"><a href="{{ url_for('main.show_idcs') }}"><i class="ion-compose"></i> <span
                     class="nav-label">机房管理</span></a>
             </li>
