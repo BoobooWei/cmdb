@@ -72,7 +72,7 @@
 
                                             <td>{{ rack.usesize }}</td>
                                             <td>{{ rack.remainsize }}</td>
-                                            <td>{{ rack.devices.count() }}</td>
+                                            <td>{{ db.session.query(Device).filter(Device.rack_id == rack.id).count() }}</td>
 
                                             <td class="actions">
                                                 <a class="hidden on-editing save-row" href="#"><i class="fa fa-save"></i></a>

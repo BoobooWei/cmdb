@@ -27,9 +27,11 @@ class Permission:
     IDC_EDIT = 0x100
     IDC_DEL = 0x200
 
+    ASSET_LOOK = 0x400
     ASSET_EDIT = 0x800
+    ASSET_DEL = 0x1000
 
-    ADMINISTER = 0x400
+    ADMINISTER = 0x2000
 
 
 class Role(db.Model):
@@ -66,6 +68,9 @@ class Role(db.Model):
                               Permission.IDC_LOOK |
                               Permission.IDC_EDIT |
                               Permission.IDC_DEL  |
+                              Permission.ASSET_LOOK  |
+                              Permission.ASSET_EDIT  |
+                              Permission.ASSET_DEL   |
                               Permission.ADMINISTER, False)
         }
 
@@ -271,12 +276,13 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.username
 
 
-class DeviceType(db.Model):
-    __tablename__ = 'deviceType'
+
+class ClassType(db.Model):
+    __tablename__ = 'classType'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)  # 璧勪骇绫诲悕
+    type = db.Column(db.Integer)      # 网络设备, 存储设备,  服务器,  资产
     remarks = db.Column(db.Text)  # 璧勪骇绫昏鏄�
-    devices = db.relationship('Asset', backref='DeviceType', lazy='dynamic')  # 鍏宠仈 Asset table
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -290,11 +296,14 @@ class DeviceDisks(db.Model):
     __tablename__ = 'deviceDisks'
     id = db.Column(db.Integer, primary_key=True)
     slot_id = db.Column(db.Integer)
-    SN = db.Column(db.String(64))
-    Size = db.Column(db.String(32))
-    Status = db.Column(db.Integer)
-    Physics_error = db.Column(db.Integer)
-    Logic_error = db.Column(db.Integer)
+    sn = db.Column(db.String(64))
+    size = db.Column(db.String(32))
+    type = db.Column(db.Integer)
+    raid = db.Column(db.Integer)
+    revolutions = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+    physics_error = db.Column(db.Integer)
+    logic_error = db.Column(db.Integer)
     device_id = db.Column(db.ForeignKey('devices.id'))
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
@@ -302,23 +311,61 @@ class DeviceDisks(db.Model):
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
     def __repr__(self):
-        return '<Disk %r>' % self.SN
+        return '<Disk %r>' % self.sn
+
+
+class DevicePortMap(db.Model):
+    __tablename__ = 'devicePortMap'
+    source_id = db.Column(db.Integer, db.ForeignKey('devicePorts.id'), primary_key=True)
+    target_id = db.Column(db.Integer, db.ForeignKey('devicePorts.id'), primary_key=True)
+    use = db.Column(db.String(64))
+    isbond = db.Column(db.Boolean)
+    remarks = db.Column(db.Text)
+    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
+    def __repr__(self):
+        return '<DevicePortMap %r connect %r>' % (self.source, self.target)
 
 
 class DevicePorts(db.Model):
     __tablename__ = 'devicePorts'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64))
+    name = db.Column(db.String(64))            # 接口名称 (eth0)
     ip = db.Column(db.String(64), unique=True, index=True)
     mac = db.Column(db.String(64), unique=True, index=True)
+    type = db.Column(db.Integer)    # 类型 (管理口, 业务口)
     portType = db.Column(db.Integer)     #（公网，内网， 上联接口）
-    device_id = db.Column(db.ForeignKey('assets.id'))
-    to_device_src = db.relationship('DevicePorts', backref=db.backref('to_device_dest', remote_side=id), uselist=False)
-    to_device_id = db.Column(db.ForeignKey('devicePorts.id'))
+    mode = db.Column(db.Integer)        # 接口类型(电口, 光口)
+    rate = db.Column(db.Integer)        #速率
+    vlanid = db.Column(db.Integer)      #交换机vlanid
+    source = db.relationship('DevicePortMap', foreign_keys=[DevicePortMap.target_id], backref=db.backref('target', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
+    target = db.relationship('DevicePortMap', foreign_keys=[DevicePortMap.source_id], backref=db.backref('source', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
+    device_id = db.Column(db.ForeignKey('deviceModel.id'))
     remarks = db.Column(db.Text)  # 澶囨敞
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
+    def map(self, target):
+        if not self.is_map(target):
+            devicePortMap = DevicePortMap()
+            devicePortMap.source = self
+            devicePortMap.target = target
+            db.session.add(devicePortMap)
+            db.session.commit()
+
+    def unmap(self, target):
+        devicePortMap = self.target.filter_by(target_id=target.id).first()
+        if devicePortMap:
+            db.session.delete(devicePortMap)
+
+    def is_map(self, target):
+        return self.target.filter_by(target_id=target.id).first() is not None
+
+    def is_map_by(self, source):
+        return self.source.filter_by(source_id=source.id).first() is not None
 
     def __repr__(self):
         return '<DevicePort %r>' % self.id
@@ -328,8 +375,8 @@ class DeviceMemorys(db.Model):
     __tablename__ = 'deviceMemorys'
     id = db.Column(db.Integer, primary_key=True)
     slot_id = db.Column(db.Integer)
-    SN = db.Column(db.String(64))
-    Size = db.Column(db.Integer)
+    sn = db.Column(db.String(64))
+    size = db.Column(db.Integer)
     device_id = db.Column(db.ForeignKey('devices.id'))
     remarks = db.Column(db.Text)  # 澶囨敞
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
@@ -344,6 +391,8 @@ class DevicePools(db.Model):
     __tablename__ = 'devicePools'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
+    type = db.Column(db.Integer)
+    usedept = db.Column(db.String(64))
     devices = db.relationship('VirtMachine', backref='pool', lazy='dynamic')
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
@@ -378,8 +427,7 @@ class DevicePowerManage(db.Model):
 class Asset(db.Model):
     __tablename__ = 'assets'
     id = db.Column(db.Integer, primary_key=True)
-    deviceType_id = db.Column(db.ForeignKey('deviceType.id'))  # 璧勪骇绫诲埆   鍏宠仈AssetType table
-    device = db.relationship('Device', backref='asset', uselist=False)
+    classType_id = db.Column(db.ForeignKey('classType.id'))  # 璧勪骇绫诲埆   鍏宠仈AssetType table
     an = db.Column(db.String(64), unique=True, index=True)  # AN 浼佷笟璧勪骇缂栧彿
     sn = db.Column(db.String(64), unique=True, index=True)  # SN 璁惧搴忓垪鍙�
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
@@ -387,7 +435,6 @@ class Asset(db.Model):
     manufacturer = db.Column(db.String(64))  # 鐢熶骇鍟�
     brand = db.Column(db.String(64))  # 鍝佺墝
     model = db.Column(db.String(64))  # 鍨嬪彿
-    devicePorts = db.relationship('DevicePorts', backref='device', lazy='dynamic')
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
     mainuses = db.Column(db.String(128))  # 涓昏鐢ㄩ��
@@ -437,27 +484,27 @@ class Asset(db.Model):
 class Device(db.Model):
     __tablename__ = 'devices'
     id = db.Column(db.Integer, primary_key=True)
-    asset_id = db.Column(db.Integer, db.ForeignKey('assets.id'))
-    hostname = db.Column(db.String(64))  # Hostname
+    asset_id = db.Column(db.Integer, db.ForeignKey('assets.id', ondelete='CASCADE', onupdate='CASCADE'))
     rack_id = db.Column(db.ForeignKey('racks.id'))  # 鍏宠仈Rack table id
+    classType_id = db.Column(db.ForeignKey('classType.id'))
+    hostname = db.Column(db.String(64))  # Hostname
     is_virtualization = db.Column(db.Boolean)  # 鏄惁璺戣櫄鎷熷寲  锛堝 OpenStack Compute锛�
-    virtualMachine = db.relationship('VirtMachine', backref='device', lazy='dynamic')
     os = db.Column(db.String(64))  # os绫诲瀷
     cpumodel = db.Column(db.String(64))  # CPU 鍨嬪彿
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
-    raidmodel = db.Column(db.String(64))  # RAID 绾у埆
     disks = db.relationship('DeviceDisks', backref='device', lazy='dynamic')  # 鍏宠仈 Asset table
     disksize = db.Column(db.String(64))
     memorys = db.relationship('DeviceMemorys', backref='device', lazy='dynamic')
     use = db.Column(db.String(64))     #用途
-    businss = db.Column(db.Integer)    #所属业务
-    powerstatus = db.Column(db.Boolean)  #电源状态
+    business = db.Column(db.Integer)    #所属业务
+    powerstatus = db.Column(db.Integer)  #电源状态
     powermanage = db.relationship('DevicePowerManage', backref='device', uselist=False)
-    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
+    isdelete = db.Column(db.Integer)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
 
     def to_json(self):
         json_device = {
@@ -504,10 +551,10 @@ class Device(db.Model):
 
 
 class VirtMachine(db.Model):
-    __tablename__ = 'virtmachine'
+    __tablename__ = 'virtMachine'
     id = db.Column(db.Integer, primary_key=True)
     device_id = db.Column(db.ForeignKey('devices.id'))
-    deviceType = db.Column(db.String(64), default=u'虚拟机')
+    deviceType = db.Column(db.String(64))
     virtType = db.Column(db.Integer)     #虚拟化平台类型 (VMware, KVM)
     pool_id = db.Column(db.Integer, db.ForeignKey('devicePools.id'))    #所属资源池
     hostname = db.Column(db.String(64))  # Hostname
@@ -516,8 +563,8 @@ class VirtMachine(db.Model):
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
     disksize = db.Column(db.String(64))
-    businss = db.Column(db.Integer)    #所属业务
-    powerstatus = db.Column(db.Boolean)  #电源状态
+    business = db.Column(db.Integer)    #所属业务
+    powerstatus = db.Column(db.Integer)  #电源状态
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
@@ -530,6 +577,41 @@ class VirtMachine(db.Model):
 
     def __repr__(self):
         return '<VirtMachine %r>' % self.hostname
+
+
+class DeviceModel(db.Model):
+    __tablename__ = 'deviceModel'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    slot_id = db.Column(db.Integer)
+    sn = db.Column(db.String(64))
+    device_id = db.Column(db.ForeignKey('devices.id'))
+    isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
+    remarks = db.Column(db.Text)  # 澶囨敞
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
+
+
+class DeviceNetwork(db.Model):
+    __tablename__ = 'deviceNetwork'
+    id = db.Column(db.Integer, primary_key=True)
+    classType_id = db.Column(db.Integer, db.ForeignKey('classType.id'))
+    asset_id = db.Column(db.Integer, db.ForeignKey('assets.id'))
+    rack_id = db.Column(db.Integer, db.ForeignKey('racks.id'))
+    model_id = db.Column(db.Integer, db.ForeignKey('deviceModel.id'))
+    firmversion = db.Column(db.String(64))     #固件版本
+    enginecount = db.Column(db.Integer)      #引擎数量
+    powercount = db.Column(db.Integer)          #电源数量
+    powertype = db.Column(db.Integer)           #电源类型 (直流, 交流)
+    fancount = db.Column(db.Integer)            #风扇数量
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+    def __repr__(self):
+        return '<Switch %r>' % self.id
+
 
 
 class Idc(db.Model):
@@ -560,7 +642,6 @@ class Rack(db.Model):
     name = db.Column(db.String(64))
     staff = db.Column(db.String(64))  # 鏈烘煖璐熻矗浜�
     idcname_id = db.Column(db.ForeignKey('idcs.id'))  # 鍏宠仈IDC table id
-    devices = db.relationship('Device', backref='rack', lazy='dynamic')
     site = db.Column(db.String(64))  # 鏈烘煖浣嶇疆
     racktype = db.Column(db.String(64))  # 鏈烘煖绫诲瀷
     usesize = db.Column(db.Integer)  # 宸茬敤绌洪棿锛坲锛�
@@ -600,3 +681,4 @@ class Logger(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+

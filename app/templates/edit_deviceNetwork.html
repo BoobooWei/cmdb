@@ -23,7 +23,7 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">添加设备</h3>
+            <h3 class="title">修改网络设备</h3>
         </div>
 
 
@@ -32,10 +32,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3 class="panel-title">设备信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_device') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_deviceNetwork', id=deviceNetwork.id) }}"
                               method="POST">
                             {{ form.csrf_token }}
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">设备类型</label>
 
+                                <div class="col-md-6">
+                                    {{ form.classType_id(class='select2', placeholder='设备类型') }}
+                                    {{ macros.print_form_messages(form.errors.classType_id) }}
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">资产号</label>
 
@@ -44,16 +51,6 @@
                                     {{ macros.print_form_messages(form.errors.asset_id) }}
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">设备类型</label>
-
-                                <div class="col-md-6">
-                                    {{ form.classType_id(class='select2', placeholder='资产号') }}
-                                    {{ macros.print_form_messages(form.errors.classType_id) }}
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label class="col-md-2 control-label">机柜</label>
 
@@ -64,86 +61,47 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">主机名</label>
+                                <label class="col-md-2 control-label">固件版本</label>
 
                                 <div class="col-md-6">
-                                    {{ form.hostname(class='form-control', placeholder='主机名') }}
-                                    {{ macros.print_form_messages(form.errors.hostname) }}
+                                    {{ form.firmversion(class='form-control', placeholder='固件版本') }}
+                                    {{ macros.print_form_messages(form.errors.firmversion) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label cr-styled">虚拟化</label>
+                                <label class="col-md-2 control-label">引擎数量</label>
 
-                                <div class="col-md-1">
-                                    <label class="cr-styled">
-                                        {{ form.is_virtualization(class='form-control', placeholder='虚拟化') }}
-                                        {{ macros.print_form_messages(form.errors.is_virtualization) }}
-                                        <i class="fa"></i>
-                                    </label>
+                                <div class="col-md-6">
+                                    {{ form.enginecount(class='form-control', placeholder='引擎数量') }}
+                                    {{ macros.print_form_messages(form.errors.enginecount) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">CPU型号</label>
+                                <label class="col-md-2 control-label">电源数量</label>
 
                                 <div class="col-md-6">
-                                    {{ form.cpumodel(type="text", class='form-control', placeholder='CPU型号') }}
-                                    {{ macros.print_form_messages(form.errors.cpumodel) }}
+                                    {{ form.powercount(class='form-control', placeholder='电源数量') }}
+                                    {{ macros.print_form_messages(form.errors.powercount) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">CPU内核(个)</label>
+                                <label class="col-md-2 control-label">电源类型</label>
 
                                 <div class="col-md-6">
-                                    {{ form.cpucount(type="text", class='form-control', placeholder='CPU内核(个)') }}
-                                    {{ macros.print_form_messages(form.errors.cpucount) }}
+                                    {{ form.powertype(class='select2', placeholder='电源类型') }}
+                                    {{ macros.print_form_messages(form.errors.powertype) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">内存大小(GB)</label>
+                                <label class="col-md-2 control-label">风扇数量</label>
 
                                 <div class="col-md-6">
-                                    {{ form.memsize(type="text", class='form-control', placeholder='内存大小(GB)') }}
-                                    {{ macros.print_form_messages(form.errors.memsize) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">磁盘大小(GB)</label>
-
-                                <div class="col-md-6">
-                                    {{ form.disksize(type="text", class='form-control', placeholder='磁盘大小(GB)') }}
-                                    {{ macros.print_form_messages(form.errors.disksize) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">用途</label>
-
-                                <div class="col-md-6">
-                                    {{ form.use(type="text", class='form-control', placeholder='用途') }}
-                                    {{ macros.print_form_messages(form.errors.use) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">所属业务</label>
-
-                                <div class="col-md-6">
-                                    {{ form.business(class='select2', placeholder='所属业务') }}
-                                    {{ macros.print_form_messages(form.errors.business) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">电源状态</label>
-
-                                <div class="col-md-6">
-                                    {{ form.powerstatus(class='select2', placeholder='电源状态') }}
-                                    {{ macros.print_form_messages(form.errors.powerstatus) }}
+                                    {{ form.fancount(class='form-control', placeholder='风扇数量') }}
+                                    {{ macros.print_form_messages(form.errors.fancount) }}
                                 </div>
                             </div>
 
@@ -151,7 +109,7 @@
                                 <label class="col-md-2 control-label">备注</label>
 
                                 <div class="col-md-6">
-                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
+                                    {{ form.remarks(class='form-control', placeholder='备注') }}
                                     {{ macros.print_form_messages(form.errors.remarks) }}
                                 </div>
                             </div>

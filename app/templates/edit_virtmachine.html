@@ -23,43 +23,97 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">添加设备</h3>
+            <h3 class="title">修改虚拟机</h3>
         </div>
+
 
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">设备信息</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">虚拟机信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_device') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_virtmachine', id=virtMachine.id) }}"
                               method="POST">
                             {{ form.csrf_token }}
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">资产号</label>
-
-                                <div class="col-md-6">
-                                    {{ form.asset_id(class='select2', placeholder='资产号') }}
-                                    {{ macros.print_form_messages(form.errors.asset_id) }}
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label class="col-md-2 control-label">设备类型</label>
 
                                 <div class="col-md-6">
-                                    {{ form.classType_id(class='select2', placeholder='资产号') }}
-                                    {{ macros.print_form_messages(form.errors.classType_id) }}
+                                    {{ form.deviceType(class='select2', placeholder='设备类型') }}
+                                    {{ macros.print_form_messages(form.errors.deviceType) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">机柜</label>
+                                <label class="col-md-2 control-label">使用状态</label>
 
                                 <div class="col-md-6">
-                                    {{ form.rack_id(class='select2', placeholder='机柜') }}
-                                    {{ macros.print_form_messages(form.errors.rack_id) }}
+                                    {{ form.onstatus(class='select2', placeholder='使用状态') }}
+                                    {{ macros.print_form_messages(form.errors.onstatus) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">使用部门</label>
+
+                                <div class="col-md-6">
+                                    {{ form.usedept(type="text", class='form-control', placeholder='使用部门', id="datepicker1") }}
+                                    {{ macros.print_form_messages(form.errors.usedept) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">部门使用人</label>
+
+                                <div class="col-md-6">
+                                    {{ form.usestaff(type="text", class='form-control', placeholder='部门使用人', id="datepicker1") }}
+                                    {{ macros.print_form_messages(form.errors.usestaff) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">主要用途</label>
+
+                                <div class="col-md-6">
+                                    {{ form.mainuses(type="text", class='form-control', placeholder='主要用途', id="datepicker3") }}
+                                    {{ macros.print_form_messages(form.errors.mainuses) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">管理部门</label>
+
+                                <div class="col-md-6">
+                                    {{ form.managedept(type="text", class='form-control', placeholder='管理部门') }}
+                                    {{ macros.print_form_messages(form.errors.managedept) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">管理人</label>
+
+                                <div class="col-md-6">
+                                    {{ form.managestaff(type="text", class='form-control', placeholder='管理人') }}
+                                    {{ macros.print_form_messages(form.errors.managestaff) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">运行主机</label>
+
+                                <div class="col-md-6">
+                                    {{ form.device_id(class='select2', placeholder='运行主机') }}
+                                    {{ macros.print_form_messages(form.errors.device_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">资源池</label>
+
+                                <div class="col-md-6">
+                                    {{ form.pool(class='select2', placeholder='资源池') }}
+                                    {{ macros.print_form_messages(form.errors.pool) }}
                                 </div>
                             </div>
 
@@ -67,20 +121,17 @@
                                 <label class="col-md-2 control-label">主机名</label>
 
                                 <div class="col-md-6">
-                                    {{ form.hostname(class='form-control', placeholder='主机名') }}
+                                    {{ form.hostname(type="text", class='form-control', placeholder='主机名') }}
                                     {{ macros.print_form_messages(form.errors.hostname) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label cr-styled">虚拟化</label>
+                                <label class="col-md-2 control-label">操作系统</label>
 
-                                <div class="col-md-1">
-                                    <label class="cr-styled">
-                                        {{ form.is_virtualization(class='form-control', placeholder='虚拟化') }}
-                                        {{ macros.print_form_messages(form.errors.is_virtualization) }}
-                                        <i class="fa"></i>
-                                    </label>
+                                <div class="col-md-6">
+                                    {{ form.os(type="text", class='form-control', placeholder='操作系统') }}
+                                    {{ macros.print_form_messages(form.errors.os) }}
                                 </div>
                             </div>
 
@@ -117,15 +168,6 @@
                                 <div class="col-md-6">
                                     {{ form.disksize(type="text", class='form-control', placeholder='磁盘大小(GB)') }}
                                     {{ macros.print_form_messages(form.errors.disksize) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">用途</label>
-
-                                <div class="col-md-6">
-                                    {{ form.use(type="text", class='form-control', placeholder='用途') }}
-                                    {{ macros.print_form_messages(form.errors.use) }}
                                 </div>
                             </div>
 

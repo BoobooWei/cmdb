@@ -6,13 +6,9 @@ _author__ = 'eric'
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
-from ..models import Role, Rack, Asset, Device, DeviceType, Idc, DeviceDisks, DevicePorts, DeviceMemorys, DevicePools, DevicePowerManage
+from ..models import *
+from .. import db
 from wtforms import ValidationError
-
-
-class NameForm(Form):
-    name = StringField('what is your name?', validators=[InputRequired()])
-    submit = SubmitField('Submit')
 
 
 class EditProfileForm(Form):
@@ -50,22 +46,26 @@ class EditProfileAdminForm(Form):
                 raise ValidationError('Username already registered')
 
 
-class EditDeviceTypeForm(Form):
-    name = StringField(u'资产类名', validators=[InputRequired() ,Length(1,64)])             # 资产类名
+class EditClassTypeForm(Form):
+    name = StringField(u'类名', validators=[InputRequired() ,Length(1,64)])             # 类名
+    type = SelectField(u'类型', coerce=int)
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
-    def __init__(self, deviceType, *args, **kwargs):
-        super(EditDeviceTypeForm, self).__init__(*args, **kwargs)
-        self.deviceType = deviceType
+    def __init__(self, classType, *args, **kwargs):
+        super(EditClassTypeForm, self).__init__(*args, **kwargs)
+        self.classType = classType
+
+        self.type.choices = [(1, u'服务器'), (2, u'网络设备'), (3, u'存储设备'), (4, u'资产')]
 
     def validate_name(self,field):
-        if not self.deviceType:
-            if DeviceType.query.filter_by(name=field.data).first():
-                raise ValidationError(u'资产类名已经被使用了')
+        if not self.classType:
+            if ClassType.query.filter_by(name=field.data).first():
+                raise ValidationError(u'类名称已经被使用了')
         else:
-            if field.data != self.deviceType.name and DeviceType.query.filter_by(name=field.data).first():
-                raise ValidationError(u'资产类名已经被使用了')
+            if field.data != self.classType.name and ClassType.query.filter_by(name=field.data).first():
+                raise ValidationError(u'类名称已经被使用了')
+
 
 
 class EditIdcForm(Form):
@@ -100,104 +100,99 @@ class EditIdcForm(Form):
 
 
 class EditAssetForm(Form):
-    DeviceType = SelectField(u'设备类型', coerce=int)   # 资产类别   关联AssetType table
+    classType_id = SelectField(u'设备类型', coerce=int)   # 资产类别   关联ClassType table
     an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
     sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
     onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
     dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
     manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
-    brand = StringField(u'品牌', validators=[Length(1,64)])                        # 品牌
-    model = StringField(u'型号', validators=[Length(1,64)])                        # 型号
-    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
-    usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
-    usestarttime = DateTimeField(u'使用开始时间')                   # 使用开始时间
-    useendtime = DateTimeField(u'使用结束时间')                     # 使用结束时间
-    mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
-    managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
-    managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
+    brand = StringField(u'品牌', validators=[Length(0,64)])                        # 品牌
+    model = StringField(u'型号', validators=[Length(0,64)])                        # 型号
+    usedept = StringField(u'使用部门', validators=[Length(0,64)])                       # 使用部门
+    usestaff = StringField(u'部门使用人', validators=[Length(0,64)])                     # 部门使用人
+    mainuses = StringField(u'主要用途', validators=[Length(0,128)])                    # 主要用途
+    managedept = StringField(u'管理部门', validators=[Length(0,64)])                   # 管理部门
+    managestaff = StringField(u'管理人', validators=[Length(0,64)])                  # 管理人
     koriyasustarttime = DateTimeField(u'维保开始时间')              # 维保开始时间
     koriyasuendtime = DateTimeField(u'维保结束时间')                # 维保结束时间
     equipprice = IntegerField(u'设备价格')
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, deviceAsset, *args, **kwargs):
         super(EditAssetForm, self).__init__(*args, **kwargs)
 
-        self.DeviceType.choices = [(deviceType.id, deviceType.name)
-                             for deviceType in DeviceType.query.order_by(DeviceType.name).all()]
+        self.classType_id.choices = [(classType.id, classType.name)
+                             for classType in ClassType.query.order_by(ClassType.name).all()]
 
-        self.onstatus.choices = [(1, u'使用'), (2, u'下线')]
+        self.onstatus.choices = [(1, u'已用'), (2, u'空闲'), (3, u'下线'), (3, u'待回收')]
+
+        self.deviceAsset = deviceAsset
 
 
     def validate_an(self,field):
-        if Device.query.filter_by(an=field.data).first():
-            raise ValidationError(u'AN已经被使用了')
+        if not self.deviceAsset:
+            if Asset.query.filter_by(an=field.data).first():
+                raise ValidationError(u'AN已经被使用了')
+        else:
+            if field.data != self.deviceAsset.an and Asset.query.filter_by(an=field.data).first():
+                raise ValidationError(u'AN已经被使用了')
 
     def validate_sn(self,field):
-        if Device.query.filter_by(sn=field.data).first():
-            raise ValidationError(u'SN已经被使用了')
+        if not self.deviceAsset:
+            if Asset.query.filter_by(sn=field.data).first():
+                raise ValidationError(u'SN已经被使用了')
+        else:
+            if field.data != self.deviceAsset.sn and Asset.query.filter_by(sn=field.data).first():
+                raise ValidationError(u'SN已经被使用了')
 
 
 class EditDeviceForm(Form):
-    DeviceType = SelectField(u'设备类型', coerce=int)   # 资产类别   关联AssetType table
-    an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
-    sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
-    onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
-    dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
-    manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
-    brand = StringField(u'品牌', validators=[Length(1,64)])                        # 品牌
-    model = StringField(u'型号', validators=[Length(1,64)])                        # 型号
-    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
-    usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
-    mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
-    managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
-    managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
-
+    asset_id = SelectField(u'资产号', coerce=int)
+    classType_id = SelectField(u'设备类型', coerce=int)
+    rack_id = SelectField(u'机柜', coerce=int)            # 关联Rack table id
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
-    rack = SelectField(u'机柜', coerce=int)                  # 关联Rack table id
-    devicePorts = StringField(u'设备接口')
     is_virtualization = BooleanField(u'虚拟化')               # 是否跑虚拟化  （如 OpenStack Compute）
     os = StringField(u'操作系统')
     cpumodel = StringField(u'CPU型号', validators=[Length(0,64)])                     # CPU 型号
     cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
     memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
-    memorys = StringField(u'设备内存')
-    raidmodel = StringField(u'Raid级别', validators=[Length(0,16)])                    # RAID 级别
     disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
-    disks = StringField(u'设备磁盘')
     use = StringField(u'用途')
-    businss = SelectField(u'所属业务', coerce=int)
-    powerstatus = BooleanField(u'电源状态')
-    powermanage = SelectField(u'电源管理', coerce=int)
-
-
+    business = SelectField(u'所属业务', coerce=int)
+    powerstatus = SelectField(u'电源状态', coerce=int)
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
-        self.onstatus.choices = [(1, u'未用'), (2, u'已用')]
+        self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
+                                 for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 1).filter(
+                                    Asset.id.notin_(db.session.query(Device.id))
+                                  ).all()]
 
-        self.rack.choices = [(rack.id, rack.name)
+        self.classType_id.choices = [(classType.id, classType.name)
+                                   for classType in ClassType.query.filter_by(type = 1).order_by(ClassType.name).all()]
+
+        self.rack_id.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
 
-        self.businss.choices = [(1, u'云计算',),]
+        self.business.choices = [(1, u'云计算',),]
 
         self.powerstatus.choices = [(1, u'开机'), (2, u'关机')]
 
 
 
 class EditVritMachineForm(Form):
-    deviceType = SelectField(u'设备类型', coerce=int)   # 资产类别   关联AssetType table
+    deviceType = SelectField(u'设备类型', coerce=int)   # 资产类别   关联ClassType table
     onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
     usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
     usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
     mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
     managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
     managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
-    device = SelectField(u'运行主机', coerce=int)
+    device_id = SelectField(u'运行主机', coerce=int)
     pool = SelectField(u'资源池', coerce=int)
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
     os = StringField(u'操作系统')
@@ -205,27 +200,59 @@ class EditVritMachineForm(Form):
     cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
     memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
     disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
-    businss = SelectField(u'所属业务', coerce=int)
-    powerstatus = BooleanField(u'电源状态')
+    business = SelectField(u'所属业务', coerce=int)
+    powerstatus = SelectField(u'电源状态', coerce=int)
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
     def __init__(self, *args, **kwargs):
         super(EditVritMachineForm, self).__init__(*args, **kwargs)
 
-        self.deviceType.choices = [(1, u'虚拟机'),]
+        self.deviceType.choices = [(1, u'OpenStack'), (2, u'VMware')]
 
-        self.onstatus.choices = [(1, u'未用'), (2, u'已用')]
+        self.onstatus.choices = [(1, u'已用'), (2, u'空闲'), (3, u'下线'), (3, u'待回收')]
 
-        self.device.choices = [(device.id, device.hostname)
+        self.device_id.choices = [(device.id, device.hostname)
                              for device in Device.query.order_by(Device.hostname).all()]
 
         self.pool.choices = [(pool.id, pool.name)
                              for pool in DevicePools.query.order_by(DevicePools.name).all()]
 
-        self.businss.choices = [(1, u'云计算',),]
+        self.business.choices = [(1, u'云计算',),(2, u'大数据')]
 
         self.powerstatus.choices = [(1, u'开机'), (2, u'关机')]
+
+
+
+
+class EditDeviceNetworkForm(Form):
+    classType_id = SelectField(u'设备类型', coerce=int)
+    asset_id = SelectField(u'资产号', coerce=int)
+    rack_id = SelectField(u'机柜', coerce=int)                  # 关联Rack table id
+    firmversion = StringField(u'固件版本')
+    enginecount = IntegerField(u'引擎数量')      #引擎数量
+    powercount = IntegerField(u'电源数量')          #电源数量
+    powertype = SelectField(u'电源类型', coerce=int)           #电源类型 (直流, 交流)
+    fancount = IntegerField(u'风扇数量')            #风扇数量
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(EditDeviceNetworkForm, self).__init__(*args, **kwargs)
+        self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
+                                 for asset in
+                                 Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).filter(
+                                     Asset.id.notin_(db.session.query(Device.id))
+                                 ).all()]
+
+        self.classType_id.choices = [(classType.id, classType.name)
+                                 for classType in ClassType.query.filter_by(type=2).order_by(ClassType.name).all()]
+
+        self.rack_id.choices = [(rack.id, rack.name)
+                                for rack in Rack.query.order_by(Rack.name).all()]
+
+        self.powertype.choices = [(1, u'交流'), (2, u'直流')]
+
 
 
 class EditDevicePortForm(Form):
@@ -250,9 +277,9 @@ class EditDevicePortForm(Form):
 
 
 class EditDeviceMemoryForm(Form):
-    slot_id = StringField(u'内存插槽', validators=[InputRequired(), Length(1,64)])
-    SN = StringField(u'序列号')
-    Size = IntegerField(u'内存大小')
+    slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
+    sn = StringField(u'序列号')
+    size = IntegerField(u'内存大小')
     device = SelectField(u'设备', coerce=int)
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
@@ -262,6 +289,35 @@ class EditDeviceMemoryForm(Form):
 
         self.device.choices = [(device.id, device.hostname)
                              for device in Device.query.order_by(Device.hostname).all()]
+
+
+class EditDeviceDiskForm(Form):
+    slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
+    sn = StringField(u'序列号')
+    size = IntegerField(u'磁盘大小(GB)')
+    type = SelectField(u'磁盘类型', coerce=int)
+    raid = SelectField(u'RAID级别', coerce=int)
+    revolutions = SelectField(u'磁盘转速', coerce=int)
+    status = SelectField(u'健康状态', coerce=int)
+    physics_error = IntegerField(u'物理坏道')
+    logic_error = IntegerField(u'逻辑坏道')
+    device = SelectField(u'连接设备', coerce=int)
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(EditDeviceDiskForm, self).__init__(*args, **kwargs)
+
+        self.type.choices = [(1, u'SAS'),(2, u'STAT'), (3, u'HDD'), (4, u'SSD')]
+
+        self.raid.choices = [(1, u'RAID0'), (2, u'RAID1'), (3, u'RAID5'), (4, u'RAID10')]
+
+        self.revolutions.choices = [(1, u'7200'),(2, u'10000'),(3, u'15000'),(4, u'SSD')]
+
+        self.status.choices = [(1, u'在线'),(2, u'下线')]
+
+        self.device.choices = [(device.id, device.hostname)
+                           for device in Device.query.order_by(Device.hostname).all()]
 
 
 class EditDevicePowermanageForm(Form):
@@ -277,7 +333,7 @@ class EditDevicePowermanageForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDevicePowermanageForm, self).__init__(*args, **kwargs)
 
-        self.powermanageType.choices = [(1, u'直流'), (1, u'交流')]
+        self.powermanageType.choices = [(1, u'IPMI'), (1, u'iLO')]
 
 #    def validate_powermanage_ip(self, field):
 #        if DevicePowerManage.query.filter_by(powermanage_ip=field.data).first():
@@ -286,10 +342,30 @@ class EditDevicePowermanageForm(Form):
 
 
 class EditDevicePoolsForm(Form):
+    type = SelectField(u'资源池类型', coerce=int)
     name = StringField(u'资源池名称', validators=[InputRequired(), Length(1,64)])
+    usedept = StringField(u'使用部门')
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
+    def __init__(self, *args, **kwargs):
+        super(EditDevicePoolsForm, self).__init__(*args, **kwargs)
+
+        self.type.choices = [(1, u'普通'), (2, u'高性能')]
+
+
+class EditDeviceModelForm(Form):
+    name = StringField(u'模块名称', validators=[InputRequired(), Length(1,64)])
+    slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
+    sn = StringField(u'序列号')
+    device_id = SelectField(u'RAID级别', coerce=int)
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditDeviceModelForm, self).__init__(*args, **kwargs)
+
+        self.device_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
+                                 for asset in Asset.query.order_by(Asset.id).all()]
 
 
 class EditRackForm(Form):

@@ -32,15 +32,15 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3 class="panel-title">资产信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_device') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_deviceAsset') }}"
                               method="POST">
                             {{ form.csrf_token }}
                             <div class="form-group">
-                                <label class="col-md-2 control-label">设备类型</label>
+                                <label class="col-md-2 control-label">资产类型</label>
 
                                 <div class="col-md-6">
-                                    {{ form.Devicetype(class='select2', placeholder='设备类型') }}
-                                    {{ macros.print_form_messages(form.errors.Devicetype) }}
+                                    {{ form.classType_id(class='select2', placeholder='设备类型') }}
+                                    {{ macros.print_form_messages(form.errors.classType_id) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -109,7 +109,7 @@
                                 <label class="col-md-2 control-label">使用部门</label>
 
                                 <div class="col-md-6">
-                                    {{ form.usedept(type="text", class='form-control', placeholder='使用部门', id="datepicker1") }}
+                                    {{ form.usedept(type="text", class='form-control', placeholder='使用部门') }}
                                     {{ macros.print_form_messages(form.errors.usedept) }}
                                 </div>
                             </div>
@@ -118,26 +118,53 @@
                                 <label class="col-md-2 control-label">部门使用人</label>
 
                                 <div class="col-md-6">
-                                    {{ form.usestaff(type="text", class='form-control', placeholder='部门使用人', id="datepicker2") }}
+                                    {{ form.usestaff(type="text", class='form-control', placeholder='部门使用人') }}
                                     {{ macros.print_form_messages(form.errors.usestaff) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">使用开始时间</label>
+                                <label class="col-md-2 control-label">主要用途</label>
 
                                 <div class="col-md-6">
-                                    {{ form.usestarttime(type="text", class='form-control', placeholder='使用开始时间', id="datepicker3") }}
-                                    {{ macros.print_form_messages(form.errors.usestarttime) }}
+                                    {{ form.mainuses(type="text", class='form-control', placeholder='主要用途') }}
+                                    {{ macros.print_form_messages(form.errors.mainuses) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">使用结束时间</label>
+                                <label class="col-md-2 control-label">管理部门</label>
 
                                 <div class="col-md-6">
-                                    {{ form.useendtime(class='form-control', placeholder='使用结束时间') }}
-                                    {{ macros.print_form_messages(form.errors.useendtime) }}
+                                    {{ form.managedept(type="text", class='form-control', placeholder='管理部门') }}
+                                    {{ macros.print_form_messages(form.errors.managedept) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">管理人</label>
+
+                                <div class="col-md-6">
+                                    {{ form.managestaff(type="text", class='form-control', placeholder='管理人') }}
+                                    {{ macros.print_form_messages(form.errors.managestaff) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">维保开始时间</label>
+
+                                <div class="col-md-6">
+                                    {{ form.koriyasustarttime(type="text", class='form-control', placeholder='维保开始时间') }}
+                                    {{ macros.print_form_messages(form.errors.koriyasustarttime) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">维保结束时间</label>
+
+                                <div class="col-md-6">
+                                    {{ form.koriyasuendtime(type="text", class='form-control', placeholder='维保结束时间') }}
+                                    {{ macros.print_form_messages(form.errors.koriyasuendtime) }}
                                 </div>
                             </div>
 
@@ -150,6 +177,22 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">备注</label>
+
+                                <div class="col-md-6">
+                                    {{ form.remarks(class='form-control', placeholder='备注') }}
+                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+
+                                <div class="col-md-6">
+                                    {{ form.submit(class='btn btn-info') }}
+                                </div>
+                            </div>
 
                         </form>
                     </div>

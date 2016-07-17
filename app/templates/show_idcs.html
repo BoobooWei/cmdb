@@ -63,26 +63,9 @@
                                             <td>{{ idc.name }}</td>
                                             <td>{{ idc.ispid }}</td>
                                             <td>{{ idc.city }}</td>
-                                            {% if idc.adnature == 1 %}
-                                                <td>租用</td>
-                                            {% elif idc.adnature == 2 %}
-                                                <td>自建</td>
-                                            {% elif idc.adnature == 3 %}
-                                                <td>合作</td>
-                                            {% elif idc.adnature == 4 %}
-                                                <td>其他</td>
-                                            {% endif %}
+                                            <td>{{ choices.adnature.get(idc.adnature, '未知') }}</td>
                                             <td>{{ idc.contactphone }}</td>
-                                            {% if idc.nettype == 1 %}
-                                                <td>单电信</td>
-                                            {% elif idc.nettype == 2 %}
-                                                <td>单联通</td>
-                                            {% elif idc.nettype == 3 %}
-                                                <td>双BGP</td>
-                                            {% elif idc.nettype == 4 %}
-                                                <td>联通电信双线</td>
-                                            {% endif %}
-
+                                            <td>{{ choices.nettype.get(idc.nettype, '未知') }}</td>
                                             <td>{{ idc.netout }}</td>
                                             <td>{{ idc.racks.count() }}</td>
 
