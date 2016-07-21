@@ -179,8 +179,8 @@ class EditDeviceForm(Form):
         self.rack_id.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
 
-        self.powermanage_id.choices = [(power.id, power.powermanageIp)
-                               for power in DevicePowerManage.query.all()]
+        self.powermanage_id.choices = [(power.id, power.ip)
+                               for power in DevicePower.query.all()]
 
         self.business.choices = [(1, u'云计算',),]
 
@@ -412,11 +412,11 @@ class EditRackForm(Form):
         self.idcname.choices = [(idc.id, idc.name)
                              for idc in Idc.query.order_by(Idc.name).all()]
 
-        self.racktype.choices = [(1, u'网络设备'), (2, u'服务器')]
+        self.racktype.choices = [(1, u'服务器'), (2, u'网络设备')]
 
-        self.electrictype.choices = [(1, u'直流'), (1, u'交流')]
+        self.electrictype.choices = [(1, u'交流'), (1, u'直流')]
 
-        self.electricno.choices = [(1, u'单路'), (1, u'双路')]
+        self.electricno.choices = [(1, u'双路'), (1, u'单路')]
 
         self.rack = rack
 

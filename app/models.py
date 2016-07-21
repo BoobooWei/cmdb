@@ -42,6 +42,17 @@ class Role(db.Model):
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
+    def to_json(self):
+        json_role = {
+            'url' : self.id,
+            'name' : self.name,
+            'default' : self.default,
+            'permissions' : self.permissions,
+            'users' : self.users,
+        }
+
+        return json_role
+
     @staticmethod
     def insert_roles():
         roles = {
@@ -105,6 +116,26 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)  # 璐︽埛鐘舵��
     avatar_hash = db.Column(db.String(32))  # 澶村儚
     logs = db.relationship('Logger', backref='user', lazy='dynamic')
+
+
+    def to_json(self):
+        json_user = {
+            'url' : self.id,
+            'email' : self.email,
+            'username' : self.username,
+            'password_hash' : self.password_hash,
+            'role' : self.role,
+            'name' : self.name,
+            'location' : self.location,
+            'position' : self.position,
+            'about_me' : self.about_me,
+            'phone' : self.phone,
+            'qq' : self.qq,
+            'member_sine' : self.member_since,
+            'last_seen' : self.last_seen,
+        }
+
+        return json_user
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -288,6 +319,17 @@ class ClassType(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+    def to_json(self):
+        json_classType = {
+            'url': self.id,
+            'name' : self.name,
+            'type' : self.type,
+            'remarks' : self.remarks,
+            'isdelete': self.isdelete,
+        }
+
+        return json_classType
+
     def __repr__(self):
         return '<DeviceType %r>' % self.name
 
@@ -309,6 +351,25 @@ class DeviceDisks(db.Model):
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
+    def to_json(self):
+        json_deviceDisk = {
+            'url' : self.id,
+            'slot_id' : self.slot_id,
+            'sn' : self.sn,
+            'size': self.size,
+            'type': self.type,
+            'raid': self.raid,
+            'revolutions': self.revolutions,
+            'status' : self.status,
+            'physics_error': self.physics_error,
+            'logic_error': self.logic_error,
+            'device' : self.device_id,
+            'isdelete': self.isdelete,
+            'remarks': self.remarks
+        }
+
+        return json_deviceDisk
 
     def __repr__(self):
         return '<Disk %r>' % self.sn
@@ -348,6 +409,25 @@ class DevicePorts(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+    def to_json(self):
+        json_devicePort = {
+            'url': self.id,
+            'name': self.name,
+            'ip'  : self.ip,
+            'mac' : self.mac,
+            'type': self.type,
+            'mode': self.mode,
+            'rate': self.rate,
+            'vlanid': self.vlanid,
+            'target': self.target,
+            'model' : self.model_id,
+            'display': self.display,
+            'remarks': self.remarks,
+            'isdelete': self.isdelete,
+        }
+
+        return json_devicePort
+
     def map(self, target):
         if not self.is_map(target):
             devicePortMap = DevicePortMap()
@@ -367,6 +447,9 @@ class DevicePorts(db.Model):
     def is_map_by(self, source):
         return self.source.filter_by(source_id=source.id).first() is not None
 
+
+
+
     def __repr__(self):
         return '<DevicePort %r>' % self.id
 
@@ -383,6 +466,18 @@ class DeviceMemorys(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+    def to_json(self):
+        json_deviceMemory = {
+            'url' : self.id,
+            'solt_id' : self.slot_id,
+            'sn' : self.sn,
+            'size' : self.size,
+            'device' : self.device_id,
+            'remarks' : self.remarks,
+            'isdelete' : self.isdelete,
+        }
+
+        return json_deviceMemory
 
     def __repr__(self):
         return '<DeviceMemory %r>' % self.id
@@ -576,9 +671,37 @@ class VirtMachine(db.Model):
     mainuses = db.Column(db.String(128))  # 涓昏鐢ㄩ��
     managedept = db.Column(db.String(64))  # 绠＄悊閮ㄩ棬
     managestaff = db.Column(db.String(64))  # 绠＄悊浜�
+    isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞
+
+    def to_json(self):
+        json_virtMachine = {
+            'url' : self.id,
+            'device' : self.device_id,
+            'deviceType': self.deviceType,
+            'virtType': self.virtType,
+            'pool_id' : self.pool_id,
+            'hostname' : self.hostname,
+            'os' : self.os,
+            'cpumodel' : self.cpumodel,
+            'cpucount' : self.cpucount,
+            'memsize' : self.memsize,
+            'disksize' : self.disksize,
+            'business' : self.business,
+            'powerstatus' : self.powerstatus,
+            'onstatus' : self.onstatus,
+            'usedept' : self.usedept,
+            'usestaff' : self.usestaff,
+            'mainues' : self.mainuses,
+            'managedept' : self.managestaff,
+            'managestaff' : self.managestaff,
+            'remarks' : self.remarks,
+            'isdelete' : self.isdelete,
+        }
+        return json_virtMachine
+
 
     def __repr__(self):
         return '<VirtMachine %r>' % self.hostname
@@ -597,6 +720,19 @@ class DeviceModel(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+    def to_json(self):
+        deviceModel = {
+            'url' : self.id,
+            'name' : self.name,
+            'type' : self.type,
+            'slot_id' : self.slot_id,
+            'sn' : self.sn,
+            'device' : self.device_id,
+            'isdelete' : self.isdelete,
+            'remarks' : self.remarks,
+        }
+
+        return deviceModel
 
     def __repr__(self):
         return '<Model %r>' % self.name
@@ -617,6 +753,24 @@ class DeviceNetwork(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞
+
+    def to_json(self):
+        deviceNetwork = {
+            'url' : self.id,
+            'classType' : self.classType_id,
+            'asset' : self.asset_id,
+            'rack' : self.rack_id,
+            'model' : self.model_id,
+            'firmversion' : self.firmversion,
+            'enginecount' : self.enginecount,
+            'powercount' : self.powercount,
+            'powertype' : self.powertype,
+            'fancount' : self.fancount,
+            'remarks' : self.remarks,
+            'isdelete' : self.isdelete,
+        }
+
+        return deviceNetwork
 
     def __repr__(self):
         return '<Switch %r>' % self.id
@@ -640,6 +794,25 @@ class Idc(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞
+
+    def to_json(self):
+        json_idc = {
+            'url' : self.id,
+            'name' : self.name,
+            'ispid' : self.ispid,
+            'racks' : self.racks,
+            'contactname' : self.contactname,
+            'contactphone' : self.contactphone,
+            'nettype' : self.nettype,
+            'netout' : self.netout,
+            'address' : self.address,
+            'city' : self.city,
+            'adnature' : self.adnature,
+            'remarks' : self.remarks,
+            'isdelete' : self.isdelete,
+        }
+
+        return json_idc
 
     def __repr__(self):
         return '<Idc %r>' % self.name
@@ -667,6 +840,30 @@ class Rack(db.Model):
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+
+    def to_json(self):
+        json_rack = {
+            'url' : self.id,
+            'name' : self.name,
+            'staff' : self.staff,
+            'idc' : self.idcname_id,
+            'site' : self.site,
+            'racktype' : self.racktype,
+            'usesize' : self.usesize,
+            'remainsize' : self.remainsize,
+            'electrictype' : self.electrictype,
+            'electricno' : self.electricno,
+            'electriccapacity' : self.electriccapacity,
+            'leftelectric' : self.leftelectric,
+            'renttime' : self.renttime,
+            'expiretime' : self.expiretime,
+            'nextpaytime' : self.nextpaytime,
+            'money' : self.money,
+            'remarks' : self.remarks,
+            'isdelete' : self.isdelete,
+        }
+
+        return json_rack
 
     def __repr__(self):
         return '<Rack %r>' % self.idcname

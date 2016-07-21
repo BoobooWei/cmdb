@@ -3,7 +3,7 @@ __author__ = 'eric'
 
 
 from . import api
-from ..models import Permission, Device, DevicePower
+from ..models import *
 from flask import jsonify
 from .decorators import permission_required
 
@@ -31,6 +31,15 @@ def get_device(id):
 def get_devicePower(id):
     devicePower = DevicePower.query.get_or_404(id)
     return jsonify({'devicePower': devicePower.to_json()})
+
+
+@api.route('/devicePort/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_devicePort(id):
+    devicePort = DevicePorts.query.get_or_404(id)
+    return jsonify({'devicePort': devicePort.to_json()})
+
 
 
         # @api.route('/devices/', methods=['POST'])
