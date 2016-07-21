@@ -23,7 +23,8 @@ def db_query():
 def models():
     return dict(Asset=Asset, Device=Device, Rack=Rack, Idc=Idc,
                 VirtMachine=VirtMachine, DevicePools=DevicePools,
-                ClassType=ClassType, DeviceNetwork=DeviceNetwork )
+                ClassType=ClassType, DeviceNetwork=DeviceNetwork,
+                DevicePower=DevicePower, DevicePorts=DevicePorts, DeviceModel=DeviceModel)
 
 
 @main.app_context_processor

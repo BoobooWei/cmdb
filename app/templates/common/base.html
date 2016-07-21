@@ -84,15 +84,24 @@
         <ul class="list-unstyled">
             <li class="active"><a href="../index.html"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a>
             </li>
-            <li class="has-submenu"><a href="#"><i class="ion-flask"></i> <span class="nav-label">资产管理<span
-                            class="badge bg-purple">{{ db.session.query(Asset).count() }}</span></span></a>
+            <li class="has-submenu">
+                <a href="#"><i class="ion-flask"></i>
+                    <span class="nav-label">资产管理
+                        <span class="badge bg-purple">{{ db.session.query(Asset).count() }}</span>
+                    </span>
+                </a>
                 <ul class="list-unstyled">
                     {% for type in db.session.query(ClassType).all() %}
-                        <li><a href="{{ url_for('main.show_deviceAssets', id=type.id) }}">{{ type.name }}<span
-                            class="badge bg-purple">{{ db.session.query(Asset).filter(Asset.classType_id == type.id).count() }}</span></a></li>
+                        <li>
+                            <a href="{{ url_for('main.show_deviceAssets', id=type.id) }}">{{ type.name }}
+                                <span class="badge bg-purple">{{ db.session.query(Asset).filter(Asset.classType_id == type.id).count() }}</span>
+                            </a>
+                        </li>
                     {% endfor %}
-                    <li><a href="{{ url_for('main.show_classType') }}">类别管理<span
-                            class="badge bg-purple">1</span></a></li>
+                    <li>
+                        <a href="{{ url_for('main.show_classType') }}">类别管理
+                            <span class="badge bg-purple">1</span></a>
+                    </li>
                 </ul>
             </li>
 
@@ -100,22 +109,36 @@
                             class="badge bg-purple">{{ db.session.query(Device).count() }}</span></span><span
                     class="badge bg-success">New</span></a>
                 <ul class="list-unstyled">
+
+                    <li><a href="{{ url_for('main.show_devices', id=0) }}">所有物理机
+                        <span class="badge bg-purple">{{ db.session.query(Device).count() }}</span></a></li>
+
                     {% for type in db.session.query(ClassType).filter(ClassType.type == 1).all() %}
-                        <li><a href="{{ url_for('main.show_devices', id=type.id) }}">{{ type.name }}</a></li>
+                        <li>
+                            <a href="{{ url_for('main.show_devices', id=type.id) }}">{{ type.name }}
+                                <span class="badge bg-purple">{{ db.session.query(Device).filter(Device.classType_id == type.id).count() }}</span>
+                            </a>
+                        </li>
                     {% endfor %}
+
+                    <li><a href="{{ url_for('main.show_devicePorts') }}">端口管理<span
+                            class="badge bg-purple">{{ db.session.query(DevicePorts).count() }}</span></a></li>
+                    <li><a href="{{ url_for('main.show_devicePower') }}">电源管理<span
+                            class="badge bg-purple">{{ db.session.query(DevicePower).count() }}</span></a></li>
                     <li><a href="{{ url_for('main.show_classType') }}">类别管理<span
                             class="badge bg-purple">1</span></a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu"><a href="#"><i class="ion-settings"></i> <span class="nav-label">虚拟化</span><span
+            <li class="has-submenu"><a href="#"><i class="ion-settings"></i> <span class="nav-label">虚拟化<span
+                            class="badge bg-purple">{{ db.session.query(VirtMachine).count() }}</span></span><span
                     class="badge bg-success">New</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="{{ url_for('main.show_virtmachine') }}">所有虚拟机<span
+                    <li><a href="{{ url_for('main.show_virtmachine',id=0) }}">所有虚拟机<span
                             class="badge bg-purple">{{ db.session.query(VirtMachine).count() }}</span></a></li>
 
                     {% for type in db.session.query(DevicePools).all() %}
-                    <li><a href="{{ url_for('main.show_virtmachine') }}">资源池-{{ type.name }}<span
+                    <li><a href="{{ url_for('main.show_virtmachine', id=type.id) }}">资源池-{{ type.name }}<span
                             class="badge bg-purple">{{ type.devices.count() }}</span></a></li>
                     {% endfor %}
 
@@ -128,8 +151,19 @@
                             class="badge bg-purple">{{ db.session.query(DeviceNetwork).count() }}</span></span>
                 <span class="badge bg-success">New</span></a>
                 <ul class="list-unstyled">
+
+                    <li>
+                            <a href="{{ url_for('main.show_deviceNetworks', id=0) }}">所有网络设备
+                                <span class="badge bg-purple">{{ db.session.query(DeviceNetwork).count() }}</span>
+                            </a>
+                    </li>
+
                     {% for type in db.session.query(ClassType).filter(ClassType.type == 2).all() %}
-                        <li><a href="{{ url_for('main.show_deviceNetworks', id=type.id) }}">{{ type.name }}</a></li>
+                        <li>
+                            <a href="{{ url_for('main.show_deviceNetworks', id=type.id) }}">{{ type.name }}
+                                <span class="badge bg-purple">{{ db.session.query(DeviceNetwork).filter(DeviceNetwork.classType_id == type.id).count() }}</span>
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </li>

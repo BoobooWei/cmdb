@@ -106,7 +106,8 @@ def delete_classType(id):
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePorts():
     devicePorts = DevicePorts.query.all()
-    return render_template('test.html', devicePorts=devicePorts)
+    return render_template('show_devicePorts.html', devicePorts=devicePorts)
+
 
 
 @main.route('/create-device.ports', methods=['GET', 'POST'])
@@ -116,18 +117,35 @@ def create_devicePorts():
     form = EditDevicePortForm()
     if form.validate_on_submit():
         devicePorts = DevicePorts()
+        deviceMaps = DevicePortMap()
+
         devicePorts.name = form.name.data
         devicePorts.ip = form.ip.data
         devicePorts.mac = form.mac.data
-        devicePorts.portType = form.portType.data
-        devicePorts.device = Device.query.get(form.device.data)
+        devicePorts.type = form.type.data
+        devicePorts.mode = form.mode.data
+        devicePorts.rate = form.rate.data
+        devicePorts.vlanid = form.vlanid.data
+        devicePorts.model_id = form.model_id.data
         devicePorts.remarks = form.remarks.data
+        target = DevicePorts.query.get(form.target.data)
+
+        db.session.add(devicePorts)
+        if target and target.id != 0:
+            print target.name
+            print target.id
+            if devicePorts.is_map(target):
+                devicePorts.map(target)
+
+
 
         db.session.add(devicePorts)
         db.session.commit()
         flash(u'创建设备端口:{0}成功!'.format(form.name.data))
         return redirect(url_for('main.index'))
-    return render_template('test.html', form=form)
+    return render_template('create_devicePorts.html', form=form)
+
+
 
 
 @main.route('/edit-device.ports/<int:id>', methods=['GET', 'POST'])
@@ -137,12 +155,28 @@ def edit_devicePorts(id):
     devicePorts = DevicePorts.query.get_or_404(id)
     form = EditDevicePortForm()
     if form.validate_on_submit():
-        devicePorts.name = form.name.data,
-        devicePorts.ip = form.ip.data,
-        devicePorts.mac = form.mac.data,
-        devicePorts.portType = form.portType.data,
-        devicePorts.device = Device.query.get(form.device.data)
+
+        devicePorts = DevicePorts()
+        deviceMaps = DevicePortMap()
+
+        devicePorts.name = form.name.data
+        devicePorts.ip = form.ip.data
+        devicePorts.mac = form.mac.data
+        devicePorts.type = form.type.data
+        devicePorts.mode = form.mode.data
+        devicePorts.rate = form.rate.data
+        devicePorts.vlanid = form.vlanid.data
+        devicePorts.model_id = form.model_id.data
         devicePorts.remarks = form.remarks.data
+        target = DevicePorts.query.get(form.target.data)
+
+        db.session.add(devicePorts)
+        if target and target.id != 0:
+            print target.name
+            print target.id
+            if devicePorts.is_map(target):
+                devicePorts.map(target)
+
         db.session.add(devicePorts)
         db.session.commit()
         flash(u'修改设备端口:{0}成功!'.format(devicePorts.name))
@@ -151,10 +185,14 @@ def edit_devicePorts(id):
     form.name.data = devicePorts.name
     form.ip.data = devicePorts.ip
     form.mac.data = devicePorts.mac
-    form.portType.data = devicePorts.portType
-    form.device.data = devicePorts.device
+    form.type.data = devicePorts.type
+    form.mode.data = devicePorts.mode
+    form.rate.data = devicePorts.rate
+    form.vlanid.data = devicePorts.vlanid
+    form.model_id.data = devicePorts.model_id
+    form.target.data = devicePorts.target
     form.remarks.data = devicePorts.remarks
-    return render_template('test.html', form=form)
+    return render_template('edit_devicePorts.html', form=form, devicePorts=devicePorts)
 
 
 @main.route('/delete-device.ports/<int:id>', methods=['GET', 'POST'])
@@ -386,76 +424,76 @@ def delete_devicePools(id):
 
 ########################################################################
 
-@main.route('/show-device.powermanage', methods=['GET', 'POST'])
+@main.route('/show-device.devicePowers', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
-def show_devicePowermanage():
-    devicePowermanage = DevicePowerManage.query.all()
-    return render_template('test.html', devicePowermanage=devicePowermanage)
+def show_devicePower():
+    devicePowers = DevicePower.query.all()
+    return render_template('show_devicePowers.html', devicePowers=devicePowers)
 
 
-@main.route('/create-device.powermanage', methods=['GET', 'POST'])
+@main.route('/create-device.devicePower', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
-def create_devicePowermanage():
-    form = EditDevicePowermanageForm()
+def create_devicePower():
+    form = EditDevicePowerForm()
     if form.validate_on_submit():
-        devicePowermanage = DevicePowerManage()
+        devicePower = DevicePower()
 
-        devicePowermanage.powermanageType = form.powermanageType.data
-        devicePowermanage.powermanageEnable = form.powermanageEnable.data
-        devicePowermanage.powermanageIp = form.powermanageIp.data
-        devicePowermanage.powermanageUser = form.powermanageUser.data
-        devicePowermanage.powermanagePassword = form.powermanagePassword.data
-        devicePowermanage.powermanageId = form.powermanageId.data
-        devicePowermanage.remarks = form.remarks.data
+        devicePower.type = form.type.data
+        devicePower.enabled = form.enabled.data
+        devicePower.ip = form.ip.data
+        devicePower.user = form.user.data
+        devicePower.password = form.password.data
+        devicePower.powerid = form.powerid.data
+        devicePower.remarks = form.remarks.data
 
-        db.session.add(devicePowermanage)
+        db.session.add(devicePower)
         db.session.commit()
-        flash(u'创建电源管理:{0}成功!'.format(devicePowermanage.powermanageIp))
-        return redirect(url_for('main.index'))
-    return render_template('test.html', form=form)
+        flash(u'创建电源管理:{0}成功!'.format(devicePower.ip))
+        return redirect(url_for('main.show_devicePower'))
+    return render_template('create_devicePower.html', form=form)
 
 
-@main.route('/edit-device.powermanage/<int:id>', methods=['GET', 'POST'])
+@main.route('/edit-device.devicePower/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
-def edit_devicePowermanage(id):
-    devicePowermanage = DevicePowerManage.query.get_or_404(id)
-    form = EditDevicePowermanageForm()
+def edit_devicePower(id):
+    devicePower = DevicePower.query.get_or_404(id)
+    form = EditDevicePowerForm()
     if form.validate_on_submit():
-        devicePowermanage.powermanageType = form.powermanageType.data,
-        devicePowermanage.powermanageEnable = form.powermanageEnable.data,
-        devicePowermanage.powermanageIp = form.powermanageIp.data,
-        devicePowermanage.powermanageUser = form.powermanageUser.data,
-        devicePowermanage.powermanagePassword = form.powermanagePassword.data,
-        devicePowermanage.powermanageId = form.powermanageId.data,
-        devicePowermanage.remarks = form.remarks.data
+        devicePower.type = form.type.data
+        devicePower.enabled = form.enabled.data
+        devicePower.ip = form.ip.data
+        devicePower.user = form.user.data
+        devicePower.password = form.password.data
+        devicePower.powerid = form.powerid.data
+        devicePower.remarks = form.remarks.data
 
-        db.session.add(devicePowermanage)
+        db.session.add(devicePower)
         db.session.commit()
-        flash(u'修改电源管理:{0}成功!'.format(devicePowermanage.powermanageIp))
-        return redirect(url_for('main.index'))
+        flash(u'修改电源管理:{0}成功!'.format(devicePower.ip))
+        return redirect(url_for('main.show_devicePower'))
 
-    form.powermanageType.data = devicePowermanage.powermanageType
-    form.powermanageEnable.data = devicePowermanage.powermanageEnable
-    form.powermanageIp.data = devicePowermanage.powermanageIp
-    form.powermanageUser.data = devicePowermanage.powermanageUser
-    form.powermanagePassword.data = devicePowermanage.powermanagePassword
-    form.powermanageId.data = devicePowermanage.powermanageId
-    form.remarks.data = devicePowermanage.remarks
+    form.type.data = devicePower.type
+    form.enabled.data = devicePower.enabled
+    form.ip.data = devicePower.ip
+    form.user.data = devicePower.user
+    form.password.data = devicePower.password_hash
+    form.powerid.data = devicePower.powerid
+    form.remarks.data = devicePower.remarks
 
-    return render_template('test.html', form=form)
+    return render_template('edit_devicePower.html', form=form, devicePower=devicePower)
 
 
-@main.route('/delete-device.powermanage/<int:id>', methods=['GET', 'POST'])
+@main.route('/delete-device.devicePower/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_DEL)
-def delete_devicePowermanage(id):
-    devicePowermanage = DevicePowerManage.query.get_or_404(id)
-    db.session.delete(devicePowermanage)
-    flash(u'电源管理: {0} 已删除!'.format(devicePowermanage.powermanageIp))
-    return redirect(url_for('main.index'))
+def delete_devicePower(id):
+    devicePower = DevicePower.query.get_or_404(id)
+    db.session.delete(devicePower)
+    flash(u'电源管理: {0} 已删除!'.format(devicePower.ip))
+    return redirect(url_for('main.show_devicePower'))
 
 
 ########################################################################
@@ -581,6 +619,7 @@ def create_device():
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
         device.disksize = form.disksize.data
+        device.powermanage_id = form.powermanage_id.data
         device.use = form.use.data
         device.business = form.business.data
         device.powerstatus = form.powerstatus.data
@@ -590,7 +629,7 @@ def create_device():
         db.session.commit()
         flash(u'设备添加完成')
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_devices',id=device.classType_id))
 
     return render_template('create_device.html', form=form)
 
@@ -612,6 +651,7 @@ def edit_device(id):
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
         device.disksize = form.disksize.data
+        device.powermanage_id = form.powermanage_id.data
         device.use = form.use.data
         device.business = form.business.data
         device.powerstatus = form.powerstatus.data
@@ -621,7 +661,7 @@ def edit_device(id):
         db.session.commit()
         flash(u'设备添加完成')
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_devices', id=device.classType_id))
 
     form.asset_id.data = device.asset_id
     form.classType_id.data = device.classType_id
@@ -633,6 +673,7 @@ def edit_device(id):
     form.cpucount.data = device.cpucount
     form.memsize.data = device.memsize
     form.disksize.data = device.disksize
+    form.powermanage_id.data = device.powermanage_id
     form.use.data = device.use
     form.business.data = device.business
     form.powerstatus.data = device.powerstatus
@@ -653,7 +694,10 @@ def show_devices(id):
     # items = pagination.items
     # return render_template('show_devices1.html', items=items, endpoint='main.show_devices', pagination=pagination)
 
-    devices = Device.query.filter(Device.classType_id == id).all()
+    if id != 0:
+        devices = Device.query.filter(Device.classType_id == id).all()
+    else:
+        devices = Device.query.all()
 
     return render_template('show_devices.html', devices=devices)
 
@@ -666,7 +710,7 @@ def delete_device(id):
     db.session.delete(device)
     db.session.commit()
     flash(u'设备: {0} 已删除!'.format(device.hostname))
-    return render_template('show_devices.html', devices=devices)
+    return redirect(url_for('main.show_devices', id=device.classType_id))
 
 
 ######################################################################
@@ -675,8 +719,11 @@ def delete_device(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceNetworks(id):
-    deviceNetworks = DeviceNetwork.query.filter(DeviceNetwork.classType_id == id).all()
-    print deviceNetworks
+    if id != 0:
+        deviceNetworks = DeviceNetwork.query.filter(DeviceNetwork.classType_id == id).all()
+    else:
+        deviceNetworks = DeviceNetwork.query.all()
+
     return render_template('show_deviceNetworks.html', deviceNetworks=deviceNetworks)
 
 
@@ -697,11 +744,15 @@ def create_deviceNetwork():
         deviceNetwork.powertype = form.powertype.data
         deviceNetwork.fancount = form.fancount.data
 
-        db.session.add(deviceNetwork)
-        db.session.commit()
-        flash(u'网络设备添加完成')
+        try:
+            db.session.add(deviceNetwork)
+            db.session.commit()
+            flash(u'网络设备: {0} 添加成功!'.format(deviceNetwork.id))
+        except:
+            db.session.rollback()
+            flash(u'网络设备: {0} 添加失败!'.format(deviceNetwork.id))
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceNetworks',id=deviceNetwork.classType_id))
 
     return render_template('create_deviceNetwork.html', form=form)
 
@@ -723,11 +774,15 @@ def edit_deviceNetwork(id):
         deviceNetwork.powertype = form.powertype.data
         deviceNetwork.fancount = form.fancount.data
 
-        db.session.add(deviceNetwork)
-        db.session.commit()
-        flash(u'网络设备添加完成')
+        try:
+            db.session.add(deviceNetwork)
+            db.session.commit()
+            flash(u'网络设备: {0} 修改成功!'.format(deviceNetwork.id))
+        except:
+            db.session.rollback()
+            flash(u'网络设备: {0} 修改失败!'.format(deviceNetwork.id))
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceNetworks',id=deviceNetwork.classType_id))
 
     form.classType_id.data = deviceNetwork.classType_id
     form.asset_id.data = deviceNetwork.asset_id
@@ -746,18 +801,27 @@ def edit_deviceNetwork(id):
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceNetwork(id):
     deviceNetwork = DeviceNetwork.query.get_or_404(id)
-    db.session.delete(deviceNetwork)
-    flash(u'虚拟机: {0} 已删除!'.format(deviceNetwork.hostname))
-    return redirect(url_for('main.show_deviceNetworks'))
+    try:
+        db.session.delete(deviceNetwork)
+        db.session.commit()
+        flash(u'网络设备: {0} 删除成功!'.format(deviceNetwork.id))
+    except:
+        db.session.rollback()
+        flash(u'网络设备: {0} 删除失败!'.format(deviceNetwork.id))
+
+    return redirect(url_for('main.show_deviceNetworks',id=deviceNetwork.classType_id))
 
 ######################################################################
 
 
-@main.route('/show-device.virtmachine', methods=['GET', 'POST'])
+@main.route('/show-device.virtmachine/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
-def show_virtmachine():
-    virtMachine = VirtMachine.query.all()
+def show_virtmachine(id):
+    if id != 0:
+        virtMachine = DevicePools.query.get_or_404(id).devices.all()
+    else:
+        virtMachine = VirtMachine.query.all()
     return render_template('show_virtmachine.html', virtMachine=virtMachine)
 
 
@@ -786,10 +850,15 @@ def create_virtmachine():
         virtMachine.powerstatus = form.powerstatus.data
         virtMachine.remarks = form.remarks.data
 
-        db.session.add(virtMachine)
-        db.session.commit()
-        flash(u'虚拟机添加完成')
-        return redirect(url_for('main.show_virtmachine'))
+        try:
+            db.session.add(virtMachine)
+            db.session.commit()
+            flash(u'虚拟机添加完成!')
+        except:
+            db.session.rollback()
+            flash(u'虚拟机添加失败!')
+
+        return redirect(url_for('main.show_virtmachine', id=virtMachine.deviceType))
 
     return render_template('create_virtmachine.html', form=form)
 
@@ -820,10 +889,15 @@ def edit_virtmachine(id):
         virtMachine.powerstatus = form.powerstatus.data
         virtMachine.remarks = form.remarks.data
 
-        db.session.add(virtMachine)
-        db.session.commit()
-        flash(u'设备添加完成')
-        return redirect(url_for('main.show_virtmachine'))
+        try:
+            db.session.add(virtMachine)
+            db.session.commit()
+            flash(u'设备添加完成!')
+        except:
+            db.session.rollback()
+            flash(u'设备添加失败!')
+
+        return redirect(url_for('main.show_virtmachine', id=virtMachine.deviceType))
 
     form.deviceType.data = virtMachine.deviceType
     form.onstatus.data = virtMachine.onstatus
@@ -852,9 +926,15 @@ def edit_virtmachine(id):
 @permission_required(Permission.DEVICE_DEL)
 def delete_virtmachine(id):
     virtMachine = VirtMachine.query.get_or_404(id)
-    db.session.delete(virtMachine)
-    flash(u'虚拟机: {0} 已删除!'.format(virtMachine.hostname))
-    return redirect(url_for('main.show_virtmachine'))
+
+    try:
+        db.session.delete(virtMachine)
+        flash(u'虚拟机: {0} 已删除!'.format(virtMachine.hostname))
+    except:
+        db.session.rollback()
+        flash(u'虚拟机: {0} 删除失败!'.format(virtMachine.hostname))
+
+    return redirect(url_for('main.show_virtmachine', id=virtMachine.deviceType))
 
 
 @main.route('/show-racks', methods=['GET', 'POST'])
@@ -895,9 +975,14 @@ def create_rack():
         rack.nextpaytime = form.nextpaytime.data
         rack.money = form.money.data
         rack.remarks = form.remarks.data
-        db.session.add(rack)
-        db.session.commit()
-        flash(u'机柜: {0} 添加完成'.format(form.name.data))
+        try:
+            db.session.add(rack)
+            db.session.commit()
+            flash(u'机柜: {0} 添加完成!'.format(form.name.data))
+        except:
+            db.session.rollback()
+            flash(u'机柜: {0} 添加失败!'.format(form.name.data))
+
         return redirect(url_for('main.show_racks'))
 
     return render_template('create_rack.html', form=form)
@@ -926,10 +1011,15 @@ def edit_rack(id):
         rack.nextpaytime = form.nextpaytime.data
         rack.money = form.money.data
         rack.remarks = form.remarks.data
-        db.session.add(rack)
 
-        db.session.commit()
-        flash(u'机柜:{0} 修改完成'.format(rack.name))
+        try:
+            db.session.add(rack)
+            db.session.commit()
+            flash(u'机柜:{0} 修改完成!'.format(rack.name))
+        except:
+            db.session.rollback()
+            flash(u'机柜:{0} 修改失败!'.format(rack.name))
+
         return redirect(url_for('main.show_racks'))
 
     form.name.data = rack.name
@@ -956,8 +1046,14 @@ def edit_rack(id):
 @permission_required(Permission.RACK_DEL)
 def delete_rack(id):
     rack = Rack.query.get_or_404(id)
-    db.session.delete(rack)
-    flash(u'机柜: {0} 已删除!'.format(rack.name))
+    try:
+        db.session.delete(rack)
+        flash(u'机柜: {0} 删除成功!'.format(rack.name))
+    except:
+        db.session.rollback()
+        flash(u'机柜: {0} 删除失败!'.format(rack.name))
+
+
     return redirect(url_for('main.show_racks'))
 
 
@@ -988,9 +1084,15 @@ def create_idc():
         idc.netout = form.netout.data
         idc.adnature = form.adnature.data
         idc.remarks = form.remarks.data
-        db.session.add(idc)
-        db.session.commit()
-        flash(u'机房:{0} 添加完成'.format(form.name.data))
+
+        try:
+            db.session.add(idc)
+            db.session.commit()
+            flash(u'机房:{0} 添加完成!'.format(form.name.data))
+        except:
+            db.session.rollback()
+            flash(u'机房:{0} 添加失败!'.format(form.name.data))
+
         return redirect(url_for('main.show_idcs'))
     return render_template('create_idc.html', form=form)
 
@@ -1013,9 +1115,16 @@ def edit_idc(id):
         idc.netout = form.netout.data
         idc.adnature = form.adnature.data
         idc.remarks = form.remarks.data
-        db.session.add(idc)
-        db.session.commit()
-        flash(u'机房:{0} 修改完成'.format(idc.name))
+
+        try:
+            db.session.add(idc)
+            db.session.commit()
+            flash(u'机房:{0} 修改完成'.format(idc.name))
+        except:
+            db.session.rollback()
+            flash(u'机房:{0} 修改失败'.format(idc.name))
+
+
         return redirect(url_for('main.show_idcs'))
 
     form.name.data = idc.name
@@ -1036,8 +1145,15 @@ def edit_idc(id):
 @permission_required(Permission.IDC_DEL)
 def delete_idc(id):
     idc = Idc.query.get_or_404(id)
-    db.session.delete(idc)
-    flash(u'机房: {0} 已删除!'.format(idc.name))
+
+    try:
+        db.session.delete(idc)
+        flash(u'机房: {0} 已删除!'.format(idc.name))
+    except:
+        db.session.rollback()
+        flash(u'机房: {0} 删除失败!'.format(idc.name))
+
+
     return redirect(url_for('main.show_idcs'))
 
 
@@ -1089,9 +1205,16 @@ def edit_profile_admin(id):
         user.name = form.name.data
         user.location = form.location.data
         user.about_me = form.about_me.data
-        db.session.add(user)
-        db.session.commit()
-        flash(u'修改资料成功!')
+
+        try:
+            db.session.add(user)
+            db.session.commit()
+            flash(u'修改资料成功!')
+        except:
+            db.session.rollback()
+            flash(u'修改资料失败!')
+
+
         return redirect(url_for('main.user', username=user.username))
     form.email.data = user.email
     form.username.data = user.username

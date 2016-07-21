@@ -17,7 +17,7 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">设备管理</h3>
+            <h3 class="title">电源模块管理</h3>
         </div>
 
 
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="m-b-28">
-                        <a href="{{ url_for('main.create_device') }}">
+                        <a href="{{ url_for('main.create_devicePower') }}">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">添加<i
                                     class="fa fa-plus"></i></button>
                         </a>
@@ -38,56 +38,58 @@
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>资产</th>
-                                        <th>主机名</th>
-                                        <th>IP</th>
-                                        <th>CPU</th>
-                                        <th>内存(GB)</th>
-                                        <th>磁盘(GB)</th>
+                                        <th>关联设备</th>
                                         <th>状态</th>
+                                        <th>品牌</th>
                                         <th>型号</th>
-                                        <th>使用部门</th>
                                         <th>使用人</th>
-                                        <th>业务</th>
+                                        <th>类型</th>
+                                        <th>启用</th>
+                                        <th>IP地址</th>
+                                        <th>设备ID</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
 
-
                                     <tbody>
-                                    {% for device in devices %}
-                                        {% set asset = db.session.query(Asset).get(device.asset_id) %}
-                                        {% set deviceModels = db.session.query(DeviceModel).filter(DeviceModel.device_id == device.id).filter(DeviceModel.type == 1).first() %}
-                                        {% set devicePorts = db.session.query(DevicePorts).filter(DevicePorts.model_id == deviceModels.id).filter(DevicePorts.display == False).first() %}
-                                        <tr>
+                                    {% for power in devicePowers %}
+                                        {% set devices = db.session.query(Device).filter(power.id == Device.powermanage_id) %}
+                                        {% set deviceAsset = db.session.query(Asset).filter(devices.first().asset_id == Asset.id).first() %}
+                                        <tr {% if devices.count() > 1 %} style="color:red" {% endif %}>
                                             <td>
                                                 <label class="cr-styled">
                                                     <input type="checkbox" checked="">
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td>{{ asset.an }}</td>
-                                            <td>{{ device.hostname }}</td>
-                                            <td>{% if devicePorts.type == 1 %}内网{% else %}公网{% endif %}|{{ devicePorts.ip }}</td>
-                                            <td>{{ device.cpucount }}</td>
-                                            <td>{{ device.memsize }}</td>
-                                            <td>{{ device.disksize }}</td>
-                                            <td>{{ choices.onstatus.get(asset.onstatus, '未知') }}</td>
-                                            <td>{{ asset.model }}</td>
-                                            <td>{{ asset.usedept }}</td>
-                                            <td>{{ asset.usestaff }}<td
-                                            <td>{{ device.business }}</td>
 
+                                            {% if devices.count() > 1 %}
+                                                <td>
+                                                {% for dev in devices.all() %}
+                                                    {{ dev.hostname }}
+                                                {% endfor %}
+                                                </td>
+                                            {% else %}
+                                                <td>{{ devices.first().hostname }}</td>
+                                            {% endif %}
+                                            <td>{{ devices.first().powerstatus }}</td>
+                                            <td>{{ deviceAsset.brand }}</td>
+                                            <td>{{ deviceAsset.model }}</td>
+                                            <td>{{ deviceAsset.usestaff }}</td>
+                                            <td>{{ power.type }}</td>
+                                            <td>{{ power.enabled }}</td>
+                                            <td>{{ power.ip }}</td>
+                                            <td>{{ power.powerid }}</td>
                                             <td class="actions">
                                                 <a class="hidden on-editing save-row" href="#"><i
                                                         class="fa fa-save"></i></a>
                                                 <a class="hidden on-editing cancel-row" href="#"><i
                                                         class="fa fa-times"></i></a>
                                                 <a class="on-default edit-row"
-                                                   href="{{ url_for('main.edit_device',id=device.id) }}"><i
+                                                   href="{{ url_for('main.edit_devicePower',id=power.id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                                 <a class="on-default remove-row"
-                                                   href="{{ url_for('main.delete_device',id=device.id) }}"><i
+                                                   href="{{ url_for('main.delete_devicePower',id=power.id) }}"><i
                                                         class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>

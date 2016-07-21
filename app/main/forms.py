@@ -158,6 +158,7 @@ class EditDeviceForm(Form):
     cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
     memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
     disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
+    powermanage_id = SelectField(u'远控卡模块', coerce=int)
     use = StringField(u'用途')
     business = SelectField(u'所属业务', coerce=int)
     powerstatus = SelectField(u'电源状态', coerce=int)
@@ -169,7 +170,7 @@ class EditDeviceForm(Form):
 
         self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
                                  for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 1).filter(
-                                    Asset.id.notin_(db.session.query(Device.id))
+                                    Asset.id.notin_(db.session.query(Device.asset_id))
                                   ).all()]
 
         self.classType_id.choices = [(classType.id, classType.name)
@@ -177,6 +178,9 @@ class EditDeviceForm(Form):
 
         self.rack_id.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
+
+        self.powermanage_id.choices = [(power.id, power.powermanageIp)
+                               for power in DevicePowerManage.query.all()]
 
         self.business.choices = [(1, u'云计算',),]
 
@@ -239,10 +243,11 @@ class EditDeviceNetworkForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(EditDeviceNetworkForm, self).__init__(*args, **kwargs)
+
         self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
                                  for asset in
                                  Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).filter(
-                                     Asset.id.notin_(db.session.query(Device.id))
+                                     Asset.id.notin_(db.session.query(DeviceNetwork.classType_id))
                                  ).all()]
 
         self.classType_id.choices = [(classType.id, classType.name)
@@ -259,21 +264,32 @@ class EditDevicePortForm(Form):
     name = StringField(u'接口名称', validators=[InputRequired(), Length(1,64)])
     ip = StringField(u'IP地址')
     mac = StringField(u'Mac地址')
-    portType = StringField(u'接口类型')
-    device = SelectField(u'设备', coerce=int)
-    to_device = SelectField(u'连接至')
+    type = SelectField(u'接口类型', coerce=int)
+    mode = SelectField(u'端口类型', coerce=int)
+    rate = SelectField(u'速率', coerce=int)
+    vlanid = IntegerField(u'VlanID')
+    model_id = SelectField(u'模块', coerce=int)
+    target = SelectField(u'连接至', coerce=int)
+    display = BooleanField(u'显示查询页面')
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
+
+
 
     def __init__(self, *args, **kwargs):
         super(EditDevicePortForm, self).__init__(*args, **kwargs)
 
-        self.device.choices = [(device.id, device.hostname)
-                             for device in Device.query.order_by(Device.hostname).all()]
+        self.type.choices = [(1, u'内网'), (2, u'公网')]
 
-        self.to_device.choices = [(ports.id, '{0}.{1}'.format(ports.device.device.hostname, ports.name))
-                             for ports in DevicePorts.query.order_by(DevicePorts.name).all()
-                                  if not ports.to_device_src and not ports.to_device_dest]
+        self.mode.choices = [(1, u'电口'), (2, u'光口')]
+
+        self.rate.choices = [(2, u'1GB'), (1, u'100MB'), (3, u'10GB'), (4, u'100GB')]
+
+        self.model_id.choices = [(model.id, model.name)
+                                 for model in DeviceModel.query.all()]
+
+        self.target.choices = [(port.id, port.name)
+                               for port in DevicePorts.query.all()]
 
 
 class EditDeviceMemoryForm(Form):
@@ -320,20 +336,21 @@ class EditDeviceDiskForm(Form):
                            for device in Device.query.order_by(Device.hostname).all()]
 
 
-class EditDevicePowermanageForm(Form):
-    powermanageType = SelectField(u'电源模块', coerce=int)                      # 网络类型
-    powermanageEnable = BooleanField(u'启用电源管理')
-    powermanageIp = StringField(u'电源管理IP', validators=[Length(0,15)])                 # 远控卡IP地址
-    powermanageUser = StringField(u'电源管理用户', validators=[Length(0,64)])
-    powermanagePassword = StringField(u'电源管理密码', validators=[Length(0,64)])
-    powermanageId = StringField(u'设备ID', validators=[Length(0,64)])          # 缃戝崱绔彛鏁伴噺
+class EditDevicePowerForm(Form):
+    type = SelectField(u'电源模块类型', coerce=int)                      # 网络类型
+    enabled = BooleanField(u'启用电源管理')
+    ip = StringField(u'IP地址', validators=[Length(0,15)])                 # 远控卡IP地址
+    user = StringField(u'用户', validators=[Length(0,64)])
+    password = PasswordField(u'密码', validators=[InputRequired(), EqualTo('password2', message=u'密码不匹配')])
+    password2 = PasswordField(u'确认密码', validators=[InputRequired()])
+    powerid = StringField(u'设备ID', validators=[Length(0,64)])          # 缃戝崱绔彛鏁伴噺
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
     def __init__(self, *args, **kwargs):
-        super(EditDevicePowermanageForm, self).__init__(*args, **kwargs)
+        super(EditDevicePowerForm, self).__init__(*args, **kwargs)
 
-        self.powermanageType.choices = [(1, u'IPMI'), (1, u'iLO')]
+        self.type.choices = [(1, u'IPMI'), (1, u'iLO')]
 
 #    def validate_powermanage_ip(self, field):
 #        if DevicePowerManage.query.filter_by(powermanage_ip=field.data).first():
@@ -356,6 +373,7 @@ class EditDevicePoolsForm(Form):
 
 class EditDeviceModelForm(Form):
     name = StringField(u'模块名称', validators=[InputRequired(), Length(1,64)])
+    type = SelectField(u'模块类型', coerce=int)
     slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
     sn = StringField(u'序列号')
     device_id = SelectField(u'RAID级别', coerce=int)
@@ -363,6 +381,7 @@ class EditDeviceModelForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(EditDeviceModelForm, self).__init__(*args, **kwargs)
+        self.type.choices = [(1, u'服务器网卡'), (2, u'网络设备模块')]
 
         self.device_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
                                  for asset in Asset.query.order_by(Asset.id).all()]

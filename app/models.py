@@ -335,14 +335,14 @@ class DevicePorts(db.Model):
     name = db.Column(db.String(64))            # 接口名称 (eth0)
     ip = db.Column(db.String(64), unique=True, index=True)
     mac = db.Column(db.String(64), unique=True, index=True)
-    type = db.Column(db.Integer)    # 类型 (管理口, 业务口)
-    portType = db.Column(db.Integer)     #（公网，内网， 上联接口）
+    type = db.Column(db.Integer)     #（公网，内网， 上联接口）
     mode = db.Column(db.Integer)        # 接口类型(电口, 光口)
     rate = db.Column(db.Integer)        #速率
-    vlanid = db.Column(db.Integer)      #交换机vlanid
+    vlanid = db.Column(db.Integer, default=0)      #交换机vlanid
     source = db.relationship('DevicePortMap', foreign_keys=[DevicePortMap.target_id], backref=db.backref('target', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
     target = db.relationship('DevicePortMap', foreign_keys=[DevicePortMap.source_id], backref=db.backref('source', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
-    device_id = db.Column(db.ForeignKey('deviceModel.id'))
+    model_id = db.Column(db.ForeignKey('deviceModel.id'))
+    display = db.Column(db.Boolean, default=False)      #是否显示在管理资产条目显示端口信息
     remarks = db.Column(db.Text)  # 澶囨敞
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -403,21 +403,47 @@ class DevicePools(db.Model):
         return '<DevicePools %r>' % self.id
 
 
-class DevicePowerManage(db.Model):
-    __tablename__ = 'devicePowermanage'
+class DevicePower(db.Model):
+    __tablename__ = 'devicePowers'
     id = db.Column(db.Integer, primary_key=True)
-    powermanageType = db.Column(db.Integer)
-    powermanageEnable = db.Column(db.Boolean, default=False)
-    powermanageIp = db.Column(db.String(64))  # 杩滄帶鍗P鍦板潃
-    powermanageUser = db.Column(db.String(64))
-    powermanagePassword = db.Column(db.String(64))
-    powermanageId = db.Column(db.String(256))
-    device_id = db.Column(db.ForeignKey('devices.id'))
+    type = db.Column(db.Integer)
+    enabled = db.Column(db.Boolean, default=False)
+    ip = db.Column(db.String(64))  # 杩滄帶鍗P鍦板潃
+    user = db.Column(db.String(64))
+    password_hash = db.Column(db.String(256))
+    powerid = db.Column(db.String(256))
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+
+    def generate_password_token(self, password):
+        from itsdangerous import JSONWebSignatureSerializer as Serializer
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'confirm': password})
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = self.generate_password_token(password)
+
+
+    def to_json(self):
+        json_power = {
+            'url' : self.id,
+            'type' : self.type,
+            'enabled' : self.enabled,
+            'ip' : self.ip,
+            'user' : self.user,
+            'password': self.password_hash,
+            'powerid': self.powerid,
+        }
+
+        return json_power
 
     def __repr__(self):
         return '<DevicePower %r>' %self.id
@@ -453,26 +479,22 @@ class Asset(db.Model):
 
         json_asset = {
             #'url': url_for('api.get_device', id=self.id, _external=True),
-            #'deviceType': url_for('api.get_deviceType', id=self.id, _external=True),
-            'AN': self.an,
-            'SN': self.sn,
+            #'classType': url_for('api.get_deviceType', id=self.id, _external=True),
+            'an': self.an,
+            'sn': self.sn,
             'onstatus': self.onstatus,
-            'flowstatus': self.flowstatus,
             'dateofmanufacture': self.dateofmanufacture,
             'manufacturer': self.manufacturer,
             'brand': self.brand,
             'model': self.model,
-            'site': self.site,
             'usedept': self.usedept,
             'usestaff': self.usestaff,
-            'usestarttime': self.usestarttime,
-            'useendtime': self.useendtime,
             'mainuses': self.mainuses,
             'managedept': self.managedept,
             'managestaff': self.managestaff,
+            'equipprice': self.equipprice,
             'koriyasustarttime': self.koriyasustarttime,
             'koriyasuendtime': self.koriyasuendtime,
-        'equipprice': self.equipprice,
             }
         return json_asset
 
@@ -499,7 +521,7 @@ class Device(db.Model):
     use = db.Column(db.String(64))     #用途
     business = db.Column(db.Integer)    #所属业务
     powerstatus = db.Column(db.Integer)  #电源状态
-    powermanage = db.relationship('DevicePowerManage', backref='device', uselist=False)
+    powermanage_id = db.Column(db.ForeignKey('devicePowers.id'))
     isdelete = db.Column(db.Integer)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -508,39 +530,22 @@ class Device(db.Model):
 
     def to_json(self):
         json_device = {
-
-            'device': {
+                'url': url_for('api.get_device', id=self.id, _external=True),
+                #'asset': url_for('api.get_asset', id=self.id, _external=True),
+                #'rack' : url_for('api.get_rack', id=self.id, _external=True),
+                'classType' : self.classType_id,
                 'hostname': self.hostname,
-                'private_ip': self.private_ip,
-                'private_mac': self.private_mac,
-                'public_ip': self.public_ip,
-                'public_mac': self.public_mac,
-                'other_ip': self.other_ip,
-                'other_mac': self.other_mac,
-                #'rack_id': url_for('api.get_rack', id=self.rack_id, _external=True),
-                'idc': self.idc,
                 'is_virtualization': self.is_virtualization,
                 'os': self.os,
                 'cpumodel': self.cpumodel,
                 'cpucount': self.cpucount,
                 'memsize': self.memsize,
-                'singlemem': self.singlemem,
-                'raidmodel': self.raidmodel,
-                'disks': self.disks.count(),
-                'powermanage_enable': self.powermanage_enable,
-                'powermanage_ip': self.powermanage_ip,
-                'powermanage_user': self.powermanage_user,
-                'powermanage_password': self.powermanage_password,
-                'powermanage_id': self.powermanage_id,
-                'networkportcount': self.networkportcount,
+                'disksize': self.disksize,
+                'use': self.use,
+                'business': self.business,
+                'powerstatus': self.powerstatus,
+                'powermanage' : self.powermanage_id,
                 'remarks': self.remarks,
-            },
-
-            'manage': {
-                'isdelete': self.isdelete,
-                'instaff': self.instaff,
-                'inputtime': self.inputtime,
-            }
 
         }
         return json_device
@@ -583,6 +588,7 @@ class DeviceModel(db.Model):
     __tablename__ = 'deviceModel'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
+    type = db.Column(db.Integer)    #模块类型
     slot_id = db.Column(db.Integer)
     sn = db.Column(db.String(64))
     device_id = db.Column(db.ForeignKey('devices.id'))
@@ -591,6 +597,9 @@ class DeviceModel(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
+
+    def __repr__(self):
+        return '<Model %r>' % self.name
 
 
 class DeviceNetwork(db.Model):

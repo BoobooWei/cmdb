@@ -54,8 +54,8 @@
 
                                     <tbody>
                                     {% for device in deviceNetworks %}
-                                        {% set deviceAsset = db.session.query(Asset).get(device.asset_id) %}
-                                        {% set deviceRack = db.session.query(Rack).get(device.rack_id) %}
+                                        {% set deviceAsset = db.session.query(Asset).filter(Asset.id == device.asset_id).first() %}
+                                        {% set deviceRack = db.session.query(Rack).filter(Rack.id == device.rack_id).first() %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -63,7 +63,7 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td>{{ db.session.query(ClassType).get(device.classType_id).name }}</td>
+                                            <td>{{ db.session.query(ClassType).filter(ClassType.id == device.classType_id).first().name }}</td>
                                             <td>{{ deviceAsset.an }}</td>
                                             <td>{{ deviceRack.name }}</td>
                                             <td>{{ deviceRack.idcname.name }}</td>
