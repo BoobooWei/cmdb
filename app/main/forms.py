@@ -376,7 +376,9 @@ class EditDeviceModelForm(Form):
     type = SelectField(u'模块类型', coerce=int)
     slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
     sn = StringField(u'序列号')
-    device_id = SelectField(u'RAID级别', coerce=int)
+    device_id = SelectField(u'设备', coerce=int)
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
 
 
     def __init__(self, *args, **kwargs):
@@ -385,6 +387,32 @@ class EditDeviceModelForm(Form):
 
         self.device_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
                                  for asset in Asset.query.order_by(Asset.id).all()]
+
+
+class EditDevicePortMapForm(Form):
+    source_id = SelectField(u'设备源端口', coerce=int)
+    target_id = SelectField(u'设备目的端口', coerce=int)
+    use = StringField(u'用途')
+    isbond = BooleanField(u'isbond')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+    def __init__(self, *args, **kwargs):
+        super(EditDevicePortMapForm, self).__init__(*args, **kwargs)
+
+        self.source_id.choices = [( port.id, port.name)
+                                  for port in DevicePorts.query.all()]
+
+        #self.source_id.choices.append((network.id, network.name)
+                                      #for network in DeviceNetwork.query.all())
+
+
+        self.target_id.choices = [(port.id, port.hostname)
+                                  for port in DevicePorts.query.all()]
+
+        #self.target_id.choices.append((network.id, network.name)
+                              #for network in DeviceNetwork.query.all())
+
 
 
 class EditRackForm(Form):

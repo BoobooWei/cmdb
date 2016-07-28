@@ -204,6 +204,37 @@ def delete_devicePorts(id):
     flash(u'删除设备端口:{0}成功!'.format(devicePorts.name))
     return redirect(url_for('main.show_devicePorts'))
 
+##################################################################
+
+@main.route('/show-device.portmaps', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_devicePortMaps():
+    devicePortMap = DevicePortMap.query.all()
+    return render_template('test.html', devicePortMap=devicePortMap)
+
+
+@main.route('/create-device.portmap', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_devicePortMap():
+    form = EditDevicePortMapForm()
+    if form.validate_on_submit():
+        devicePortMap = DevicePortMap()
+
+        devicePortMap.source_id = form.source_id.data
+        devicePortMap.target_id = form.target_id.data
+        devicePortMap.use = form.use.data
+        devicePortMap.isbond = form.isbond.data
+        devicePortMap.remarks = form.remarks.data
+
+        db.session.add(devicePortMap)
+        flash(u'创建端口映射成功!')
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('create_devicePortMap.html', form=form)
+
+
 
 ##################################################################
 
