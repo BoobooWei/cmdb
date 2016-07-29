@@ -17,7 +17,7 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">设备管理</h3>
+            <h3 class="title">用户管理</h3>
         </div>
 
 
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="m-b-28">
-                        <a href="{{ url_for('main.create_device') }}">
+                        <a href="{{ url_for('main.create_system_users') }}">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">添加<i
                                     class="fa fa-plus"></i></button>
                         </a>
@@ -38,27 +38,19 @@
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>资产</th>
-                                        <th>主机名</th>
-                                        <th>IP</th>
-                                        <th>CPU</th>
-                                        <th>内存(GB)</th>
-                                        <th>磁盘(GB)</th>
-                                        <th>状态</th>
-                                        <th>型号</th>
-                                        <th>使用部门</th>
-                                        <th>使用人</th>
-                                        <th>业务</th>
+                                        <th>Email</th>
+                                        <th>用户</th>
+                                        <th>启用</th>
+                                        <th>真实姓名</th>
+                                        <th>权限</th>
+                                        <th>工作职位</th>
+                                        <th>电话</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
 
-
                                     <tbody>
-                                    {% for device in devices %}
-                                        {% set asset = db.session.query(Asset).get(device.asset_id) %}
-                                        {% set deviceModels = db.session.query(DeviceModel).filter(DeviceModel.device_id == device.id).filter(DeviceModel.type == 1).first() %}
-                                        {% set devicePorts = db.session.query(DevicePorts).filter(DevicePorts.model_id == deviceModels.id).filter(DevicePorts.display == False).first() %}
+                                    {% for user in users %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -66,32 +58,25 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td>{{ asset.an }}</td>
-                                            <td>{{ device.hostname }}</td>
-                                            <td>{% if devicePorts.type == 1 %}内网{% else %}公网{% endif %}|{{ devicePorts.ip }}</td>
-                                            <td>{{ device.cpucount }}</td>
-                                            <td>{{ device.memsize }}</td>
-                                            <td>{{ device.disksize }}</td>
-                                            <td>{{ choices.onstatus.get(asset.onstatus, '未知') }}</td>
-                                            <td>{{ asset.model }}</td>
-                                            <td>{{ asset.usedept }}</td>
-                                            <td>{{ asset.usestaff }}<td
-                                            <td>{{ device.business }}</td>
 
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.confirmed }}</td>
+                                            <td>{{ user.name }}</td>
+                                            <td>{{ user.role.name }}</td>
+                                            <td>{{ user.position }}</td>
+                                            <td>{{ user.phone }}</td>
                                             <td class="actions">
                                                 <a class="hidden on-editing save-row" href="#"><i
                                                         class="fa fa-save"></i></a>
                                                 <a class="hidden on-editing cancel-row" href="#"><i
                                                         class="fa fa-times"></i></a>
                                                 <a class="on-default edit-row"
-                                                   href="{{ url_for('main.edit_device',id=device.id) }}"><i
+                                                   href="{{ url_for('main.edit_system_users',id=user.id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                                 <a class="on-default remove-row"
-                                                   href="{{ url_for('main.delete_device',id=device.id) }}"><i
+                                                   href="{{ url_for('main.delete_system_users',id=user.id) }}"><i
                                                         class="fa fa-trash-o"></i></a>
-                                                <a class="on-default remove-row"
-                                                   href="{{ url_for('main.delete_device',id=device.id) }}"><i
-                                                        class="fa ion-eye"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}

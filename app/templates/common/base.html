@@ -179,10 +179,7 @@
 
             <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">数据库管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="inbox.html">Inbox</a></li>
-                    <li><a href="email-compose.html">Compose Mail</a></li>
-                    <li><a href="email-read.html">View Mail</a></li>
-                    <li><a href="email-templates.html">Email Templates</a></li>
+                    <li><a href="inbox.html">类别管理</a></li>
                 </ul>
             </li>
 
@@ -214,18 +211,10 @@
             <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">用户管理</span><span
                     class="badge bg-pink">5</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="profile.html">Profile</a></li>
-                    <li><a href="timeline.html">Timeline</a></li>
-                    <li><a href="invoice.html">Invoice</a></li>
-                    <li><a href="contact.html">Contact-list</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="recoverpw.html">Recover Password</a></li>
-                    <li><a href="lock-screen.html">Lock Screen</a></li>
-                    <li><a href="blank.html">Blank Page</a></li>
-                    <li><a href="../404.html">404 Error</a></li>
-                    <li><a href="404_alt.html">404 alt</a></li>
-                    <li><a href="../500.html">500 Error</a></li>
+                    <li><a href="{{ url_for('main.show_system_users') }}">用户管理
+                    <span class="badge bg-purple">{{ db.session.query(User).count() }}</span>
+                    </a></li>
+                    <li><a href="#">权限管理</a></li>
                 </ul>
             </li>
         </ul>
@@ -350,11 +339,9 @@
                     </a>
                     <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003"
                         style="overflow: hidden; outline: none;">
-                        <li><a href="{{ url_for('main.edit_profile') }}"><i class="fa fa-briefcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="#"><i class="fa fa-bell"></i> Friends <span
-                                class="label label-info pull-right mail-info">5</span></a></li>
-                        <li><a href="#"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a href="{{ url_for('main.edit_profile') }}"><i class="fa fa-briefcase"></i>用户信息</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i>修改密码</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out"></i>安全退出</a></li>
                     </ul>
                 </li>
                 <!-- user login dropdown end -->

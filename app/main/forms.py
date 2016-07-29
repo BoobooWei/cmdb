@@ -4,7 +4,7 @@ _author__ = 'eric'
 
 
 from flask.ext.wtf import Form
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField, SelectMultipleField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
 from ..models import *
 from .. import db
@@ -12,25 +12,26 @@ from wtforms import ValidationError
 
 
 class EditProfileForm(Form):
-    username = StringField('Username', validators=[InputRequired(), Length(0,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
+    username = StringField(u'用户姓名', validators=[InputRequired(), Length(0,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
     name = StringField(u'真实姓名', validators=[InputRequired(), Length(0,64)])
     position = StringField(u'工作职位', validators=[InputRequired(), Length(0,64)])
-    qq = StringField(u'QQ号码')
     phone = StringField(u'手机号码')
     location = StringField(u'位置', validators=[Length(0,64)])
-    about_me = TextAreaField(u'关于我')
     submit = SubmitField(u'提交')
 
 
 class EditProfileAdminForm(Form):
-    email = StringField('Email',validators=[InputRequired(), Length(1,64), Email()])
-    username = StringField('Username', validators=[InputRequired(), Length(1,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
-    confirmed = BooleanField(u'confirmed')
-    role = SelectField('Role', coerce=int)
-    name = StringField('Real Name', validators=[Length(0,64)])
-    location = StringField('Location', validators=[Length(0,64)])
-    about_me = TextAreaField('About me')
-    submit = SubmitField('Submit')
+    email = StringField(u'Email',validators=[InputRequired(), Length(1,64), Email()])
+    username = StringField(u'用户名', validators=[InputRequired(), Length(1,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
+    password = PasswordField(u'密码', validators=[InputRequired()])
+    confirmed = BooleanField(u'启用')
+    name = StringField(u'真实姓名', validators=[Length(0,64)])
+    role = SelectField(u'权限', coerce=int)
+    position = StringField(u'工作职位')
+    phone = StringField(u'手机号码')
+    location = StringField(u'位置', validators=[Length(0,64)])
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
 
     def __init__(self, user, *args, **kwargs):
         super(EditProfileAdminForm, self).__init__(*args, **kwargs)
@@ -38,12 +39,21 @@ class EditProfileAdminForm(Form):
         self.user = user
 
     def validate_email(self, field):
-        if field.data != self.user.email and User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email already registered')
+        if self.user:
+            if field.data != self.user.email and User.query.filter_by(email=field.data).first():
+                raise ValidationError('Email already registered')
+        else:
+            if User.query.filter_by(email=field.data).first():
+                raise ValidationError('Email already registered')
 
     def validate_username(self, field):
-        if field.data != self.user.username and User.query.filter_by(username=field.data).first():
+        if self.user:
+            if field.data != self.user.username and User.query.filter_by(username=field.data).first():
                 raise ValidationError('Username already registered')
+        else:
+            if User.query.filter_by(username=field.data).first():
+                raise ValidationError('Username already registered')
+
 
 
 class EditClassTypeForm(Form):
@@ -168,7 +178,7 @@ class EditDeviceForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
-        self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
+        self.asset_id.choices = [(asset.id, u'{0}:{1}:{2}:{3}:{4}:{5}'.format(asset.an, asset.sn, asset.brand, asset.model, asset.usedept, asset.usestaff))
                                  for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 1).filter(
                                     Asset.id.notin_(db.session.query(Device.asset_id))
                                   ).all()]
@@ -245,8 +255,7 @@ class EditDeviceNetworkForm(Form):
         super(EditDeviceNetworkForm, self).__init__(*args, **kwargs)
 
         self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
-                                 for asset in
-                                 Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).filter(
+                                 for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).filter(
                                      Asset.id.notin_(db.session.query(DeviceNetwork.classType_id))
                                  ).all()]
 

@@ -24,7 +24,8 @@ def models():
     return dict(Asset=Asset, Device=Device, Rack=Rack, Idc=Idc,
                 VirtMachine=VirtMachine, DevicePools=DevicePools,
                 ClassType=ClassType, DeviceNetwork=DeviceNetwork,
-                DevicePower=DevicePower, DevicePorts=DevicePorts, DeviceModel=DeviceModel)
+                DevicePower=DevicePower, DevicePorts=DevicePorts,
+                DeviceModel=DeviceModel, User=User)
 
 
 @main.app_context_processor

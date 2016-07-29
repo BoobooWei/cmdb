@@ -12,8 +12,8 @@ from . import db
 from . import login_manager
 
 
-class Permission:
-    USER_EDIT = 0x001
+class Permission(object):
+    ADMINISTER = 0x001
 
     DEVICE_LOOK = 0x002
     DEVICE_EDIT = 0x004
@@ -27,12 +27,33 @@ class Permission:
     IDC_EDIT = 0x100
     IDC_DEL = 0x200
 
-    ASSET_LOOK = 0x400
-    ASSET_EDIT = 0x800
-    ASSET_DEL = 0x1000
+    VIRTMACHINE_LOOK = 0x400
+    VIRTMACHINE_EDIT = 0x800
+    VIRTMACHINE_DEL = 0x1000
 
-    ADMINISTER = 0x2000
+    NETWORKDEVICE_LOOK = 0x2000
+    NETWORKDEVICE_EDIT = 0x4000
+    NETWORKDEVICE_DEL = 0x8000
 
+    DATABASE_LOOK = 0x10000
+    DATABASE_EDIT = 0x20000
+    DATABASE_DEL = 0x40000
+
+    SOFTWARE_LOOK = 0x80000
+    SOFTWARE_EDIT = 0x100000
+    SOFTWARE_DEL = 0x200000
+
+    DEVICEPERMISSION_LOOK = 0x400000
+    DEVICEPERMISSION_EDIT = 0x800000
+    DEVICEPERMISSION_DEL = 0x1000000
+
+    ASSET_LOOK = 0x2000000
+    ASSET_EDIT = 0x4000000
+    ASSET_DEL = 0x8000000
+
+    USER_LOOK = 0x10000000
+    USER_EDIT = 0x20000000
+    USER_DEL = 0x40000000
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -56,33 +77,97 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.DEVICE_LOOK |
+
+            'User': (
+                     Permission.DEVICEPERMISSION_LOOK |
+                     Permission.SOFTWARE_LOOK |
+                     Permission.VIRTMACHINE_LOOK |
+                     Permission.NETWORKDEVICE_LOOK |
+                     Permission.DATABASE_LOOK |
+                     Permission.SOFTWARE_LOOK |
+                     Permission.ASSET_LOOK |
+                     Permission.DEVICE_LOOK |
                      Permission.RACK_LOOK |
-                     Permission.IDC_LOOK, True),
+                     Permission.IDC_LOOK|
+                     Permission.USER_LOOK, True),
 
-            'manager': (Permission.USER_EDIT |
-                        Permission.DEVICE_LOOK |
-                        Permission.DEVICE_EDIT |
-                        Permission.RACK_LOOK |
-                        Permission.RACK_EDIT |
-                        Permission.IDC_LOOK |
-                        Permission.IDC_EDIT |
-                        Permission.ASSET_EDIT, False ),
+            'manager': (
 
-            'Administrator': (Permission.USER_EDIT |
-                              Permission.DEVICE_LOOK |
-                              Permission.DEVICE_EDIT |
-                              Permission.DEVICE_DEL  |
-                              Permission.RACK_LOOK |
-                              Permission.RACK_EDIT |
-                              Permission.RACK_DEL  |
-                              Permission.IDC_LOOK |
-                              Permission.IDC_EDIT |
-                              Permission.IDC_DEL  |
-                              Permission.ASSET_LOOK  |
-                              Permission.ASSET_EDIT  |
-                              Permission.ASSET_DEL   |
-                              Permission.ADMINISTER, False)
+                Permission.DEVICEPERMISSION_LOOK |
+                Permission.SOFTWARE_LOOK |
+                Permission.VIRTMACHINE_LOOK |
+                Permission.NETWORKDEVICE_LOOK |
+                Permission.DATABASE_LOOK |
+                Permission.SOFTWARE_LOOK |
+                Permission.ASSET_LOOK |
+                Permission.DEVICE_LOOK |
+                Permission.RACK_LOOK |
+                Permission.IDC_LOOK  |
+                Permission.USER_LOOK |
+
+                Permission.DEVICEPERMISSION_EDIT |
+                Permission.SOFTWARE_EDIT |
+                Permission.VIRTMACHINE_EDIT |
+                Permission.NETWORKDEVICE_EDIT |
+                Permission.DATABASE_EDIT |
+                Permission.SOFTWARE_EDIT |
+                Permission.ASSET_EDIT |
+                Permission.DEVICE_EDIT |
+                Permission.RACK_EDIT |
+                Permission.IDC_EDIT |
+
+                Permission.DEVICEPERMISSION_DEL |
+                Permission.SOFTWARE_DEL |
+                Permission.VIRTMACHINE_DEL |
+                Permission.NETWORKDEVICE_DEL |
+                Permission.DATABASE_DEL |
+                Permission.SOFTWARE_DEL |
+                Permission.ASSET_DEL |
+                Permission.DEVICE_DEL |
+                Permission.RACK_DEL |
+                Permission.IDC_DEL |
+
+                Permission.ASSET_EDIT, False ),
+
+            'Administrator': (
+
+                Permission.DEVICEPERMISSION_LOOK |
+                Permission.SOFTWARE_LOOK |
+                Permission.VIRTMACHINE_LOOK |
+                Permission.NETWORKDEVICE_LOOK |
+                Permission.DATABASE_LOOK |
+                Permission.SOFTWARE_LOOK |
+                Permission.ASSET_LOOK |
+                Permission.DEVICE_LOOK |
+                Permission.IDC_LOOK |
+                Permission.RACK_LOOK |
+                Permission.USER_LOOK |
+
+                Permission.DEVICEPERMISSION_EDIT |
+                Permission.SOFTWARE_EDIT |
+                Permission.VIRTMACHINE_EDIT |
+                Permission.NETWORKDEVICE_EDIT |
+                Permission.DATABASE_EDIT |
+                Permission.SOFTWARE_EDIT |
+                Permission.ASSET_EDIT |
+                Permission.DEVICE_EDIT |
+                Permission.IDC_EDIT  |
+                Permission.RACK_EDIT |
+                Permission.USER_EDIT |
+
+                Permission.DEVICEPERMISSION_DEL |
+                Permission.SOFTWARE_DEL |
+                Permission.VIRTMACHINE_DEL |
+                Permission.NETWORKDEVICE_DEL |
+                Permission.DATABASE_DEL |
+                Permission.SOFTWARE_DEL |
+                Permission.ASSET_DEL |
+                Permission.DEVICE_DEL |
+                Permission.IDC_DEL  |
+                Permission.RACK_DEL |
+                Permission.USER_EDIT |
+                Permission.USER_DEL |
+                Permission.ADMINISTER, False)
         }
 
         for r in roles:
@@ -775,6 +860,57 @@ class DeviceNetwork(db.Model):
     def __repr__(self):
         return '<Switch %r>' % self.id
 
+
+class IpResourcePools(db.Model):
+    __tablename__ = 'ipResourcePools'
+    id = db.Column(db.Integer, primary_key=True)
+    idc_id = db.Column(db.ForeignKey('idcs.id'))   #锁在机房
+    netmask = db.Column(db.String(32))             #子网掩码
+    gateway = db.Column(db.String(32))             #网关
+    range = db.Column(db.String(64))               #ip范围
+    type = db.Column(db.Boolean)                   #ip类型 (公网,内网)
+    vlan = db.Column(db.String(10))                #所在vlan
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+
+    def __repr__(self):
+        return '<IpPool %r>' % self.id
+
+
+    @staticmethod
+    def auto_insert_ipaddr(target, value, oldvalue, initiator):
+        from IPy import IP
+        ipRange = IP(value)
+        for ipaddr in ipRange:
+            status = 0
+            port_id = ''
+            devicePort = DevicePorts.query.filter(DevicePorts.ip==ipaddr).all()
+            if devicePort:
+                status = 1
+                port_id = devicePort.id
+            ip = IpResourceManage()
+            ip.ipPool_id = target.id
+            ip.ip = ipaddr
+            ip.status = status
+            ip.devicePort_id = port_id
+            db.session.add(ip)
+            db.session.commit()
+
+
+
+db.event.listen(IpResourcePools.range, 'set', IpResourcePools.auto_insert_ipaddr)
+
+
+class IpResourceManage(db.Model):
+    __tablename__ = 'ipResourceManage'
+    id = db.Column(db.Integer, primary_key=True)
+    ipPool_id = db.Column(db.Integer, db.ForeignKey('ipResourcePools.id'))
+    ip = db.Column(db.String(20))
+    status = db.Column(db.Integer)              # 可用, 已用, 主机地址, 广播地址
+    devicePort_id = db.Column(db.Integer, db.ForeignKey('devicePorts.id'))
+
+    def __repr__(self):
+        return '<ipManage %r>' % self.id
 
 
 class Idc(db.Model):
