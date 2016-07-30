@@ -25,7 +25,8 @@ def models():
                 VirtMachine=VirtMachine, DevicePools=DevicePools,
                 ClassType=ClassType, DeviceNetwork=DeviceNetwork,
                 DevicePower=DevicePower, DevicePorts=DevicePorts,
-                DeviceModel=DeviceModel, User=User)
+                DeviceModel=DeviceModel, User=User, IpResourcePools=IpResourcePools,
+                IpResourceManage=IpResourceManage)
 
 
 @main.app_context_processor

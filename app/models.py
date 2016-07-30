@@ -7,9 +7,10 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
-from flask import current_app, request, url_for
+from flask import current_app, request, url_for, flash
 from . import db
 from . import login_manager
+from app.exceptions import ValidationError
 
 
 class Permission(object):
@@ -479,7 +480,9 @@ class DevicePorts(db.Model):
     __tablename__ = 'devicePorts'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))            # 接口名称 (eth0)
-    ip = db.Column(db.String(64), unique=True, index=True)
+    ip = db.Column(db.String(32), unique=True, index=True)
+    mask = db.Column(db.String(32))             #子网掩码
+    gateway = db.Column(db.String(32))          #网关
     mac = db.Column(db.String(64), unique=True, index=True)
     type = db.Column(db.Integer)     #（公网，内网， 上联接口）
     mode = db.Column(db.Integer)        # 接口类型(电口, 光口)
@@ -499,6 +502,8 @@ class DevicePorts(db.Model):
             'url': self.id,
             'name': self.name,
             'ip'  : self.ip,
+            'mask': self.mask,
+            'gateway' : self.gateway,
             'mac' : self.mac,
             'type': self.type,
             'mode': self.mode,
@@ -532,11 +537,58 @@ class DevicePorts(db.Model):
     def is_map_by(self, source):
         return self.source.filter_by(source_id=source.id).first() is not None
 
+    @staticmethod
+    def auto_update_ipaddr(target, value, oldvalue, initiator):
+        from IPy import IP
 
+        prefix = value.split('.')[:-1]
+        prefix.append('0')
+        prefix = '.'.join(prefix)
+
+        ipRange = str(IP("{0}/{1}".format(prefix, target.mask)))
+
+
+        print ipRange
+        ipPool = IpResourcePools.query.filter(ipRange)
+        ipAddr = IpResourceManage.query.filter(IpResourceManage.ip == value).first()
+        if ipPool and ipAddr:
+            ipAddr.status = 1
+            flash(u'IP地址:{0}在IP地址段已经设置为已用。')
+            db.session.add(ipAddr)
+            db.session.commit()
+
+        else:
+            ipPool = IpResourcePools()
+            ipPool.netmask = target.mask
+            ipPool.gateway = target.gateway
+            ipPool.range = ipRange
+
+            iptype = 1
+            if IP(ipRange).iptype() == 'PUBLIC':
+                iptype = 2
+
+            ipPool.type = iptype
+
+            db.session.add(ipPool)
+            db.session.commit()
+
+            flash(u'成功创建IP地址段: {0}'.format(ipRange))
+
+            ipAddr = IpResourceManage.query.filter(IpResourceManage.ip == value).first()
+            if ipAddr:
+                ipAddr.status = 1
+
+                db.session.add(ipAddr)
+                db.session.commit()
+
+                flash(u'IP地址:{0}在IP地址段已经设置为已用。')
 
 
     def __repr__(self):
         return '<DevicePort %r>' % self.id
+
+db.event.listen(DevicePorts.ip, 'set', DevicePorts.auto_update_ipaddr)
+
 
 
 class DeviceMemorys(db.Model):
@@ -649,6 +701,7 @@ class Asset(db.Model):
     koriyasustarttime = db.Column(db.DateTime)  # 缁翠繚寮�濮嬫椂闂�
     koriyasuendtime = db.Column(db.DateTime)  # 缁翠繚缁撴潫鏃堕棿
     equipprice = db.Column(db.Integer)  # 璁惧浠锋牸
+    auto_discover = db.Column(db.Boolean)           #自动发现 True , False
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -678,6 +731,27 @@ class Asset(db.Model):
             }
         return json_asset
 
+    @staticmethod
+    def from_json(json_asset):
+
+        sn = json_asset.get('sn', None)
+        if sn is None and sn == '':
+            raise ValidationError(u'设备SN不能为空.')
+
+        asset = db.session.query(Asset).filter(sn=json_asset.get('sn')).first()
+        if not asset:
+            asset = Asset()
+
+        asset.sn = sn
+        asset.dateofmanufacture = json_asset.get('dateofmanufacture')
+        asset.manufacturer = json_asset.get('manufacturer')
+        asset.brand = json_asset.get('brand')
+        asset.model = json_asset.get('model')
+        asset.auto_discover = True
+
+        return asset
+
+
     def __repr__(self):
         return '<Asset %r>' %self.id
 
@@ -702,6 +776,8 @@ class Device(db.Model):
     business = db.Column(db.Integer)    #所属业务
     powerstatus = db.Column(db.Integer)  #电源状态
     powermanage_id = db.Column(db.ForeignKey('devicePowers.id'))
+    uuid = db.Column(db.String(64))     # Device UUID
+    auto_discover = db.Column(db.Boolean)           #自动发现 True , False
     isdelete = db.Column(db.Integer)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -725,10 +801,37 @@ class Device(db.Model):
                 'business': self.business,
                 'powerstatus': self.powerstatus,
                 'powermanage' : self.powermanage_id,
+                'uuid' : self.uuid,
                 'remarks': self.remarks,
 
         }
         return json_device
+
+
+    @staticmethod
+    def from_json(json_device):
+
+        uuid = json_device.get('uuid', None)
+        if uuid is None and uuid == '':
+            raise ValidationError(u'UUID不能为空.')
+
+        device = db.session.query(Device).filter(Device.uuid == json_device.get('uuid')).first()
+        if not device:
+            device = Device()
+
+        device.hostname = json_device.get('hostname')
+        device.os = json_device.get('os')
+        device.cpumodel = json_device.get('cpumodel')
+        device.cpucount = json_device.get('cpucount')
+        device.memsize = json_device.get('memsize')
+        device.disksize = json_device.get('disksize')
+        device.powerstatus = json_device.get('powerstatus')
+        device.auto_discover  = True
+        device.uuid = uuid
+
+        return device
+
+
 
     def __repr__(self):
         return '<Device %r>' % self.hostname
@@ -865,37 +968,40 @@ class IpResourcePools(db.Model):
     __tablename__ = 'ipResourcePools'
     id = db.Column(db.Integer, primary_key=True)
     idc_id = db.Column(db.ForeignKey('idcs.id'))   #锁在机房
-    netmask = db.Column(db.String(32))             #子网掩码
+    ips = db.relationship('IpResourceManage', backref='ipPool', lazy='dynamic')
+    netmask = db.Column(db.String(32))
     gateway = db.Column(db.String(32))             #网关
     range = db.Column(db.String(64))               #ip范围
-    type = db.Column(db.Boolean)                   #ip类型 (公网,内网)
+    type = db.Column(db.Integer)                   #ip类型 (内网,公网)
     vlan = db.Column(db.String(10))                #所在vlan
     remarks = db.Column(db.Text)  # 澶囨敞
 
 
     def __repr__(self):
-        return '<IpPool %r>' % self.id
+        return '<IpPool %r>' % self.range
 
 
     @staticmethod
     def auto_insert_ipaddr(target, value, oldvalue, initiator):
         from IPy import IP
-        ipRange = IP(value)
-        for ipaddr in ipRange:
-            status = 0
-            port_id = ''
-            devicePort = DevicePorts.query.filter(DevicePorts.ip==ipaddr).all()
-            if devicePort:
-                status = 1
-                port_id = devicePort.id
-            ip = IpResourceManage()
-            ip.ipPool_id = target.id
-            ip.ip = ipaddr
-            ip.status = status
-            ip.devicePort_id = port_id
-            db.session.add(ip)
-            db.session.commit()
 
+        ipRange = IP(value)
+        if not IpResourcePools.query.filter(IpResourcePools.range == str(ipRange)).all():
+
+            for ipaddr in ipRange[1:-1]:
+                status = 0
+                port_id = None
+                devicePort = DevicePorts.query.filter(DevicePorts.ip==ipaddr).first()
+                if devicePort:
+                    status = 1
+                    port_id = devicePort.id
+                ip = IpResourceManage()
+                ip.ipPool = target
+                ip.ip = ipaddr
+                ip.status = status
+                ip.devicePort_id = port_id
+                db.session.add(ip)
+                db.session.commit()
 
 
 db.event.listen(IpResourcePools.range, 'set', IpResourcePools.auto_insert_ipaddr)
@@ -910,7 +1016,8 @@ class IpResourceManage(db.Model):
     devicePort_id = db.Column(db.Integer, db.ForeignKey('devicePorts.id'))
 
     def __repr__(self):
-        return '<ipManage %r>' % self.id
+        return '<ipManage %r:%r>' % (self.ip, self.status)
+
 
 
 class Idc(db.Model):

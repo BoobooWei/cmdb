@@ -423,6 +423,45 @@ class EditDevicePortMapForm(Form):
                               #for network in DeviceNetwork.query.all())
 
 
+class EditIpResourcePoolsForm(Form):
+    idc_id = SelectField(u'所在机房', coerce=int)
+    range = StringField(u'IP范围')
+    netmask = StringField(u'子网掩码')
+    gateway = StringField(u'网关')
+    type = SelectField(u'类型', coerce=int)
+    vlan = StringField(u'VlanID')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditIpResourcePoolsForm, self).__init__(*args, **kwargs)
+
+        self.idc_id.choices = [(idc.id, idc.name)
+                               for idc in Idc.query.all()]
+
+        self.type.choices = [(1, u'内网'), (2, u'公网')]
+
+
+class EditIpResourceManageForm(Form):
+    ipPool_id = SelectField(u'IP资源池', coerce=int)
+    ip = StringField(u'IP地址')
+    status = StringField(u'状态')
+    devicePort_id = SelectField(u'设备端口')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'提交')
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditIpResourceManageForm, self).__init__(*args, **kwargs)
+
+        self.ipPool_id.choices = [(ipPool.id, ipPool.name)
+                                for ipPool in IpResourcePools.query.all()]
+
+        self.devicePort_id.choices = [(devicePort.id, devicePort.name)
+                                      for devicePort in DevicePorts.query.all()]
+
+
 
 class EditRackForm(Form):
     name = StringField(u'机柜名称', validators=[InputRequired(), Length(1,64)])

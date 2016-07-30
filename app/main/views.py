@@ -606,6 +606,91 @@ def delete_devicePower(id):
     return redirect(url_for('main.show_devicePower'))
 
 
+
+########################################################################
+
+
+@main.route('/show-device.model', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceModel():
+    deviceModels = DeviceModel.query.all()
+    return render_template('show_devicePowers.html', deviceModels=deviceModels)
+
+
+@main.route('/create-device.model', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_deviceModel():
+    form = EditDeviceModelForm()
+    if form.validate_on_submit():
+        deviceModel = DeviceModel()
+
+        deviceModel.name = form.name.data
+        deviceModel.type = form.type.data
+        deviceModel.slot_id = form.slot_id.data
+        deviceModel.sn = form.sn.data
+        deviceModel.device_id = form.device_id.data
+        deviceModel.remarks = form.remarks.data
+
+        db.session.add(deviceModel)
+        db.session.commit()
+        flash(u'创建模块:{0}成功!'.format(deviceModel.name))
+        return redirect(url_for('main.show_deviceModels'))
+    return render_template('create_deviceModel.html', form=form)
+
+
+@main.route('/edit-device.model/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_deviceModel(id):
+    deviceModel = DeviceModel.query.get_or_404(id)
+    form = EditDeviceModelForm()
+    if form.validate_on_submit():
+
+        deviceModel.name = form.name.data
+        deviceModel.type = form.type.data
+        deviceModel.slot_id = form.slot_id.data
+        deviceModel.sn = form.sn.data
+        deviceModel.device_id = form.device_id.data
+        deviceModel.remarks = form.remarks.data
+
+        db.session.add(deviceModel)
+        db.session.commit()
+        flash(u'创建模块:{0}成功!'.format(deviceModel.name))
+        return redirect(url_for('main.show_deviceModels'))
+
+    form.name.data = deviceModel.name
+    form.type.data = deviceModel.type
+    form.slot_id.data = deviceModel.slot_id
+    form.sn.data = deviceModel.sn
+    form.device_id.data = deviceModel.device_id
+    form.remarks.data = deviceModel.remarks
+
+    return render_template('edit_deviceModel.html', form=form)
+
+
+
+@main.route('/delete-device.model/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_DEL)
+def delete_deviceModel(id):
+
+    deviceModels = DeviceModel.query.get_or_404(id)
+    devicePorts = DevicePorts.query.filter(DevicePorts.model_id == deviceModels.id).all()
+
+    for port in deviceModels:
+        ip = IpResourceManage.query.filter(IpResourceManage.ip == port.ip).first()
+        ip.status = 0
+        db.session.add(ip)
+
+    db.session.query(DevicePorts).filter(DevicePorts.model_id == deviceModels.id).delete()
+    db.session.delete(deviceModels)
+    db.session.commit()
+
+    return render_template('show_devicePowers.html', deviceModels=deviceModels)
+
+
 ########################################################################
 
 @main.route('/show-device.deviceAssets/<int:id>', methods=['GET', 'POST'])
@@ -1270,6 +1355,113 @@ def delete_idc(id):
 ########################################################################
 
 
+@main.route('/show-ip.manage/<int:id>', methods=['GET'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_IpResourceManage(id):
+    ipResourceManage = IpResourceManage.query.filter(IpResourceManage.ipPool_id == id)
+    return render_template('show_ipResourceManage.html', ipResourceManage=ipResourceManage)
+
+
+
+@main.route('/edit-ip.manage/<int:id>', methods=['GET'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_IpResourceManage(id):
+    ipResourceManage = IpResourceManage.query.get(id)
+    form = EditIpResourceManageForm()
+    if form.validate_on_submit():
+
+        ipResourceManage.status = form.status.data
+        ipResourceManage.remarks = form.remarks.data
+        db.session.add(ipResourceManage)
+        db.session.commit()
+
+    form.ipPool_id.data = ipResourceManage.ipPool_id
+    form.ip.data = ipResourceManage.ip
+    form.status.data = ipResourceManage.status
+    form.devicePort_id = ipResourceManage.devicePort_id
+    form.remarks.data = ipResourceManage.remarks
+
+    return render_template('show_ipResourceManage.html', ipResourceManage=ipResourceManage)
+
+########################################################################
+
+
+@main.route('/show-ip.pools', methods=['GET'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_IpResourcePools():
+    ipResourcePools = IpResourcePools.query.all()
+    return render_template('show_ipResourcePools.html', ipResourcePools=ipResourcePools)
+
+
+@main.route('/create-ip.pools', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_IpResourcePools():
+    form = EditIpResourcePoolsForm()
+    if form.validate_on_submit():
+        ipResourcePools = IpResourcePools()
+        ipResourcePools.idc_id = form.idc_id.data
+        ipResourcePools.type = form.type.data
+        ipResourcePools.netmask = form.netmask.data
+        ipResourcePools.gateway = form.gateway.data
+        ipResourcePools.vlan = form.vlan.data
+        ipResourcePools.remarks = form.remarks.data
+        ipResourcePools.range = form.range.data
+
+        db.session.add(ipResourcePools)
+        db.session.commit()
+        flash(u'创建IP资源池:{0}成功!'.format(ipResourcePools.range))
+        return redirect(url_for('main.show_IpResourcePools'))
+    return render_template('create_ipResourcePools.html', form=form)
+
+
+@main.route('/edit-ip.pools/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_IpResourcePools(id):
+    ipResourcePools = IpResourcePools.query.get(id)
+    form = EditIpResourcePoolsForm()
+    if form.validate_on_submit():
+        ipResourcePools.idc_id = form.idc_id.data
+        ipResourcePools.type = form.type.data
+        ipResourcePools.netmask = form.netmask.data
+        ipResourcePools.gateway = form.gateway.data
+        ipResourcePools.vlan = form.vlan.data
+        ipResourcePools.remarks = form.remarks.data
+        ipResourcePools.range = form.range.data
+
+        db.session.add(ipResourcePools)
+        db.session.commit()
+        flash(u'修改IP资源池:{0}成功!'.format(ipResourcePools.range))
+        return redirect(url_for('main.show_IpResourcePools'))
+
+    form.idc_id.data = ipResourcePools.idc_id
+    form.type.data = ipResourcePools.type
+    form.netmask.data = ipResourcePools.netmask
+    form.gateway.data = ipResourcePools.gateway
+    form.vlan.data = ipResourcePools.vlan
+    form.remarks.data = ipResourcePools.remarks
+    form.range.data = ipResourcePools.range
+
+    return render_template('edit_ipResourcePools.html', form=form, ipResourcePools=ipResourcePools)
+
+
+
+@main.route('/delete-ip.pools/<int:id>', methods=['GET'])
+@login_required
+@permission_required(Permission.DEVICE_DEL)
+def delete_IpResourcePools(id):
+    ipResourcePools = IpResourcePools.query.get(id)
+    db.session.query(IpResourceManage).filter(IpResourceManage.ipPool_id == ipResourcePools.id).delete()
+    db.session.delete(ipResourcePools)
+    db.session.commit()
+    flash(u'删除IP资源池:{0}成功!'.format(ipResourcePools.range))
+    return redirect(url_for('main.show_IpResourcePools'))
+
+
 
 @main.route('/xxx')
 def xxx():
@@ -1314,7 +1506,6 @@ def edit_profile_admin(id):
         user.role = Role.query.get(form.role.data)
         user.name = form.name.data
         user.location = form.location.data
-        user.about_me = form.about_me.data
 
         try:
             db.session.add(user)
@@ -1332,7 +1523,6 @@ def edit_profile_admin(id):
     form.role.data = user.role_id
     form.name.data = user.name
     form.location.data = user.location
-    form.about_me.data = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
 
 

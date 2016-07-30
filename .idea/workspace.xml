@@ -2,21 +2,755 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/create_system_users.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/edit_system_users.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_system_users.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/d27b3723b89d_.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cmdb.iml" afterPath="$PROJECT_DIR$/.idea/cmdb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/create_ipResourcePools.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/edit_ipResourceManage.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/edit_ipResourcePools.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_ipResourceManage.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_ipResourcePools.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/26e963bc678d_.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/69b977399772_.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/ce4eaa48dabb_.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/clear.png" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/clear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/loading.gif" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/loading.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/colorpicker/img/alpha.png" afterPath="$PROJECT_DIR$/app/static/assets/colorpicker/img/alpha.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/colorpicker/img/hue.png" afterPath="$PROJECT_DIR$/app/static/assets/colorpicker/img/hue.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/colorpicker/img/saturation.png" afterPath="$PROJECT_DIR$/app/static/assets/colorpicker/img/saturation.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/dropzone/spritemap.png" afterPath="$PROJECT_DIR$/app/static/assets/dropzone/spritemap.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/dropzone/spritemap@2x.png" afterPath="$PROJECT_DIR$/app/static/assets/dropzone/spritemap@2x.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/sprite-skin-flat.png" afterPath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/sprite-skin-flat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.eot" afterPath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.ttf" afterPath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.woff" afterPath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/img/switch.png" afterPath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/img/switch.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/img/droparrows.png" afterPath="$PROJECT_DIR$/app/static/assets/select2/img/droparrows.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/img/select2-spinner.gif" afterPath="$PROJECT_DIR$/app/static/assets/select2/img/select2-spinner.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/img/select2.png" afterPath="$PROJECT_DIR$/app/static/assets/select2/img/select2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/img-1.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/sm-img-1.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/sm-img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/sm-img-2.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/sm-img-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/sm-img-3.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/sm-img-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/sm-img-4.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/sm-img-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/album/sm-img-5.jpg" afterPath="$PROJECT_DIR$/app/static/img/album/sm-img-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-2.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-3.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-4.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-5.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-6.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-7.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-7.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-8.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-8.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/avatar-9.jpg" afterPath="$PROJECT_DIR$/app/static/img/avatar-9.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/bg_6.jpg" afterPath="$PROJECT_DIR$/app/static/img/bg_6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/email/1.png" afterPath="$PROJECT_DIR$/app/static/img/email/1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/email/2.png" afterPath="$PROJECT_DIR$/app/static/img/email/2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/email/3.png" afterPath="$PROJECT_DIR$/app/static/img/email/3.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/favicon_1.ico" afterPath="$PROJECT_DIR$/app/static/img/favicon_1.ico" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/img_1.jpg" afterPath="$PROJECT_DIR$/app/static/img/img_1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/img_2.jpg" afterPath="$PROJECT_DIR$/app/static/img/img_2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/img/logo_dark.png" afterPath="$PROJECT_DIR$/app/static/img/logo_dark.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/clear.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/clear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/loading.gif" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/loading.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/alpha.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/alpha.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/hue.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/hue.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/saturation.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/img/saturation.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/spritemap.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/spritemap.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/spritemap@2x.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/spritemap@2x.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/sprite-skin-flat.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/sprite-skin-flat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.eot" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.ttf" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.woff" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/img/switch.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/img/switch.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/droparrows.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/droparrows.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/select2-spinner.gif" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/select2-spinner.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/select2.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/img/select2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regulard41d.eot" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regulard41d.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/img-1.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-1.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-2.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-3.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-4.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-5.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/album/sm-img-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-2.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-3.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-4.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-5.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-6.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-7.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-7.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-8.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-8.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-9.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/avatar-9.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/bg_6.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/bg_6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/1.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/2.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/3.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/email/3.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/favicon_1.ico" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/favicon_1.ico" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/img_1.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/img_1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/img_2.jpg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/img_2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/logo_dark.png" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/img/logo_dark.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0.zip" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/clear.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/clear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/loading.gif" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/loading.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/alpha.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/alpha.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/hue.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/hue.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/saturation.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/img/saturation.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/spritemap.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/spritemap.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/spritemap@2x.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/spritemap@2x.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfontd41d.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/sprite-skin-flat.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/sprite-skin-flat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.eot" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.ttf" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.woff" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/img/switch.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/img/switch.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/droparrows.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/droparrows.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/select2-spinner.gif" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/select2-spinner.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/select2.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/img/select2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regulard41d.eot" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regulard41d.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/img-1.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-1.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-2.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-3.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-4.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-5.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/album/sm-img-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-2.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-3.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-3.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-4.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-4.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-5.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-5.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-6.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-7.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-7.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-8.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-8.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-9.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/avatar-9.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/bg_6.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/bg_6.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/1.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/2.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/3.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/email/3.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/favicon_1.ico" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/favicon_1.ico" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/img_1.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/img_1.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/img_2.jpg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/img_2.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/logo_dark.png" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/img/logo_dark.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/kft.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/kft.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE" afterPath="$PROJECT_DIR$/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/api_1_0/devices.py" afterPath="$PROJECT_DIR$/app/api_1_0/devices.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/__init__.py" afterPath="$PROJECT_DIR$/app/main/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/bootstrap-editable.css" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/bootstrap-editable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/bootstrap-editable.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/bootstrap-editable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/demo-xeditable.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/demo-xeditable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/moment.min.js" afterPath="$PROJECT_DIR$/app/static/assets/bootstrap3-editable/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/c3-chart/c3-chart.init.js" afterPath="$PROJECT_DIR$/app/static/assets/c3-chart/c3-chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/c3-chart/c3.css" afterPath="$PROJECT_DIR$/app/static/assets/c3-chart/c3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/c3-chart/c3.js" afterPath="$PROJECT_DIR$/app/static/assets/c3-chart/c3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/c3-chart/d3.v3.min.js" afterPath="$PROJECT_DIR$/app/static/assets/c3-chart/d3.v3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/chartjs/chart.min.js" afterPath="$PROJECT_DIR$/app/static/assets/chartjs/chart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/chartjs/chartjs.init.js" afterPath="$PROJECT_DIR$/app/static/assets/chartjs/chartjs.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/chat/moment-2.2.1.js" afterPath="$PROJECT_DIR$/app/static/assets/chat/moment-2.2.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/ambiance.css" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/ambiance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/codemirror.css" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/codemirror.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/codemirror.js" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/custom.codemirror.js" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/custom.codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/formatting.js" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/formatting.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/javascript.js" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/javascript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/codemirror/xml.js" afterPath="$PROJECT_DIR$/app/static/assets/codemirror/xml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/colorpicker/bootstrap-colorpicker.js" afterPath="$PROJECT_DIR$/app/static/assets/colorpicker/bootstrap-colorpicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/colorpicker/colorpicker.css" afterPath="$PROJECT_DIR$/app/static/assets/colorpicker/colorpicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/cropper/cropper-conf.js" afterPath="$PROJECT_DIR$/app/static/assets/cropper/cropper-conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/cropper/cropper.css" afterPath="$PROJECT_DIR$/app/static/assets/cropper/cropper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/cropper/cropper.min.js" afterPath="$PROJECT_DIR$/app/static/assets/cropper/cropper.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/datatables/dataTables.bootstrap.js" afterPath="$PROJECT_DIR$/app/static/assets/datatables/dataTables.bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/datatables/jquery.dataTables.min.css" afterPath="$PROJECT_DIR$/app/static/assets/datatables/jquery.dataTables.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/datatables/jquery.dataTables.min.js" afterPath="$PROJECT_DIR$/app/static/assets/datatables/jquery.dataTables.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/dropzone/dropzone.css" afterPath="$PROJECT_DIR$/app/static/assets/dropzone/dropzone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/dropzone/dropzone.min.js" afterPath="$PROJECT_DIR$/app/static/assets/dropzone/dropzone.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/easypie-chart/easypiechart.min.js" afterPath="$PROJECT_DIR$/app/static/assets/easypie-chart/easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/easypie-chart/example.js" afterPath="$PROJECT_DIR$/app/static/assets/easypie-chart/example.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/easypie-chart/jquery.easypiechart.min.js" afterPath="$PROJECT_DIR$/app/static/assets/easypie-chart/jquery.easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.crosshair.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.crosshair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.init.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.pie.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.pie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.resize.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.resize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.selection.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.selection.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.stack.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.stack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.time.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.tooltip.min.js" afterPath="$PROJECT_DIR$/app/static/assets/flot-chart/jquery.flot.tooltip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" afterPath="$PROJECT_DIR$/app/static/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/form-wizard/bootstrap-validator.min.js" afterPath="$PROJECT_DIR$/app/static/assets/form-wizard/bootstrap-validator.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/form-wizard/jquery.steps.css" afterPath="$PROJECT_DIR$/app/static/assets/form-wizard/jquery.steps.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/form-wizard/jquery.steps.min.js" afterPath="$PROJECT_DIR$/app/static/assets/form-wizard/jquery.steps.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/form-wizard/wizard-init.js" afterPath="$PROJECT_DIR$/app/static/assets/form-wizard/wizard-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/fullcalendar/calendar-init.js" afterPath="$PROJECT_DIR$/app/static/assets/fullcalendar/calendar-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/fullcalendar/fullcalendar.css" afterPath="$PROJECT_DIR$/app/static/assets/fullcalendar/fullcalendar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/fullcalendar/fullcalendar.min.js" afterPath="$PROJECT_DIR$/app/static/assets/fullcalendar/fullcalendar.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/fullcalendar/moment.min.js" afterPath="$PROJECT_DIR$/app/static/assets/fullcalendar/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/gmaps/gmaps-plugin.js" afterPath="$PROJECT_DIR$/app/static/assets/gmaps/gmaps-plugin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/gmaps/gmaps.js" afterPath="$PROJECT_DIR$/app/static/assets/gmaps/gmaps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.css" afterPath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.min.js" afterPath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" afterPath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ui-sliders.js" afterPath="$PROJECT_DIR$/app/static/assets/ion-rangeslider/ui-sliders.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ionicon/css/ionicons.min.css" afterPath="$PROJECT_DIR$/app/static/assets/ionicon/css/ionicons.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.svg" afterPath="$PROJECT_DIR$/app/static/assets/ionicon/fonts/ioniconsbab9.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/datatables.css" afterPath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/datatables.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/datatables.editable.init.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/datatables.editable.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/jquery.dataTables.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery-datatables-editable/jquery.dataTables.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-knob/jquery.knob.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery-knob/jquery.knob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/jquery.multi-select.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/jquery.multi-select.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/jquery.quicksearch.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/jquery.quicksearch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/multi-select.css" afterPath="$PROJECT_DIR$/app/static/assets/jquery-multi-select/multi-select.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery.validate/form-validation-init.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery.validate/form-validation-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/jquery.validate/jquery.validate.min.js" afterPath="$PROJECT_DIR$/app/static/assets/jquery.validate/jquery.validate.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/magnific-popup/magnific-popup.css" afterPath="$PROJECT_DIR$/app/static/assets/magnific-popup/magnific-popup.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/magnific-popup/magnific-popup.js" afterPath="$PROJECT_DIR$/app/static/assets/magnific-popup/magnific-popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/modal-effect/css/component.css" afterPath="$PROJECT_DIR$/app/static/assets/modal-effect/css/component.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/modal-effect/js/classie.js" afterPath="$PROJECT_DIR$/app/static/assets/modal-effect/js/classie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/modal-effect/js/modalEffects.js" afterPath="$PROJECT_DIR$/app/static/assets/modal-effect/js/modalEffects.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/morris/morris.css" afterPath="$PROJECT_DIR$/app/static/assets/morris/morris.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/morris/morris.init.js" afterPath="$PROJECT_DIR$/app/static/assets/morris/morris.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/morris/morris.min.js" afterPath="$PROJECT_DIR$/app/static/assets/morris/morris.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/morris/raphael.min.js" afterPath="$PROJECT_DIR$/app/static/assets/morris/raphael.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/nestable/jquery.nestable.css" afterPath="$PROJECT_DIR$/app/static/assets/nestable/jquery.nestable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/nestable/jquery.nestable.js" afterPath="$PROJECT_DIR$/app/static/assets/nestable/jquery.nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/nestable/nestable.js" afterPath="$PROJECT_DIR$/app/static/assets/nestable/nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/notifications/notification.css" afterPath="$PROJECT_DIR$/app/static/assets/notifications/notification.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/notifications/notifications.js" afterPath="$PROJECT_DIR$/app/static/assets/notifications/notifications.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/notifications/notify-metro.js" afterPath="$PROJECT_DIR$/app/static/assets/notifications/notify-metro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/notifications/notify.min.js" afterPath="$PROJECT_DIR$/app/static/assets/notifications/notify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/owl-carousel/owl.carousel.css" afterPath="$PROJECT_DIR$/app/static/assets/owl-carousel/owl.carousel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/owl-carousel/owl.carousel.js" afterPath="$PROJECT_DIR$/app/static/assets/owl-carousel/owl.carousel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/peity-chart/jquery.peity.init.js" afterPath="$PROJECT_DIR$/app/static/assets/peity-chart/jquery.peity.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/peity-chart/jquery.peity.min.js" afterPath="$PROJECT_DIR$/app/static/assets/peity-chart/jquery.peity.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/responsive-table/rwd-table.min.css" afterPath="$PROJECT_DIR$/app/static/assets/responsive-table/rwd-table.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/responsive-table/rwd-table.min.js" afterPath="$PROJECT_DIR$/app/static/assets/responsive-table/rwd-table.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.chart.init.js" afterPath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.min.css" afterPath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.min.js" afterPath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/rickshaw.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/vendor/d3.layout.min.js" afterPath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/vendor/d3.layout.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/vendor/d3.min.js" afterPath="$PROJECT_DIR$/app/static/assets/rickshaw-chart/vendor/d3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/.img/select2x2.html" afterPath="$PROJECT_DIR$/app/static/assets/select2/.img/select2x2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/select2.css" afterPath="$PROJECT_DIR$/app/static/assets/select2/select2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/select2/select2.min.js" afterPath="$PROJECT_DIR$/app/static/assets/select2/select2.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/sparkline-chart/chart-sparkline.js" afterPath="$PROJECT_DIR$/app/static/assets/sparkline-chart/chart-sparkline.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/sparkline-chart/jquery.sparkline.min.js" afterPath="$PROJECT_DIR$/app/static/assets/sparkline-chart/jquery.sparkline.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/spinner/spinner.min.js" afterPath="$PROJECT_DIR$/app/static/assets/spinner/spinner.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/summernote/summernote.css" afterPath="$PROJECT_DIR$/app/static/assets/summernote/summernote.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/summernote/summernote.min.js" afterPath="$PROJECT_DIR$/app/static/assets/summernote/summernote.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.init.js" afterPath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.min.css" afterPath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.min.js" afterPath="$PROJECT_DIR$/app/static/assets/sweet-alert/sweet-alert.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/tagsinput/jquery.tagsinput.css" afterPath="$PROJECT_DIR$/app/static/assets/tagsinput/jquery.tagsinput.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/tagsinput/jquery.tagsinput.min.js" afterPath="$PROJECT_DIR$/app/static/assets/tagsinput/jquery.tagsinput.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-datepicker.js" afterPath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-datepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-datepicker.min.css" afterPath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-datepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-timepicker.min.css" afterPath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-timepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-timepicker.min.js" afterPath="$PROJECT_DIR$/app/static/assets/timepicker/bootstrap-timepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/toggles/toggles.css" afterPath="$PROJECT_DIR$/app/static/assets/toggles/toggles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/toggles/toggles.min.js" afterPath="$PROJECT_DIR$/app/static/assets/toggles/toggles.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery-jvectormap-1.1.1.css" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery-jvectormap-1.1.1.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.asia.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.asia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.australia.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.australia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.europe.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.europe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.sampledata.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.sampledata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.usa.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.usa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.world.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jquery.vmap.world.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/jqvmap.css" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/jqvmap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/vector-map/vmap-init.js" afterPath="$PROJECT_DIR$/app/static/assets/vector-map/vmap-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/animate.css" afterPath="$PROJECT_DIR$/app/static/css/animate.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/bootstrap-reset.css" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-reset.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/app/static/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/helper.css" afterPath="$PROJECT_DIR$/app/static/css/helper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/css/style.css" afterPath="$PROJECT_DIR$/app/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery-ui-1.10.1.custom.min.js" afterPath="$PROJECT_DIR$/app/static/js/jquery-ui-1.10.1.custom.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.app.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.chat.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.chat.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.counterup.min.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.counterup.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.dashboard.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.nicescroll.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.nicescroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.scrollTo.min.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.scrollTo.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/jquery.todo.js" afterPath="$PROJECT_DIR$/app/static/js/jquery.todo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/modernizr.min.js" afterPath="$PROJECT_DIR$/app/static/js/modernizr.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/pace.min.js" afterPath="$PROJECT_DIR$/app/static/js/pace.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/skycons.min.js" afterPath="$PROJECT_DIR$/app/static/js/skycons.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/waypoints.min.js" afterPath="$PROJECT_DIR$/app/static/js/waypoints.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/js/wow.min.js" afterPath="$PROJECT_DIR$/app/static/js/wow.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/404.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/404.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/404_alt.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/404_alt.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/500.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/500.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/AppleWebKit/index.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/AppleWebKit/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Chrome/index.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Chrome/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/GET.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/GET.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Opera/index.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Opera/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Popover requires tooltip.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/Popover requires tooltip.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/_.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/_.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/demo-xeditable.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/demo-xeditable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/moment.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/bootstrap3-editable/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3-chart.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3-chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/c3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/d3.v3.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/c3-chart/d3.v3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chartjs/chart.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chartjs/chart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chartjs/chartjs.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chartjs/chartjs.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chat/moment-2.2.1.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/chat/moment-2.2.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/ambiance.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/ambiance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/codemirror.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/codemirror.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/codemirror.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/custom.codemirror.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/custom.codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/formatting.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/formatting.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/javascript.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/javascript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/xml.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/codemirror/xml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/bootstrap-colorpicker.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/bootstrap-colorpicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/colorpicker.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/colorpicker/colorpicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper-conf.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper-conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/cropper/cropper.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/dataTables.bootstrap.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/dataTables.bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/dropzone.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/dropzone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/dropzone.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/dropzone/dropzone.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/easypiechart.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/example.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/example.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/jquery.easypiechart.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/easypie-chart/jquery.easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.crosshair.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.crosshair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.pie.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.pie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.resize.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.resize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.selection.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.selection.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.stack.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.stack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.time.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.tooltip.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.tooltip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/bootstrap-validator.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/bootstrap-validator.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/wizard-init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/form-wizard/wizard-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/calendar-init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/calendar-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/moment.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/fullcalendar/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/gmaps/gmaps-plugin.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/gmaps/gmaps-plugin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/gmaps/gmaps.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/gmaps/gmaps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ui-sliders.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ion-rangeslider/ui-sliders.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/css/ionicons.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/css/ionicons.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.svg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.editable.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.editable.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/jquery.dataTables.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-datatables-editable/jquery.dataTables.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-knob/jquery.knob.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-knob/jquery.knob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.multi-select.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.multi-select.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.quicksearch.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.quicksearch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/multi-select.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery-multi-select/multi-select.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery.validate/form-validation-init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery.validate/form-validation-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery.validate/jquery.validate.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/jquery.validate/jquery.validate.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/css/component.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/css/component.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/js/classie.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/js/classie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/js/modalEffects.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/modal-effect/js/modalEffects.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/morris.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/raphael.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/morris/raphael.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/jquery.nestable.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/jquery.nestable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/jquery.nestable.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/jquery.nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/nestable.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/nestable/nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notification.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notification.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notifications.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notifications.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notify-metro.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notify-metro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notify.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/notifications/notify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.chart.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.layout.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.layout.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/.img/select2x2.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/.img/select2x2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/select2.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/select2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/select2.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/select2/select2.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sparkline-chart/chart-sparkline.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sparkline-chart/chart-sparkline.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sparkline-chart/jquery.sparkline.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sparkline-chart/jquery.sparkline.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/spinner/spinner.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/spinner/spinner.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/summernote/summernote.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/summernote/summernote.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/summernote/summernote.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/summernote/summernote.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/toggles/toggles.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/toggles/toggles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/toggles/toggles.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/toggles/toggles.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery-jvectormap-1.1.1.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery-jvectormap-1.1.1.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.asia.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.asia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.australia.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.australia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.europe.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.europe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.sampledata.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.sampledata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.usa.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.usa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.world.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.world.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jqvmap.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/jqvmap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/vmap-init.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/assets/vector-map/vmap-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/blank.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/blank.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/bootstrap-ui.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/bootstrap-ui.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/buttons.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/buttons.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/c3-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/c3-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/calendar.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/calendar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/chartjs.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/chartjs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/code-editor.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/code-editor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/contact.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/contact.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/animate.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/animate.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/bootstrap-reset.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/bootstrap-reset.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/helper.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/helper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/style.css" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-compose.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-compose.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-read.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-read.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/action.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/action.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/alert.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/alert.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/billing.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/email-templates/billing.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/flot-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/flot-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-advanced.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-advanced.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-editor.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-editor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-elements.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-elements.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-uploads.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-uploads.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-validation.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-validation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-wizard.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-wizard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-xeditable.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/form-xeditable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/gmap.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/gmap.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/grid.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/grid.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/hpwos/index.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/hpwos/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/icons.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/icons.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/image-crop.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/image-crop.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/inbox.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/inbox.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/index.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/invoice.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/invoice.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery-ui-1.10.1.custom.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery-ui-1.10.1.custom.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.app.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.chat.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.chat.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.counterup.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.counterup.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.dashboard.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.nicescroll.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.nicescroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.scrollTo.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.scrollTo.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.todo.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/jquery.todo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/modernizr.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/modernizr.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/pace.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/pace.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/skycons.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/skycons.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/waypoints.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/waypoints.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/wow.min.js" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/js/wow.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/lock-screen.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/lock-screen.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/login.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/modals.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/modals.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/morris-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/morris-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/nestable-list.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/nestable-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/notification.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/notification.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/other-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/other-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/panels.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/panels.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/peity-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/peity-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/portlets.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/portlets.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/profile.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/progressbars.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/progressbars.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/recoverpw.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/recoverpw.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/register.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/register.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/responsive-table.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/responsive-table.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/rickshaw-chart.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/rickshaw-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/sweet-alert.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/sweet-alert.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/table-datatable.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/table-datatable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tables-editable.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tables-editable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tables.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tables.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tabs-accordions.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/tabs-accordions.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/timeline.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/timeline.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/typography.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/typography.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/ui-sliders.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/ui-sliders.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/vector-map.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/vector-map.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/widgets.html" afterPath="$PROJECT_DIR$/app/static/velonic_3.0/admin_3/widgets.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/403.html" afterPath="$PROJECT_DIR$/app/templates/403.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/404.html" afterPath="$PROJECT_DIR$/app/templates/404.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/500.html" afterPath="$PROJECT_DIR$/app/templates/500.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/change_email.html" afterPath="$PROJECT_DIR$/app/templates/auth/change_email.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/change_password.html" afterPath="$PROJECT_DIR$/app/templates/auth/change_password.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/change_email.html" afterPath="$PROJECT_DIR$/app/templates/auth/email/change_email.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/change_email.txt" afterPath="$PROJECT_DIR$/app/templates/auth/email/change_email.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/confirm.html" afterPath="$PROJECT_DIR$/app/templates/auth/email/confirm.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/confirm.txt" afterPath="$PROJECT_DIR$/app/templates/auth/email/confirm.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/reset_password.html" afterPath="$PROJECT_DIR$/app/templates/auth/email/reset_password.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/email/reset_password.txt" afterPath="$PROJECT_DIR$/app/templates/auth/email/reset_password.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/register.html" afterPath="$PROJECT_DIR$/app/templates/auth/register.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/auth/unconfirmed.html" afterPath="$PROJECT_DIR$/app/templates/auth/unconfirmed.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/base.html" afterPath="$PROJECT_DIR$/app/templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_profile.html" afterPath="$PROJECT_DIR$/app/templates/edit_profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devices.html" afterPath="$PROJECT_DIR$/app/templates/show_devices.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/login.html" afterPath="$PROJECT_DIR$/app/templates/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/mail/new_user.html" afterPath="$PROJECT_DIR$/app/templates/mail/new_user.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/mail/new_user.txt" afterPath="$PROJECT_DIR$/app/templates/mail/new_user.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/404.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/404.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/404_alt.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/404_alt.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/500.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/500.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/AppleWebKit/index.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/AppleWebKit/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Chrome/index.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Chrome/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/GET.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/GET.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Opera/index.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Opera/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Popover requires tooltip.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/Popover requires tooltip.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/_.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/_.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-inputmask/bootstrap-inputmask.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/bootstrap-editable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/demo-xeditable.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/demo-xeditable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/moment.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/bootstrap3-editable/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3-chart.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3-chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/c3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/d3.v3.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/c3-chart/d3.v3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chartjs/chart.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chartjs/chart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chartjs/chartjs.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chartjs/chartjs.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chat/moment-2.2.1.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/chat/moment-2.2.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/ambiance.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/ambiance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/codemirror.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/codemirror.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/codemirror.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/custom.codemirror.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/custom.codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/formatting.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/formatting.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/javascript.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/javascript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/xml.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/codemirror/xml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/bootstrap-colorpicker.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/bootstrap-colorpicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/colorpicker.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/colorpicker/colorpicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper-conf.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper-conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/cropper/cropper.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/dataTables.bootstrap.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/dataTables.bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/datatables/jquery.dataTables.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/dropzone.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/dropzone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/dropzone.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/dropzone/dropzone.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/easypiechart.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/example.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/example.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/jquery.easypiechart.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/easypie-chart/jquery.easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.crosshair.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.crosshair.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.pie.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.pie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.resize.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.resize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.selection.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.selection.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.stack.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.stack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.time.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.tooltip.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/flot-chart/jquery.flot.tooltip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/font-awesome/fonts/fontawesome-webfonte0a5.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/bootstrap-validator.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/bootstrap-validator.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/jquery.steps.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/wizard-init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/form-wizard/wizard-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/calendar-init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/calendar-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/fullcalendar.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/moment.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/fullcalendar/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/gmaps/gmaps-plugin.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/gmaps/gmaps-plugin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/gmaps/gmaps.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/gmaps/gmaps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ion.rangeSlider.skinFlat.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ui-sliders.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ion-rangeslider/ui-sliders.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/css/ionicons.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/css/ionicons.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.svg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/ionicon/fonts/ioniconsbab9.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.editable.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/datatables.editable.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/jquery.dataTables.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-datatables-editable/jquery.dataTables.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-knob/jquery.knob.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-knob/jquery.knob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.multi-select.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.multi-select.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.quicksearch.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/jquery.quicksearch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/multi-select.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery-multi-select/multi-select.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery.validate/form-validation-init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery.validate/form-validation-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery.validate/jquery.validate.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/jquery.validate/jquery.validate.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/magnific-popup/magnific-popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/css/component.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/css/component.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/js/classie.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/js/classie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/js/modalEffects.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/modal-effect/js/modalEffects.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/morris.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/raphael.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/morris/raphael.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/jquery.nestable.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/jquery.nestable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/jquery.nestable.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/jquery.nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/nestable.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/nestable/nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notification.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notification.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notifications.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notifications.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notify-metro.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notify-metro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notify.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/notifications/notify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/owl-carousel/owl.carousel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/peity-chart/jquery.peity.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/responsive-table/rwd-table.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.chart.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.chart.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/rickshaw.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.layout.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.layout.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/rickshaw-chart/vendor/d3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/.img/select2x2.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/.img/select2x2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/select2.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/select2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/select2.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/select2/select2.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sparkline-chart/chart-sparkline.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sparkline-chart/chart-sparkline.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sparkline-chart/jquery.sparkline.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sparkline-chart/jquery.sparkline.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/spinner/spinner.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/spinner/spinner.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/summernote/summernote.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/summernote/summernote.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/summernote/summernote.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/summernote/summernote.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/sweet-alert/sweet-alert.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/tagsinput/jquery.tagsinput.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-datepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/timepicker/bootstrap-timepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/toggles/toggles.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/toggles/toggles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/toggles/toggles.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/toggles/toggles.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery-jvectormap-1.1.1.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery-jvectormap-1.1.1.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.asia.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.asia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.australia.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.australia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.europe.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.europe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.sampledata.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.sampledata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.usa.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.usa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.world.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jquery.vmap.world.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jqvmap.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/jqvmap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/vmap-init.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/assets/vector-map/vmap-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/blank.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/blank.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/bootstrap-ui.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/bootstrap-ui.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/buttons.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/buttons.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/c3-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/c3-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/calendar.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/calendar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/chartjs.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/chartjs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/code-editor.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/code-editor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/contact.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/contact.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/animate.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/animate.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/bootstrap-reset.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/bootstrap-reset.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/helper.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/helper.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/style.css" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-compose.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-compose.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-read.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-read.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/action.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/action.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/alert.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/alert.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/billing.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/email-templates/billing.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/flot-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/flot-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-advanced.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-advanced.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-editor.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-editor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-elements.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-elements.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-uploads.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-uploads.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-validation.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-validation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-wizard.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-wizard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-xeditable.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/form-xeditable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/gmap.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/gmap.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/grid.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/grid.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/hpwos/index.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/hpwos/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/icons.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/icons.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/image-crop.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/image-crop.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/inbox.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/inbox.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/index.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/invoice.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/invoice.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery-ui-1.10.1.custom.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery-ui-1.10.1.custom.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.app.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.chat.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.chat.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.counterup.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.counterup.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.dashboard.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.nicescroll.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.nicescroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.scrollTo.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.scrollTo.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.todo.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/jquery.todo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/modernizr.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/modernizr.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/pace.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/pace.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/skycons.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/skycons.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/waypoints.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/waypoints.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/wow.min.js" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/js/wow.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/lock-screen.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/lock-screen.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/login.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/modals.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/modals.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/morris-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/morris-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/nestable-list.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/nestable-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/notification.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/notification.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/other-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/other-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/panels.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/panels.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/peity-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/peity-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/portlets.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/portlets.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/profile.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/progressbars.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/progressbars.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/recoverpw.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/recoverpw.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/register.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/register.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/responsive-table.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/responsive-table.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/rickshaw-chart.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/rickshaw-chart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/sweet-alert.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/sweet-alert.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/table-datatable.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/table-datatable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tables-editable.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tables-editable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tables.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tables.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tabs-accordions.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/tabs-accordions.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/timeline.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/timeline.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/typography.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/typography.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/ui-sliders.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/ui-sliders.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/vector-map.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/vector-map.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/widgets.html" afterPath="$PROJECT_DIR$/app/templates/velonic_3.0/admin_3/widgets.html" />
     </list>
     <ignored path="cmdb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,85 +774,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/main/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="e#15#118#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/auth/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-585">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit_system_users.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/edit_system_users.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="60" column="90" selection-start-line="60" selection-start-column="90" selection-end-line="60" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create_system_users.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/create_system_users.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="60" column="90" selection-start-line="60" selection-start-column="90" selection-end-line="60" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/main/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding>
-                <element signature="e#35#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/auth/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="36" column="19" selection-start-line="36" selection-start-column="0" selection-end-line="37" selection-end-column="74" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="896" column="12" selection-start-line="896" selection-start-column="12" selection-end-line="896" selection-end-column="12" />
+            <state relative-caret-position="195">
+              <caret line="903" column="33" selection-start-line="903" selection-start-column="33" selection-end-line="903" selection-end-column="33" />
               <folding>
                 <element signature="e#45#59#0" expanded="true" />
               </folding>
@@ -126,23 +786,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manage.py">
+      <file leaf-file-name="devices.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/api_1_0/devices.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state relative-caret-position="1275">
+              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
               <folding>
-                <element signature="e#23#52#0" expanded="true" />
+                <element signature="e#48#65#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show_devices.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/show_devices.html">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/main/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
-              <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
+            <state relative-caret-position="285">
+              <caret line="389" column="31" selection-start-line="389" selection-start-column="31" selection-end-line="389" selection-end-column="31" />
+              <folding>
+                <element signature="e#35#65#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/main/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1341">
+              <caret line="691" column="0" selection-start-line="691" selection-start-column="0" selection-end-line="691" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -167,10 +839,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/templates/show_devicePools.html" />
-        <option value="$PROJECT_DIR$/app/templates/edit_asset.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_deviceType.html" />
-        <option value="$PROJECT_DIR$/app/templates/create_devicetType.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_devicetType.html" />
         <option value="$PROJECT_DIR$/app/templates/create_assetType.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_assetType.html" />
@@ -201,7 +869,6 @@
         <option value="$PROJECT_DIR$/app/templates/show_devicePowers.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_devicePower.html" />
         <option value="$PROJECT_DIR$/app/templates/create_devicePower.html" />
-        <option value="$PROJECT_DIR$/app/api_1_0/devices.py" />
         <option value="$PROJECT_DIR$/app/templates/show_devicePorts.html" />
         <option value="$PROJECT_DIR$/app/templates/test.html" />
         <option value="$PROJECT_DIR$/app/templates/base.html" />
@@ -209,15 +876,20 @@
         <option value="$PROJECT_DIR$/app/templates/edit_profile.html" />
         <option value="$PROJECT_DIR$/app/templates/create_system_user.html" />
         <option value="$PROJECT_DIR$/app/templates/show_system_users.html" />
-        <option value="$PROJECT_DIR$/app/main/__init__.py" />
         <option value="$PROJECT_DIR$/app/templates/show_devices.html" />
-        <option value="$PROJECT_DIR$/app/main/forms.py" />
         <option value="$PROJECT_DIR$/app/templates/create_system_users.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_system_users.html" />
-        <option value="$PROJECT_DIR$/app/main/views.py" />
-        <option value="$PROJECT_DIR$/app/templates/common/base.html" />
         <option value="$PROJECT_DIR$/manage.py" />
+        <option value="$PROJECT_DIR$/app/templates/show_ipResourceManage.html" />
+        <option value="$PROJECT_DIR$/app/templates/edit_ipResourceManage.html" />
+        <option value="$PROJECT_DIR$/app/main/forms.py" />
+        <option value="$PROJECT_DIR$/app/templates/show_ipResourcePools.html" />
+        <option value="$PROJECT_DIR$/app/templates/create_ipResourceManage.html" />
+        <option value="$PROJECT_DIR$/app/main/__init__.py" />
+        <option value="$PROJECT_DIR$/app/templates/common/base.html" />
         <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/api_1_0/devices.py" />
+        <option value="$PROJECT_DIR$/app/main/views.py" />
       </list>
     </option>
   </component>
@@ -229,8 +901,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="724" />
+    <option name="width" value="1440" />
+    <option name="height" value="823" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -273,7 +945,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -303,6 +975,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cmdb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cmdb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cmdb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cmdb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -362,7 +1074,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,16 +1095,16 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/templates" />
-      <recent name="Z:\cmdb\app\templates" />
-      <recent name="$PROJECT_DIR$/app" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="Z:\cmdb\app\templates" />
       <recent name="Z:\cmdb" />
       <recent name="$PROJECT_DIR$/app/templates" />
       <recent name="$PROJECT_DIR$/app/templates/common" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/templates" />
+      <recent name="Z:\cmdb\app\templates" />
+      <recent name="$PROJECT_DIR$/app" />
     </key>
   </component>
   <component name="RunManager" selected="Python.manage">
@@ -668,10 +1380,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="724" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20678514" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -731,36 +1443,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/templates/modals.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/show_classType.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="76" column="34" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/edit_classType.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="37" column="52" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/common/1.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/edit_virtmachine.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360">
-          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_idc.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="163" column="54" selection-start-line="163" selection-start-column="54" selection-end-line="163" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_racks.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -835,9 +1517,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="e#22#45#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -904,18 +1583,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/api_1_0/errors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_devicePowers.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="74" column="86" selection-start-line="74" selection-start-column="86" selection-end-line="74" selection-end-column="86" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -937,13 +1608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/api_1_0/devices.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -972,7 +1636,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -980,7 +1643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="41" column="48" selection-start-line="0" selection-start-column="0" selection-end-line="322" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -988,7 +1650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="84" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -996,7 +1657,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="769">
           <caret line="156" column="50" selection-start-line="156" selection-start-column="50" selection-end-line="156" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1004,45 +1664,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="975">
           <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_devices.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/auth/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-585">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/auth/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="36" column="19" selection-start-line="36" selection-start-column="0" selection-end-line="37" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/create_system_users.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="900">
           <caret line="60" column="90" selection-start-line="60" selection-start-column="90" selection-end-line="60" selection-end-column="90" />
           <folding />
         </state>
@@ -1050,37 +1677,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/edit_system_users.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
+        <state relative-caret-position="900">
           <caret line="60" column="90" selection-start-line="60" selection-start-column="90" selection-end-line="60" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+    <entry file="file://$PROJECT_DIR$/app/templates/show_devices.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding>
-            <element signature="e#35#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="1500">
+          <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#118#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1089,18 +1696,134 @@
         <state relative-caret-position="375">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="e#23#52#0" expanded="true" />
+            <element signature="e#23#52#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/auth/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="36" column="19" selection-start-line="36" selection-start-column="0" selection-end-line="37" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/auth/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_ipResourceManage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="60" selection-start-line="27" selection-start-column="60" selection-end-line="27" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_ipResourcePools.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_ipResourcePools.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_ipResourceManage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_ipResourceManage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_ipResourcePools.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="132" column="17" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/errors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/devices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+          <folding>
+            <element signature="e#48#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="896" column="12" selection-start-line="896" selection-start-column="12" selection-end-line="896" selection-end-column="12" />
+        <state relative-caret-position="195">
+          <caret line="903" column="33" selection-start-line="903" selection-start-column="33" selection-end-line="903" selection-end-column="33" />
           <folding>
             <element signature="e#45#59#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="389" column="31" selection-start-line="389" selection-start-column="31" selection-end-line="389" selection-end-column="31" />
+          <folding>
+            <element signature="e#35#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1341">
+          <caret line="691" column="0" selection-start-line="691" selection-start-column="0" selection-end-line="691" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
