@@ -182,14 +182,6 @@
                     class="badge bg-purple">{{ db.session.query(Rack).count() }}</span></a>
             </li>
 
-            <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">数据库管理</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="">Oracle</a></li>
-                    <li><a href="">MySQL</a></li>
-                    <li><a href="">类别管理</a></li>
-                </ul>
-            </li>
-
             <li class="has-submenu"><a href="#"><i class="ion-location"></i> <span class="nav-label">IP资源管理</span></a>
                 <ul class="list-unstyled">
                     {% for pool in db.session.query(IpResourcePools).all() %}
@@ -199,21 +191,6 @@
                 </ul>
             </li>
 
-            <li class="has-submenu"><a href="#"><i class="ion-location"></i> <span class="nav-label">设备权限管理</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="gmap.html">网络设备权限</a></li>
-                    <li><a href="vector-map.html">服务器权限</a></li>
-                </ul>
-            </li>
-
-            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">配件管理</span><span
-                    class="badge bg-pink">5</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="">服务器磁盘</a></li>
-                    <li><a href="">类别管理</a></li>
-
-                </ul>
-            </li>
             <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">用户管理</span><span
                     class="badge bg-pink">5</span></a>
                 <ul class="list-unstyled">
