@@ -73,7 +73,7 @@
 <aside class="left-panel">
     <!-- brand -->
     <div class="logo">
-        <a href="../index.html" class="logo-expanded">
+        <a href="" class="logo-expanded">
             <i class="ion-social-buffer"></i>
             <span class="nav-label">CMDB</span>
         </a>
@@ -250,18 +250,6 @@
 
         <!-- Left navbar -->
         <nav class=" navbar-default" role="navigation">
-            <ul class="nav navbar-nav hidden-xs">
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">English <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">German</a></li>
-                        <li><a href="#">French</a></li>
-                        <li><a href="#">Italian</a></li>
-                        <li><a href="#">Spanish</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Files</a></li>
-            </ul>
 
             <!-- Right navbar -->
             <ul class="nav navbar-nav navbar-right top-menu top-right-menu">
@@ -278,8 +266,8 @@
                             <a href="#">
                                 <span class="pull-left"><img src="{{ url_for('static', filename='img/avatar-3.jpg') }}"
                                                              class="img-circle thumb-sm m-r-15" alt="img"></span>
-                                <span class="block"><strong>John smith</strong></span>
-                                <span class="media-body block">New tasks needs to be done<br><small class="text-muted">3
+                                <span class="block"><strong>Admin</strong></span>
+                                <span class="media-body block">新增资产WEB服务器<br><small class="text-muted">3
                                     minutes ago
                                 </small></span>
                             </a>
@@ -288,14 +276,14 @@
                             <a href="#">
                                 <span class="pull-left"><img src="{{ url_for('static', filename='img/avatar-4.jpg') }}"
                                                              class="img-circle thumb-sm m-r-15" alt="img"></span>
-                                <span class="block"><strong>John smith</strong></span>
-                                <span class="media-body block">New tasks needs to be done<br><small class="text-muted">
+                                <span class="block"><strong>Eric</strong></span>
+                                <span class="media-body block">自动发现新资产<br><small class="text-muted">
                                     10 minutes ago
                                 </small></span>
                             </a>
                         </li>
                         <li>
-                            <p><a href="inbox.html" class="text-right">See all Messages</a></p>
+                            <p><a href="" class="text-right">查看更多信息</a></p>
                         </li>
                     </ul>
                 </li>
@@ -346,7 +334,7 @@
                     <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003"
                         style="overflow: hidden; outline: none;">
                         <li><a href="{{ url_for('main.edit_profile') }}"><i class="fa fa-briefcase"></i>用户信息</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i>修改密码</a></li>
+                        <li><a href="{{ url_for('auth.change_password') }}"><i class="fa fa-cog"></i>修改密码</a></li>
                         <li><a href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out"></i>安全退出</a></li>
                     </ul>
                 </li>

@@ -10,21 +10,21 @@ from ..models import User
 
 
 class LoginForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1,64), Email()])
-    password = PasswordField('Password', validators=[Required()])
-    remember_me = BooleanField('keep me logged in')
-    submit = SubmitField('Log In')
+    email = StringField(u'邮箱', validators=[Required(), Length(1,64), Email()])
+    password = PasswordField(u'密码', validators=[Required()])
+    remember_me = BooleanField(u'记住密码')
+    submit = SubmitField(u'登录')
 
 
 class ChangePasswordForm(Form):
-    old_password = PasswordField('Old Password', validators=[Required()])
-    password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Password must match.')])
-    password2 = PasswordField('Confirm password', validators=[Required()])
+    old_password = PasswordField(u'旧密码', validators=[Required()])
+    password = PasswordField(u'新密码', validators=[Required(), EqualTo('password2', message='Password must match.')])
+    password2 = PasswordField(u'确认密码', validators=[Required()])
     submit = SubmitField(u'确定')
 
 
 class ResetPasswordRequestForm(Form):
-    email = StringField('Email', validators=[Required(),Length(1,64), Email()])
+    email = StringField(u'邮件', validators=[Required(),Length(1,64), Email()])
     submit = SubmitField(u'确定')
 
     def validate_email(self,field):
@@ -33,9 +33,9 @@ class ResetPasswordRequestForm(Form):
 
 
 class ResetPasswordForm(Form):
-    email = StringField('Email', validators=[Required(),Length(1,64), Email()])
-    password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Password must match.')])
-    password2 = PasswordField('Confirm password', validators=[Required()])
+    email = StringField(u'邮件', validators=[Required(),Length(1,64), Email()])
+    password = PasswordField(u'密码', validators=[Required(), EqualTo('password2', message='Password must match.')])
+    password2 = PasswordField(u'确认密码', validators=[Required()])
     submit = SubmitField(u'确认')
 
     def validate_email(self,field):
@@ -43,8 +43,8 @@ class ResetPasswordForm(Form):
             raise ValidationError('Unknown Email')
 
 class ChangeEmailRequestForm(Form):
-    email = StringField('Email', validators=[Required(),Length(1,64), Email()])
-    password = PasswordField('Password', validators=[Required()])
+    email = StringField(u'邮件', validators=[Required(),Length(1,64), Email()])
+    password = PasswordField(u'密码', validators=[Required()])
     submit = SubmitField(u'确认')
 
     def validate_email(self, field):

@@ -92,7 +92,7 @@ def change_password():
 @auth.route('/reset', methods=['GET', 'POST'])
 def reset_password_request():
     if not current_user.is_anonymous:
-        return redirect('main.index')
+        return redirect(url_for('main.index'))
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
