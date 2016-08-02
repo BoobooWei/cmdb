@@ -49,7 +49,7 @@
                                 <label class="col-md-2 control-label">IP范围</label>
 
                                 <div class="col-md-6">
-                                    {{ form.range(class='form-control', placeholder='192.168.1.0/24') }}
+                                    {{ form.range(class='form-control', placeholder='192.168.1.0/26') }}
                                     {{ macros.print_form_messages(form.errors.range) }}
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                 <label class="col-md-2 control-label">子网掩码</label>
 
                                 <div class="col-md-6">
-                                    {{ form.netmask(class='form-control', placeholder='子网掩码') }}
+                                    {{ form.netmask(class='form-control', placeholder='255.255.255.192') }}
                                     {{ macros.print_form_messages(form.errors.netmask) }}
                                 </div>
                             </div>

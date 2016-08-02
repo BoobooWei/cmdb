@@ -42,6 +42,7 @@
                                         <th>IP范围</th>
                                         <th>子网掩码</th>
                                         <th>网关</th>
+                                        <th>类型</th>
                                         <th>VlanID</th>
                                         <th>操作</th>
                                     </tr>
@@ -62,6 +63,11 @@
                                             <td>{{ pool.range }}</td>
                                             <td>{{ pool.netmask }}</td>
                                             <td>{{ pool.gateway }}</td>
+                                            {% if pool.type == 1 %}
+                                            <td>内网</td>
+                                            {% else %}
+                                            <td>外网</td>
+                                            {% endif %}
                                             <td>{{ pool.vlan }}</td>
 
                                             <td class="actions">
