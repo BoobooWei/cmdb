@@ -243,6 +243,7 @@ class EditVritMachineForm(Form):
 
 
 class EditDeviceNetworkForm(Form):
+    hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
     classType_id = SelectField(u'设备类型', coerce=int)
     asset_id = SelectField(u'资产号', coerce=int)
     rack_id = SelectField(u'机柜', coerce=int)                  # 关联Rack table id
@@ -254,7 +255,7 @@ class EditDeviceNetworkForm(Form):
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, deviceNetwork, *args, **kwargs):
         super(EditDeviceNetworkForm, self).__init__(*args, **kwargs)
 
         self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
@@ -267,6 +268,16 @@ class EditDeviceNetworkForm(Form):
                                 for rack in Rack.query.order_by(Rack.name).all()]
 
         self.powertype.choices = [(1, u'交流'), (2, u'直流')]
+        self.deviceNetwork = deviceNetwork
+
+
+    def validate_hostname(self, field):
+        if not self.deviceNetwork:
+            if DeviceNetwork.query.filter_by(hostname=field.data).first():
+                raise ValidationError(u'Hostname已经被使用了')
+        else:
+            if field.data != self.deviceNetwork.hostname and DeviceNetwork.query.filter_by(hostname=field.data).first():
+                raise ValidationError(u'Hostname已经被使用了')
 
 
 
@@ -415,8 +426,15 @@ class EditDeviceModelForm(Form):
         super(EditDeviceModelForm, self).__init__(*args, **kwargs)
         self.type.choices = [(1, u'服务器网卡'), (2, u'网络设备模块')]
 
-        self.device_id.choices = [(device.id, '{0}'.format(device.hostname))
-                                 for device in Device.query.order_by(Device.id).all()]
+        device = Device.query.all()
+        deviceNetwork = DeviceNetwork.query.all()
+
+        deviceChoices = []
+        deviceChoices.extend(device)
+        deviceChoices.extend(deviceNetwork)
+
+        self.device_id.choices = [ (device.id, device.hostname)
+                                   for device in deviceChoices]
 
 
 class EditDevicePortMapForm(Form):

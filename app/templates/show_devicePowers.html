@@ -72,11 +72,21 @@
                                             {% else %}
                                                 <td>{{ devices.first().hostname }}</td>
                                             {% endif %}
-                                            <td>{{ devices.first().powerstatus }}</td>
+
+                                            {% if devices.first().powerstatus == 1 %}
+                                            <td>开机</td>
+                                            {% else %}
+                                            <td>关机</td>
+                                            {% endif %}
+
                                             <td>{{ deviceAsset.brand }}</td>
                                             <td>{{ deviceAsset.model }}</td>
                                             <td>{{ deviceAsset.usestaff }}</td>
-                                            <td>{{ power.type }}</td>
+                                            {% if power.type == 1 %}
+                                            <td>IPMI</td>
+                                            {% elif power.type == 2%}
+                                            <td>iLO</td>
+                                            {% endif %}
                                             <td>{{ power.enabled }}</td>
                                             <td>{{ power.ip }}</td>
                                             <td>{{ power.powerid }}</td>

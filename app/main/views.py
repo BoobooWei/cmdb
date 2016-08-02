@@ -933,10 +933,11 @@ def show_deviceNetworks(id):
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_deviceNetwork():
-    form = EditDeviceNetworkForm()
+    form = EditDeviceNetworkForm(None)
     if form.validate_on_submit():
         deviceNetwork = DeviceNetwork()
 
+        deviceNetwork.hostname = form.hostname.data
         deviceNetwork.classType_id = form.classType_id.data
         deviceNetwork.asset_id = form.asset_id.data
         deviceNetwork.rack_id = form.rack_id.data
@@ -964,9 +965,10 @@ def create_deviceNetwork():
 @permission_required(Permission.DEVICE_EDIT)
 def edit_deviceNetwork(id):
     deviceNetwork = DeviceNetwork.query.get_or_404(id)
-    form = EditDeviceNetworkForm()
+    form = EditDeviceNetworkForm(deviceNetwork)
     if form.validate_on_submit():
 
+        deviceNetwork.hostname = form.hostname.data
         deviceNetwork.classType_id = form.classType_id.data
         deviceNetwork.asset_id = form.asset_id.data
         deviceNetwork.rack_id = form.rack_id.data
@@ -986,6 +988,7 @@ def edit_deviceNetwork(id):
 
         return redirect(url_for('main.show_deviceNetworks',id=deviceNetwork.classType_id))
 
+    form.hostname.data = deviceNetwork.hostname
     form.classType_id.data = deviceNetwork.classType_id
     form.asset_id.data = deviceNetwork.asset_id
     form.rack_id.data = deviceNetwork.rack_id

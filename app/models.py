@@ -976,6 +976,7 @@ class DeviceModel(db.Model):
 class DeviceNetwork(db.Model):
     __tablename__ = 'deviceNetwork'
     id = db.Column(db.Integer, primary_key=True)
+    hostname = db.Column(db.String(64))     #主机名
     classType_id = db.Column(db.Integer, db.ForeignKey('classType.id'))
     asset_id = db.Column(db.Integer, db.ForeignKey('assets.id'))
     rack_id = db.Column(db.Integer, db.ForeignKey('racks.id'))
@@ -993,6 +994,7 @@ class DeviceNetwork(db.Model):
         deviceNetwork = {
             'id' : self.id,
             'url' : self.id,
+            'hostname' : self.hostname,
             'classType' : self.classType_id,
             'asset' : self.asset_id,
             'rack' : self.rack_id,

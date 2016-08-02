@@ -38,6 +38,7 @@
                                     <thead>
                                     <tr>
                                         <th></th>
+                                        <th>主机名</th>
                                         <th>设备类型</th>
                                         <th>资产号</th>
                                         <th>机房</th>
@@ -63,6 +64,7 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
+                                            <td>{{ device.hostname }}</td>
                                             <td>{{ db.session.query(ClassType).filter(ClassType.id == device.classType_id).first().name }}</td>
                                             <td>{{ deviceAsset.an }}</td>
                                             <td>{{ deviceRack.name }}</td>
