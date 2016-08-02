@@ -4,7 +4,7 @@ _author__ = 'eric'
 
 
 from flask.ext.wtf import Form
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField, SelectMultipleField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField, SelectMultipleField, DateField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
 from ..models import *
 from .. import db
@@ -114,7 +114,7 @@ class EditAssetForm(Form):
     an = StringField(u'AN号', validators=[InputRequired() ,Length(1,64)])   # AN 企业资产编号
     sn = StringField(u'SN号', validators=[InputRequired() ,Length(1,64)])                           # SN 设备序列号
     onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
-    dateofmanufacture = DateTimeField(u'生产时间')              # 生产时间
+    dateofmanufacture = DateField(u'生产时间')              # 生产时间
     manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
     brand = StringField(u'品牌', validators=[Length(0,64)])                        # 品牌
     model = StringField(u'型号', validators=[Length(0,64)])                        # 型号
@@ -123,8 +123,8 @@ class EditAssetForm(Form):
     mainuses = StringField(u'主要用途', validators=[Length(0,128)])                    # 主要用途
     managedept = StringField(u'管理部门', validators=[Length(0,64)])                   # 管理部门
     managestaff = StringField(u'管理人', validators=[Length(0,64)])                  # 管理人
-    koriyasustarttime = DateTimeField(u'维保开始时间')              # 维保开始时间
-    koriyasuendtime = DateTimeField(u'维保结束时间')                # 维保结束时间
+    koriyasustarttime = DateField(u'维保开始时间')              # 维保开始时间
+    koriyasuendtime = DateField(u'维保结束时间')                # 维保结束时间
     equipprice = IntegerField(u'设备价格')
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
@@ -261,7 +261,7 @@ class EditDeviceNetworkForm(Form):
                                  for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).all()]
 
         self.classType_id.choices = [(classType.id, classType.name)
-                                 for classType in ClassType.query.filter_by(type==2).order_by(ClassType.name).all()]
+                                 for classType in ClassType.query.filter(ClassType.type==2).order_by(ClassType.name).all()]
 
         self.rack_id.choices = [(rack.id, rack.name)
                                 for rack in Rack.query.order_by(Rack.name).all()]
@@ -496,9 +496,9 @@ class EditRackForm(Form):
     electricno = SelectField(u'电力路数', coerce=int)                   # 电力路数
     electriccapacity = IntegerField(u'电力容量(A)')             # 电力容量
     leftelectric = IntegerField(u'剩余容量(A)')                 # 剩余电力
-    renttime = DateTimeField(u'租用时间')                   # 租用时间
-    expiretime = DateTimeField(u'过期时间')                     # 过期时间
-    nextpaytime = DateTimeField(u'下次支付时间')                    # 下次支付时间
+    renttime = DateField(u'租用时间')                   # 租用时间
+    expiretime = DateField(u'过期时间')                     # 过期时间
+    nextpaytime = DateField(u'下次支付时间')                    # 下次支付时间
     money = IntegerField(u'支付金额')                        # 支付金额
     remarks = TextAreaField(u'备注')                            # 备注
     submit = SubmitField(u'提交')
