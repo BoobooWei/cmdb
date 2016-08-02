@@ -7,7 +7,7 @@ __author__ = 'eric'
 
 from . import api
 from ..models import *
-from flask import jsonify, g
+from flask import jsonify, g, abort
 from .decorators import permission_required
 from .authentication import auth
 from .errors import ValidationError
@@ -80,8 +80,31 @@ def new_device():
 @auth.login_required
 @permission_required(Permission.DEVICE_LOOK)
 def get_devicePower(id):
-    devicePower = DevicePower.query.get_or_404(id)
-    return jsonify({'devicePower': devicePower.to_json()})
+    devicePower = DevicePower.query.filter(DevicePower.device_id == id)
+    if not devicePower.all():
+        abort(404)
+    if devicePower.count() >1:
+        raise ValidationError(u'该设备电源管理ip有多个. 安全期间请在CMDB中删除不正确的电源管理.')
+
+    return jsonify({'devicePower': devicePower.first().to_json()})
+
+
+@api.route('/deviceModel/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_deviceModel(id):
+    deviceModel = DeviceModel.query.get_or_404(id)
+    return jsonify({'deviceModel': deviceModel.to_json()})
+
+
+
+@api.route('/deviceModels/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_deviceModels(id):
+    deviceModels = DeviceModel.query.filter(DeviceModel.device_id == id).all()
+    return jsonify({'deviceModels': [ deviceModel.to_json() for deviceModel in deviceModels ]})
+
 
 
 @api.route('/devicePort/<int:id>')
@@ -92,6 +115,67 @@ def get_devicePort(id):
     return jsonify({'devicePort': devicePort.to_json()})
 
 
+
+@api.route('/devicePorts/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_devicePorts(id):
+    devicePorts = DevicePorts.query.filter(DevicePorts.model_id == id).all()
+    return jsonify({'devicePorts': [devicePort.to_json() for devicePort in devicePorts]})
+
+
+
+@api.route('/deviceDisks/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_deviceDisks(id):
+    deviceDisks = DeviceDisks.query.filter(DeviceDisks.device_id == id).all()
+    return jsonify({'deviceDisks': [deviceDisk.to_json() for deviceDisk in deviceDisks]})
+
+
+
+@api.route('/deviceDisk/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_deviceDisk(id):
+    deviceDisk = DeviceDisks.query.get_or_404(id)
+    return jsonify({'deviceDisk': deviceDisk.to_json()})
+
+
+
+@api.route('/rack/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_rack(id):
+    rack = Rack.query.get_or_404(id)
+    return jsonify({'rack': rack.to_json()})
+
+
+
+@api.route('/racks/')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_racks():
+    racks = Rack.query.all()
+    return jsonify({'racks': [ rack.to_json() for rack in racks]})
+
+
+
+@api.route('/idc/<int:id>')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_idc(id):
+    idc = Idc.query.get_or_404(id)
+    return jsonify({'idc': idc.to_json()})
+
+
+
+@api.route('/idcs/')
+@auth.login_required
+@permission_required(Permission.DEVICE_LOOK)
+def get_idcs():
+    idcs = Idc.query.all()
+    return jsonify({'idcs': [idc.to_json() for idc in idcs]})
 
         # @api.route('/devices/', methods=['POST'])
 # @permission_required(Permission.DEVICE_EDIT)

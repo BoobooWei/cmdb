@@ -193,12 +193,14 @@ def show_devicePorts():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_devicePorts():
-    form = EditDevicePortForm()
+    form = EditDevicePortForm(None)
     if form.validate_on_submit():
         devicePorts = DevicePorts()
         deviceMaps = DevicePortMap()
 
         devicePorts.name = form.name.data
+        devicePorts.netmask = form.netmask.data
+        devicePorts.gateway = form.gateway.data
         devicePorts.ip = form.ip.data
         devicePorts.mac = form.mac.data
         devicePorts.type = form.type.data
@@ -206,17 +208,8 @@ def create_devicePorts():
         devicePorts.rate = form.rate.data
         devicePorts.vlanid = form.vlanid.data
         devicePorts.model_id = form.model_id.data
+        devicePorts.display = form.display.data
         devicePorts.remarks = form.remarks.data
-        target = DevicePorts.query.get(form.target.data)
-
-        db.session.add(devicePorts)
-        if target and target.id != 0:
-            print target.name
-            print target.id
-            if devicePorts.is_map(target):
-                devicePorts.map(target)
-
-
 
         db.session.add(devicePorts)
         db.session.commit()
@@ -232,13 +225,12 @@ def create_devicePorts():
 @permission_required(Permission.DEVICE_EDIT)
 def edit_devicePorts(id):
     devicePorts = DevicePorts.query.get_or_404(id)
-    form = EditDevicePortForm()
+    form = EditDevicePortForm(devicePorts)
     if form.validate_on_submit():
 
-        devicePorts = DevicePorts()
-        deviceMaps = DevicePortMap()
-
         devicePorts.name = form.name.data
+        devicePorts.netmask = form.netmask.data
+        devicePorts.gateway = form.gateway.data
         devicePorts.ip = form.ip.data
         devicePorts.mac = form.mac.data
         devicePorts.type = form.type.data
@@ -246,15 +238,8 @@ def edit_devicePorts(id):
         devicePorts.rate = form.rate.data
         devicePorts.vlanid = form.vlanid.data
         devicePorts.model_id = form.model_id.data
+        devicePorts.display = form.display.data
         devicePorts.remarks = form.remarks.data
-        target = DevicePorts.query.get(form.target.data)
-
-        db.session.add(devicePorts)
-        if target and target.id != 0:
-            print target.name
-            print target.id
-            if devicePorts.is_map(target):
-                devicePorts.map(target)
 
         db.session.add(devicePorts)
         db.session.commit()
@@ -262,6 +247,8 @@ def edit_devicePorts(id):
         return redirect(url_for('main.index'))
 
     form.name.data = devicePorts.name
+    form.netmask.data = devicePorts.netmask
+    form.gateway.data = devicePorts.gateway
     form.ip.data = devicePorts.ip
     form.mac.data = devicePorts.mac
     form.type.data = devicePorts.type
@@ -269,7 +256,7 @@ def edit_devicePorts(id):
     form.rate.data = devicePorts.rate
     form.vlanid.data = devicePorts.vlanid
     form.model_id.data = devicePorts.model_id
-    form.target.data = devicePorts.target
+    form.display.data = devicePorts.display
     form.remarks.data = devicePorts.remarks
     return render_template('edit_devicePorts.html', form=form, devicePorts=devicePorts)
 
@@ -550,6 +537,7 @@ def create_devicePower():
     if form.validate_on_submit():
         devicePower = DevicePower()
 
+        devicePower.device_id = form.device_id.data
         devicePower.type = form.type.data
         devicePower.enabled = form.enabled.data
         devicePower.ip = form.ip.data
@@ -572,6 +560,7 @@ def edit_devicePower(id):
     devicePower = DevicePower.query.get_or_404(id)
     form = EditDevicePowerForm()
     if form.validate_on_submit():
+        devicePower.device_id = form.device_id.data
         devicePower.type = form.type.data
         devicePower.enabled = form.enabled.data
         devicePower.ip = form.ip.data
@@ -585,6 +574,7 @@ def edit_devicePower(id):
         flash(u'修改电源管理:{0}成功!'.format(devicePower.ip))
         return redirect(url_for('main.show_devicePower'))
 
+    form.device_id.data = devicePower.device_id
     form.type.data = devicePower.type
     form.enabled.data = devicePower.enabled
     form.ip.data = devicePower.ip
@@ -610,12 +600,12 @@ def delete_devicePower(id):
 ########################################################################
 
 
-@main.route('/show-device.model', methods=['GET', 'POST'])
+@main.route('/show-device.models', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
-def show_deviceModel():
+def show_deviceModels():
     deviceModels = DeviceModel.query.all()
-    return render_template('show_devicePowers.html', deviceModels=deviceModels)
+    return render_template('show_deviceModels.html', deviceModels=deviceModels)
 
 
 @main.route('/create-device.model', methods=['GET', 'POST'])
@@ -629,6 +619,7 @@ def create_deviceModel():
         deviceModel.name = form.name.data
         deviceModel.type = form.type.data
         deviceModel.slot_id = form.slot_id.data
+        deviceModel.portcount = form.portcount.data
         deviceModel.sn = form.sn.data
         deviceModel.device_id = form.device_id.data
         deviceModel.remarks = form.remarks.data
@@ -651,6 +642,7 @@ def edit_deviceModel(id):
         deviceModel.name = form.name.data
         deviceModel.type = form.type.data
         deviceModel.slot_id = form.slot_id.data
+        deviceModel.portcount = form.portcount.data
         deviceModel.sn = form.sn.data
         deviceModel.device_id = form.device_id.data
         deviceModel.remarks = form.remarks.data
@@ -663,11 +655,12 @@ def edit_deviceModel(id):
     form.name.data = deviceModel.name
     form.type.data = deviceModel.type
     form.slot_id.data = deviceModel.slot_id
+    form.portcount.data = deviceModel.portcount
     form.sn.data = deviceModel.sn
     form.device_id.data = deviceModel.device_id
     form.remarks.data = deviceModel.remarks
 
-    return render_template('edit_deviceModel.html', form=form)
+    return render_template('edit_deviceModel.html', form=form, deviceModel=deviceModel)
 
 
 
@@ -679,7 +672,7 @@ def delete_deviceModel(id):
     deviceModels = DeviceModel.query.get_or_404(id)
     devicePorts = DevicePorts.query.filter(DevicePorts.model_id == deviceModels.id).all()
 
-    for port in deviceModels:
+    for port in devicePorts:
         ip = IpResourceManage.query.filter(IpResourceManage.ip == port.ip).first()
         ip.status = 0
         db.session.add(ip)
@@ -688,7 +681,7 @@ def delete_deviceModel(id):
     db.session.delete(deviceModels)
     db.session.commit()
 
-    return render_template('show_devicePowers.html', deviceModels=deviceModels)
+    return redirect(url_for('main.show_deviceModels'))
 
 
 ########################################################################
@@ -814,7 +807,7 @@ def create_device():
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
         device.disksize = form.disksize.data
-        device.powermanage_id = form.powermanage_id.data
+        device.useracksize = form.rackusesize.data
         device.use = form.use.data
         device.business = form.business.data
         device.powerstatus = form.powerstatus.data
@@ -846,7 +839,7 @@ def edit_device(id):
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
         device.disksize = form.disksize.data
-        device.powermanage_id = form.powermanage_id.data
+        device.useracksize = form.rackusesize.data
         device.use = form.use.data
         device.business = form.business.data
         device.powerstatus = form.powerstatus.data
@@ -868,8 +861,8 @@ def edit_device(id):
     form.cpucount.data = device.cpucount
     form.memsize.data = device.memsize
     form.disksize.data = device.disksize
-    form.powermanage_id.data = device.powermanage_id
     form.use.data = device.use
+    form.rackusesize.data = device.useracksize
     form.business.data = device.business
     form.powerstatus.data = device.powerstatus
     form.remarks.data = device.remarks
@@ -889,6 +882,7 @@ def show_devices(id):
     # items = pagination.items
     # return render_template('show_devices1.html', items=items, endpoint='main.show_devices', pagination=pagination)
 
+
     if id != 0:
         devices = Device.query.filter(Device.classType_id == id).all()
     else:
@@ -902,6 +896,18 @@ def show_devices(id):
 @permission_required(Permission.DEVICE_LOOK)
 def delete_device(id):
     device = Device.query.get_or_404(id)
+
+    deviceModel = db.session.query(DeviceModel).filter(DeviceModel.device_id == device.id).all()
+    print deviceModel
+    if deviceModel:
+        for model in deviceModel:
+            db.session.query(DevicePorts).filter(DevicePorts.model_id == model.id).delete()
+
+    db.session.query(DeviceModel).filter(DeviceModel.device_id == device.id).delete()
+    db.session.query(DeviceDisks).filter(DeviceDisks.device_id == device.id).delete()
+    db.session.query(DeviceMemorys).filter(DeviceMemorys.device_id == device.id).delete()
+    db.session.query(DevicePower).filter(DevicePower.device_id == device.id).delete()
+
     db.session.delete(device)
     db.session.commit()
     flash(u'设备: {0} 已删除!'.format(device.hostname))
@@ -1157,7 +1163,7 @@ def create_rack():
         rack = Rack()
         rack.name = form.name.data
         rack.staff = form.staff.data
-        rack.idcname = Idc.query.get(form.idcname.data)
+        rack.idc = Idc.query.get(form.idc.data)
         rack.site = form.site.data
         rack.racktype = form.racktype.data
         rack.usesize = form.usesize.data
@@ -1192,7 +1198,7 @@ def edit_rack(id):
     if form.validate_on_submit():
         rack.name = form.name.data
         rack.staff = form.staff.data
-        rack.idcname = Idc.query.get(form.idcname.data)
+        rack.idc = Idc.query.get(form.idc.data)
         rack.site = form.site.data
         rack.racktype = form.racktype.data
         rack.usesize = form.usesize.data
@@ -1219,7 +1225,7 @@ def edit_rack(id):
 
     form.name.data = rack.name
     form.staff.data = rack.staff
-    form.idcname.data = rack.idcname
+    form.idc.data = rack.idc
     form.site.data = rack.site
     form.racktype.data = rack.racktype
     form.usesize.data = rack.usesize
@@ -1242,7 +1248,17 @@ def edit_rack(id):
 def delete_rack(id):
     rack = Rack.query.get_or_404(id)
     try:
+        devices = db.session.query(Device).filter(Device.rack_id == rack.id).all()
+        for device in devices:
+            db.session.query(Asset).filter(device.asset_id == Asset.id).delete()
+
+        networks = db.session.query(DeviceNetwork).filter(DeviceNetwork.rack_id == rack.id).all()
+        for network in networks:
+            db.session.query(Asset).filter(network.asset_id == Asset.id).delete()
+
+
         db.session.delete(rack)
+        db.session.commit()
         flash(u'机柜: {0} 删除成功!'.format(rack.name))
     except:
         db.session.rollback()
@@ -1342,6 +1358,7 @@ def delete_idc(id):
     idc = Idc.query.get_or_404(id)
 
     try:
+        db.session.query(Rack).filter(Rack.idc_id == idc.id).delete()
         db.session.delete(idc)
         flash(u'机房: {0} 已删除!'.format(idc.name))
     except:

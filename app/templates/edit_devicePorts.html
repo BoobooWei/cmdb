@@ -53,6 +53,24 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label">子网掩码</label>
+
+                                <div class="col-md-6">
+                                    {{ form.netmask(class='form-control', placeholder='子网掩码') }}
+                                    {{ macros.print_form_messages(form.errors.netmask) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">网关</label>
+
+                                <div class="col-md-6">
+                                    {{ form.gateway(class='form-control', placeholder='网关') }}
+                                    {{ macros.print_form_messages(form.errors.gateway) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Mac地址</label>
 
                                 <div class="col-md-6">
@@ -103,15 +121,6 @@
                                 <div class="col-md-6">
                                     {{ form.model_id(class='select2', placeholder='模块') }}
                                     {{ macros.print_form_messages(form.errors.model_id) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">连接至</label>
-
-                                <div class="col-md-6">
-                                    {{ form.target(class='select2', placeholder='连接至') }}
-                                    {{ macros.print_form_messages(form.errors.target) }}
                                 </div>
                             </div>
 

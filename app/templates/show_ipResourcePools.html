@@ -50,6 +50,7 @@
 
                                     <tbody>
                                     {% for pool in ipResourcePools %}
+                                        {% set idc = db.session.query(Idc).filter(Idc.id == pool.idc_id).first() %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -57,7 +58,7 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td>{{ pool.idc_id }}</td>
+                                            <td>{{ idc.name }}</td>
                                             <td>{{ pool.range }}</td>
                                             <td>{{ pool.netmask }}</td>
                                             <td>{{ pool.gateway }}</td>

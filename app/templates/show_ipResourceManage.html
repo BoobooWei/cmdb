@@ -49,6 +49,10 @@
 
                                     <tbody>
                                     {% for ip in ipResourceManage %}
+                                        {% set devicePort = db.session.query(DevicePorts).filter(DevicePorts.id == ip.devicePort_id).first() %}
+                                        {% set deviceModel = db.session.query(DeviceModel).filter(DeviceModel.id == devicePort.model_id).first() %}
+                                        {% set device = db.session.query(Device).filter(Device.id == deviceModel.device_id).first() %}
+                                        {% set ipResourcePools = db.session.query(IpResourcePools).filter(IpResourcePools.id == ip.ipPool_id).first() %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -56,10 +60,15 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td>{{ ip.ipPool_id }}</td>
+                                            <td>{{ ipResourcePools.range }}</td>
                                             <td>{{ ip.ip }}</td>
-                                            <td>{{ ip.status }}</td>
-                                            <td>{{ ip.devicePort_id }}</td>
+                                            {% if ip.status == 0 %}
+                                            <td style="color: #90111A">未使用</td>
+                                            {% else %}
+                                            <td style="color: #008855">已使用</td>
+                                            {% endif %}
+
+                                            <td>{{ device.hostname }}.{{ deviceModel.name }}.{{ devicePort.name }}</td>
 
                                             <td class="actions">
                                                 <a class="hidden on-editing save-row" href="#"><i

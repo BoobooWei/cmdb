@@ -168,7 +168,7 @@ class EditDeviceForm(Form):
     cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
     memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
     disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
-    powermanage_id = SelectField(u'远控卡模块', coerce=int)
+    rackusesize = IntegerField(u'使用机柜容量')
     use = StringField(u'用途')
     business = SelectField(u'所属业务', coerce=int)
     powerstatus = SelectField(u'电源状态', coerce=int)
@@ -178,10 +178,14 @@ class EditDeviceForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
+        # self.asset_id.choices = [(asset.id, u'{0}:{1}:{2}:{3}:{4}:{5}'.format(asset.an, asset.sn, asset.brand, asset.model, asset.usedept, asset.usestaff))
+        #                          for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 1).filter(
+        #                             Asset.id.notin_(db.session.query(Device.asset_id))
+        #                           ).all()]
+
         self.asset_id.choices = [(asset.id, u'{0}:{1}:{2}:{3}:{4}:{5}'.format(asset.an, asset.sn, asset.brand, asset.model, asset.usedept, asset.usestaff))
-                                 for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 1).filter(
-                                    Asset.id.notin_(db.session.query(Device.asset_id))
-                                  ).all()]
+                                 for asset in db.session.query(Asset).filter(Asset.classType_id.in_(db.session.query(ClassType.id).filter(ClassType.type == 1))).all()]
+
 
         self.classType_id.choices = [(classType.id, classType.name)
                                    for classType in ClassType.query.filter_by(type = 1).order_by(ClassType.name).all()]
@@ -189,10 +193,7 @@ class EditDeviceForm(Form):
         self.rack_id.choices = [(rack.id, rack.name)
                              for rack in Rack.query.order_by(Rack.name).all()]
 
-        self.powermanage_id.choices = [(power.id, power.ip)
-                               for power in DevicePower.query.all()]
-
-        self.business.choices = [(1, u'云计算',),]
+        self.business.choices = [(1, u'云计算',),(2, u'网站')]
 
         self.powerstatus.choices = [(1, u'开机'), (2, u'关机')]
 
@@ -227,7 +228,7 @@ class EditVritMachineForm(Form):
         self.onstatus.choices = [(1, u'已用'), (2, u'空闲'), (3, u'下线'), (3, u'待回收')]
 
         self.device_id.choices = [(device.id, device.hostname)
-                             for device in Device.query.order_by(Device.hostname).all()]
+                             for device in Device.query.order_by(Device.hostname).filter(Device.is_virtualization == True).all()]
 
         self.pool.choices = [(pool.id, pool.name)
                              for pool in DevicePools.query.order_by(DevicePools.name).all()]
@@ -235,6 +236,8 @@ class EditVritMachineForm(Form):
         self.business.choices = [(1, u'云计算',),(2, u'大数据')]
 
         self.powerstatus.choices = [(1, u'开机'), (2, u'关机')]
+
+
 
 
 
@@ -255,12 +258,10 @@ class EditDeviceNetworkForm(Form):
         super(EditDeviceNetworkForm, self).__init__(*args, **kwargs)
 
         self.asset_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
-                                 for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).filter(
-                                     Asset.id.notin_(db.session.query(DeviceNetwork.classType_id))
-                                 ).all()]
+                                 for asset in Asset.query.order_by(Asset.inputtime.desc()).filter(Asset.classType_id == 2).all()]
 
         self.classType_id.choices = [(classType.id, classType.name)
-                                 for classType in ClassType.query.filter_by(type=2).order_by(ClassType.name).all()]
+                                 for classType in ClassType.query.filter_by(type==2).order_by(ClassType.name).all()]
 
         self.rack_id.choices = [(rack.id, rack.name)
                                 for rack in Rack.query.order_by(Rack.name).all()]
@@ -271,21 +272,21 @@ class EditDeviceNetworkForm(Form):
 
 class EditDevicePortForm(Form):
     name = StringField(u'接口名称', validators=[InputRequired(), Length(1,64)])
-    ip = StringField(u'IP地址')
+    ip = StringField(u'IP地址', validators=[InputRequired()])
+    netmask = StringField(u'子网掩码', validators=[InputRequired()])
+    gateway = StringField(u'网关')
     mac = StringField(u'Mac地址')
     type = SelectField(u'接口类型', coerce=int)
     mode = SelectField(u'端口类型', coerce=int)
     rate = SelectField(u'速率', coerce=int)
     vlanid = IntegerField(u'VlanID')
     model_id = SelectField(u'模块', coerce=int)
-    target = SelectField(u'连接至', coerce=int)
     display = BooleanField(u'显示查询页面')
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'提交')
 
 
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, devicePorts, *args, **kwargs):
         super(EditDevicePortForm, self).__init__(*args, **kwargs)
 
         self.type.choices = [(1, u'内网'), (2, u'公网')]
@@ -294,12 +295,26 @@ class EditDevicePortForm(Form):
 
         self.rate.choices = [(2, u'1GB'), (1, u'100MB'), (3, u'10GB'), (4, u'100GB')]
 
-        self.model_id.choices = [(model.id, model.name)
+        self.model_id.choices = [(model.id, u'{0}.{1}'.format(Device.query.filter(Device.id==model.device_id).first().hostname, model.name ))
                                  for model in DeviceModel.query.all()]
 
-        self.target.choices = [(port.id, port.name)
-                               for port in DevicePorts.query.all()]
+        self.devicePorts = devicePorts
 
+    def validate_mac(self, field):
+        if not self.devicePorts:
+            if DevicePorts.query.filter_by(mac=field.data).first():
+                raise ValidationError(u'mac地址已经被使用了')
+        else:
+            if field.data != self.devicePorts.mac and DevicePorts.query.filter_by(DevicePorts.mac==field.data).first():
+                raise ValidationError(u'mac地址已经被使用了')
+
+    def validate_ip(self, field):
+        if not self.devicePorts:
+            if DevicePorts.query.filter_by(DevicePorts.ip==field.data).first():
+                raise ValidationError(u'ip地址已经被使用了')
+        else:
+            if field.data != self.devicePorts.ip and DevicePorts.query.filter_by(DevicePorts.ip == field.data).first():
+                raise ValidationError(u'ip地址已经被使用了')
 
 class EditDeviceMemoryForm(Form):
     slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
@@ -346,7 +361,8 @@ class EditDeviceDiskForm(Form):
 
 
 class EditDevicePowerForm(Form):
-    type = SelectField(u'电源模块类型', coerce=int)                      # 网络类型
+    device_id = SelectField(u'关联服务器', coerce=int)
+    type = SelectField(u'电源模块类型', coerce=int)   # 网络类型
     enabled = BooleanField(u'启用电源管理')
     ip = StringField(u'IP地址', validators=[Length(0,15)])                 # 远控卡IP地址
     user = StringField(u'用户', validators=[Length(0,64)])
@@ -359,7 +375,11 @@ class EditDevicePowerForm(Form):
     def __init__(self, *args, **kwargs):
         super(EditDevicePowerForm, self).__init__(*args, **kwargs)
 
+        self.device_id.choices = [(device.id, device.hostname)
+                                  for device in Device.query.all()]
+
         self.type.choices = [(1, u'IPMI'), (1, u'iLO')]
+
 
 #    def validate_powermanage_ip(self, field):
 #        if DevicePowerManage.query.filter_by(powermanage_ip=field.data).first():
@@ -383,7 +403,8 @@ class EditDevicePoolsForm(Form):
 class EditDeviceModelForm(Form):
     name = StringField(u'模块名称', validators=[InputRequired(), Length(1,64)])
     type = SelectField(u'模块类型', coerce=int)
-    slot_id = IntegerField(u'插槽', validators=[InputRequired(), Length(1,64)])
+    portcount = IntegerField(u'端口数量')
+    slot_id = IntegerField(u'插槽ID', validators=[InputRequired()])
     sn = StringField(u'序列号')
     device_id = SelectField(u'设备', coerce=int)
     remarks = TextAreaField(u'备注')
@@ -394,8 +415,8 @@ class EditDeviceModelForm(Form):
         super(EditDeviceModelForm, self).__init__(*args, **kwargs)
         self.type.choices = [(1, u'服务器网卡'), (2, u'网络设备模块')]
 
-        self.device_id.choices = [(asset.id, '{0}-{1}-{2}'.format(asset.an, asset.sn, asset.id))
-                                 for asset in Asset.query.order_by(Asset.id).all()]
+        self.device_id.choices = [(device.id, '{0}'.format(device.hostname))
+                                 for device in Device.query.order_by(Device.id).all()]
 
 
 class EditDevicePortMapForm(Form):
@@ -466,7 +487,7 @@ class EditIpResourceManageForm(Form):
 class EditRackForm(Form):
     name = StringField(u'机柜名称', validators=[InputRequired(), Length(1,64)])
     staff = StringField(u'管理人', validators=[Length(0,64)])                        # 机柜负责人
-    idcname = SelectField(u'机房', coerce=int)
+    idc = SelectField(u'机房', coerce=int)
     site = StringField(u'机柜位置', validators=[Length(1,64)])                         # 机柜位置
     racktype = SelectField(u'机柜类型', coerce=int)                     # 机柜类型
     usesize = IntegerField(u'已用(u)')                      # 已用空间（u）
@@ -485,7 +506,7 @@ class EditRackForm(Form):
     def __init__(self, rack,*args, **kwargs):
         super(EditRackForm, self).__init__(*args, **kwargs)
 
-        self.idcname.choices = [(idc.id, idc.name)
+        self.idc.choices = [(idc.id, idc.name)
                              for idc in Idc.query.order_by(Idc.name).all()]
 
         self.racktype.choices = [(1, u'服务器'), (2, u'网络设备')]

@@ -110,7 +110,7 @@
                     class="badge bg-success">New</span></a>
                 <ul class="list-unstyled">
 
-                    <li><a href="{{ url_for('main.show_devices', id=0) }}">所有物理机
+                    <li><a href="{{ url_for('main.show_devices', id=0) }}">所有设备
                         <span class="badge bg-purple">{{ db.session.query(Device).count() }}</span></a></li>
 
                     {% for type in db.session.query(ClassType).filter(ClassType.type == 1).all() %}
@@ -125,10 +125,14 @@
                             class="badge bg-purple">{{ db.session.query(DevicePorts).count() }}</span></a></li>
                     <li><a href="{{ url_for('main.show_devicePower') }}">电源管理<span
                             class="badge bg-purple">{{ db.session.query(DevicePower).count() }}</span></a></li>
-                    <li><a href="">自动发现<span
-                            class="badge bg-purple">{{ db.session.query(DevicePower).count() }}</span></a></li>
+                    <li><a href="{{ url_for('main.show_devices', id=-1) }}">自动发现<span
+                            class="badge bg-purple">{{ db.session.query(Device).filter(Device.auto_discover == True).count() }}</span></a></li>
+
+                    <li><a href="{{ url_for('main.show_deviceModels') }}">模块管理<span
+                            class="badge bg-purple">{{ db.session.query(DeviceModel).count() }}</span></a></li>
+
                     <li><a href="{{ url_for('main.show_classType') }}">类别管理<span
-                            class="badge bg-purple">1</span></a></li>
+                            class="badge bg-purple">{{ db.session.query(ClassType).count() }}</span></a></li>
                 </ul>
             </li>
 
@@ -181,7 +185,9 @@
 
             <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">数据库管理</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="inbox.html">类别管理</a></li>
+                    <li><a href="">Oracle</a></li>
+                    <li><a href="">MySQL</a></li>
+                    <li><a href="">类别管理</a></li>
                 </ul>
             </li>
 
@@ -204,11 +210,8 @@
             <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">配件管理</span><span
                     class="badge bg-pink">5</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="profile.html">Profile</a></li>
-                    <li><a href="timeline.html">Timeline</a></li>
-                    <li><a href="invoice.html">Invoice</a></li>
-                    <li><a href="contact.html">Contact-list</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="">服务器磁盘</a></li>
+                    <li><a href="">类别管理</a></li>
 
                 </ul>
             </li>

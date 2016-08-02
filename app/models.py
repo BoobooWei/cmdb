@@ -407,6 +407,7 @@ class ClassType(db.Model):
 
     def to_json(self):
         json_classType = {
+            'id' : self.id,
             'url': self.id,
             'name' : self.name,
             'type' : self.type,
@@ -440,7 +441,8 @@ class DeviceDisks(db.Model):
 
     def to_json(self):
         json_deviceDisk = {
-            'url' : self.id,
+            'id' : self.id,
+            'url' : url_for('api.deviceDisk', id=self.id, _external=True),
             'slot_id' : self.slot_id,
             'sn' : self.sn,
             'size': self.size,
@@ -450,7 +452,7 @@ class DeviceDisks(db.Model):
             'status' : self.status,
             'physics_error': self.physics_error,
             'logic_error': self.logic_error,
-            'device' : self.device_id,
+            'device_id' : self.device_id,
             'isdelete': self.isdelete,
             'remarks': self.remarks
         }
@@ -481,7 +483,7 @@ class DevicePorts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))            # 接口名称 (eth0)
     ip = db.Column(db.String(32), unique=True, index=True)
-    mask = db.Column(db.String(32))             #子网掩码
+    netmask = db.Column(db.String(32))             #子网掩码
     gateway = db.Column(db.String(32))          #网关
     mac = db.Column(db.String(64), unique=True, index=True)
     type = db.Column(db.Integer)     #（公网，内网， 上联接口）
@@ -499,18 +501,19 @@ class DevicePorts(db.Model):
 
     def to_json(self):
         json_devicePort = {
-            'url': self.id,
+            'id' : self.id,
+            'url': url_for('api.get_devicePort', id=self.id, _external=True),
             'name': self.name,
             'ip'  : self.ip,
-            'mask': self.mask,
+            'mask': self.netmask,
             'gateway' : self.gateway,
             'mac' : self.mac,
             'type': self.type,
             'mode': self.mode,
             'rate': self.rate,
             'vlanid': self.vlanid,
-            'target': self.target,
-            'model' : self.model_id,
+            'model' : url_for('api.get_deviceModel', id=self.model_id, _external=True),
+            'model_id' : self.model_id,
             'display': self.display,
             'remarks': self.remarks,
             'isdelete': self.isdelete,
@@ -539,27 +542,28 @@ class DevicePorts(db.Model):
 
     @staticmethod
     def auto_update_ipaddr(target, value, oldvalue, initiator):
+        db.session.add(target)
+        db.session.commit()
         from IPy import IP
 
         prefix = value.split('.')[:-1]
         prefix.append('0')
         prefix = '.'.join(prefix)
+        ipRange = str(IP("{0}/{1}".format(prefix, target.netmask)))
 
-        ipRange = str(IP("{0}/{1}".format(prefix, target.mask)))
 
-
-        print ipRange
-        ipPool = IpResourcePools.query.filter(ipRange)
+        ipPool = IpResourcePools.query.filter(IpResourcePools.range == ipRange).first()
         ipAddr = IpResourceManage.query.filter(IpResourceManage.ip == value).first()
         if ipPool and ipAddr:
             ipAddr.status = 1
-            flash(u'IP地址:{0}在IP地址段已经设置为已用。')
+            ipAddr.devicePort_id = target.id
+            flash(u'IP地址:{0}在IP地址段已经设置为已用.')
             db.session.add(ipAddr)
             db.session.commit()
 
         else:
             ipPool = IpResourcePools()
-            ipPool.netmask = target.mask
+            ipPool.netmask = target.netmask
             ipPool.gateway = target.gateway
             ipPool.range = ipRange
 
@@ -577,6 +581,7 @@ class DevicePorts(db.Model):
             ipAddr = IpResourceManage.query.filter(IpResourceManage.ip == value).first()
             if ipAddr:
                 ipAddr.status = 1
+                ipAddr.devicePort_id = target.id
 
                 db.session.add(ipAddr)
                 db.session.commit()
@@ -605,11 +610,13 @@ class DeviceMemorys(db.Model):
 
     def to_json(self):
         json_deviceMemory = {
-            'url' : self.id,
+            'id' : self.id,
+            'url': url_for('api.get_deviceMemorys', id=self.id, _external=True),
             'solt_id' : self.slot_id,
             'sn' : self.sn,
             'size' : self.size,
-            'device' : self.device_id,
+            'device_id' : self.device_id,
+            'device' : url_for('api.get_device', id=self.device_id, _external=True),
             'remarks' : self.remarks,
             'isdelete' : self.isdelete,
         }
@@ -644,6 +651,7 @@ class DevicePower(db.Model):
     user = db.Column(db.String(64))
     password_hash = db.Column(db.String(256))
     powerid = db.Column(db.String(256))
+    device_id = db.Column(db.ForeignKey('devices.id'), primary_key=True)
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
     remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -666,7 +674,10 @@ class DevicePower(db.Model):
 
     def to_json(self):
         json_power = {
-            'url' : self.id,
+            'url': url_for('api.get_devicePower', id=self.id, _external=True),
+            'id' : self.id,
+            'device_id' : self.device_id,
+            'device' : url_for('api.get_device', id=self.device_id, _external=True),
             'type' : self.type,
             'enabled' : self.enabled,
             'ip' : self.ip,
@@ -711,8 +722,9 @@ class Asset(db.Model):
     def to_json(self):
 
         json_asset = {
-            #'url': url_for('api.get_device', id=self.id, _external=True),
+            'url': url_for('api.get_asset', id=self.id, _external=True),
             #'classType': url_for('api.get_deviceType', id=self.id, _external=True),
+            'id' : self.id,
             'an': self.an,
             'sn': self.sn,
             'onstatus': self.onstatus,
@@ -772,10 +784,10 @@ class Device(db.Model):
     disks = db.relationship('DeviceDisks', backref='device', lazy='dynamic')  # 鍏宠仈 Asset table
     disksize = db.Column(db.String(64))
     memorys = db.relationship('DeviceMemorys', backref='device', lazy='dynamic')
+    useracksize = db.Column(db.Integer)
     use = db.Column(db.String(64))     #用途
     business = db.Column(db.Integer)    #所属业务
     powerstatus = db.Column(db.Integer)  #电源状态
-    powermanage_id = db.Column(db.ForeignKey('devicePowers.id'))
     uuid = db.Column(db.String(64))     # Device UUID
     auto_discover = db.Column(db.Boolean)           #自动发现 True , False
     isdelete = db.Column(db.Integer)  # 鏄惁鍒犻櫎
@@ -785,12 +797,34 @@ class Device(db.Model):
 
 
     def to_json(self):
+        deviceAsset = db.session.query(Asset).filter(Asset.id == self.asset_id).first()
+        deviceModel = db.session.query(DeviceModel).filter(DeviceModel.device_id == self.id).first()
+        devicePorts = db.session.query(DevicePorts).filter(DevicePorts.model_id == deviceModel.id).all()
+
+        ip = None
+        for devicePort in devicePorts:
+            if devicePort.display:
+                if devicePort.type == 1:
+                    ip = '内网|{0}'.format(devicePort.ip)
+                else:
+                    ip = '公网|{0}'.format(devicePort.ip)
+
         json_device = {
                 'url': url_for('api.get_device', id=self.id, _external=True),
-                #'asset': url_for('api.get_asset', id=self.id, _external=True),
-                #'rack' : url_for('api.get_rack', id=self.id, _external=True),
+                'id' : self.id,
+                'asset': url_for('api.get_asset', id=self.id, _external=True),
+                'asset_id' : self.asset_id,
+                'rack' : url_for('api.get_rack', id=self.id, _external=True),
                 'classType' : self.classType_id,
+                'an' : deviceAsset.an,
+                'sn' : deviceAsset.sn,
                 'hostname': self.hostname,
+                'ip' : ip,
+                'onstatus' : deviceAsset.onstatus,
+                'brand' : deviceAsset.brand,
+                'model' : deviceAsset.model,
+                'usedept' : deviceAsset.usedept,
+                'usestaff' : deviceAsset.usestaff,
                 'is_virtualization': self.is_virtualization,
                 'os': self.os,
                 'cpumodel': self.cpumodel,
@@ -800,7 +834,6 @@ class Device(db.Model):
                 'use': self.use,
                 'business': self.business,
                 'powerstatus': self.powerstatus,
-                'powermanage' : self.powermanage_id,
                 'uuid' : self.uuid,
                 'remarks': self.remarks,
 
@@ -832,10 +865,19 @@ class Device(db.Model):
         return device
 
 
+    @staticmethod
+    def auto_update_racksize(target, value, oldvalue, initiator):
+        deviceRack = db.session.query(Rack).filter(Rack.id == target.rack_id).first()
+        if deviceRack:
+            deviceRack.usesize += value
+            deviceRack.remainsize -= value
+            db.session.add(deviceRack)
+            db.session.commit()
 
     def __repr__(self):
         return '<Device %r>' % self.hostname
 
+db.event.listen(Device.useracksize, 'set', Device.auto_update_racksize)
 
 
 class VirtMachine(db.Model):
@@ -867,7 +909,8 @@ class VirtMachine(db.Model):
     def to_json(self):
         json_virtMachine = {
             'url' : self.id,
-            'device' : self.device_id,
+            'device_id' : self.device_id,
+            'device' : url_for('api.get_device', id=self.device_id, _external=True),
             'deviceType': self.deviceType,
             'virtType': self.virtType,
             'pool_id' : self.pool_id,
@@ -900,6 +943,7 @@ class DeviceModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     type = db.Column(db.Integer)    #模块类型
+    portcount = db.Column(db.Integer)       #端口数量
     slot_id = db.Column(db.Integer)
     sn = db.Column(db.String(64))
     device_id = db.Column(db.ForeignKey('devices.id'))
@@ -910,12 +954,15 @@ class DeviceModel(db.Model):
 
     def to_json(self):
         deviceModel = {
-            'url' : self.id,
+            'id' : self.id,
+            'url' : url_for('api.get_deviceModel', id=self.id, _external=True),
             'name' : self.name,
             'type' : self.type,
+            'portcount' : self.portcount,
             'slot_id' : self.slot_id,
             'sn' : self.sn,
-            'device' : self.device_id,
+            'device_id' : self.device_id,
+            'device' : url_for('api.get_device', id=self.device_id, _external=True),
             'isdelete' : self.isdelete,
             'remarks' : self.remarks,
         }
@@ -944,6 +991,7 @@ class DeviceNetwork(db.Model):
 
     def to_json(self):
         deviceNetwork = {
+            'id' : self.id,
             'url' : self.id,
             'classType' : self.classType_id,
             'asset' : self.asset_id,
@@ -1025,7 +1073,7 @@ class Idc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     ispid = db.Column(db.String(64))  # 杩愯惀鍟嗗悕绉�
-    racks = db.relationship('Rack', backref='idcname', lazy='dynamic')  # 鍏宠仈Rack
+    racks = db.relationship('Rack', backref='idc', lazy='dynamic')  # 鍏宠仈Rack
     contactname = db.Column(db.String(64))
     contactphone = db.Column(db.String(64))  # 鑱旂郴浜�
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
@@ -1040,10 +1088,10 @@ class Idc(db.Model):
 
     def to_json(self):
         json_idc = {
-            'url' : self.id,
+            'id' : self.id,
+            'url' : url_for('api.get_idc', id=self.id, _external=True),
             'name' : self.name,
             'ispid' : self.ispid,
-            'racks' : self.racks,
             'contactname' : self.contactname,
             'contactphone' : self.contactphone,
             'nettype' : self.nettype,
@@ -1066,7 +1114,7 @@ class Rack(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     staff = db.Column(db.String(64))  # 鏈烘煖璐熻矗浜�
-    idcname_id = db.Column(db.ForeignKey('idcs.id'))  # 鍏宠仈IDC table id
+    idc_id = db.Column(db.ForeignKey('idcs.id'))  # 鍏宠仈IDC table id
     site = db.Column(db.String(64))  # 鏈烘煖浣嶇疆
     racktype = db.Column(db.String(64))  # 鏈烘煖绫诲瀷
     usesize = db.Column(db.Integer)  # 宸茬敤绌洪棿锛坲锛�
@@ -1086,10 +1134,12 @@ class Rack(db.Model):
 
     def to_json(self):
         json_rack = {
+            'id' : self.id,
             'url' : self.id,
             'name' : self.name,
             'staff' : self.staff,
-            'idc' : self.idcname_id,
+            'idc' : url_for('api.get_idc', id=self.idc_id, _external=True),
+            'idc_id' : self.idc_id,
             'site' : self.site,
             'racktype' : self.racktype,
             'usesize' : self.usesize,

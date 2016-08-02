@@ -53,7 +53,7 @@
 
                                     <tbody>
                                     {% for power in devicePowers %}
-                                        {% set devices = db.session.query(Device).filter(power.id == Device.powermanage_id) %}
+                                        {% set devices = db.session.query(Device).filter(Device.id == power.device_id) %}
                                         {% set deviceAsset = db.session.query(Asset).filter(devices.first().asset_id == Asset.id).first() %}
                                         <tr {% if devices.count() > 1 %} style="color:red" {% endif %}>
                                             <td>
