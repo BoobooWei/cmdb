@@ -2,31 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/create_deviceModel.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/edit_deviceModel.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceModels.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/base.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/api_1_0/devices.py" afterPath="$PROJECT_DIR$/app/api_1_0/devices.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_device.html" afterPath="$PROJECT_DIR$/app/templates/create_device.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_devicePorts.html" afterPath="$PROJECT_DIR$/app/templates/create_devicePorts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_devicePower.html" afterPath="$PROJECT_DIR$/app/templates/create_devicePower.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_rack.html" afterPath="$PROJECT_DIR$/app/templates/create_rack.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_device.html" afterPath="$PROJECT_DIR$/app/templates/edit_device.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_devicePorts.html" afterPath="$PROJECT_DIR$/app/templates/edit_devicePorts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_devicePower.html" afterPath="$PROJECT_DIR$/app/templates/edit_devicePower.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_rack.html" afterPath="$PROJECT_DIR$/app/templates/edit_rack.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devicePools.html" afterPath="$PROJECT_DIR$/app/templates/show_devicePools.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devicePorts.html" afterPath="$PROJECT_DIR$/app/templates/show_devicePorts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devicePowers.html" afterPath="$PROJECT_DIR$/app/templates/show_devicePowers.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devices.html" afterPath="$PROJECT_DIR$/app/templates/show_devices.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_ipResourceManage.html" afterPath="$PROJECT_DIR$/app/templates/show_ipResourceManage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_ipResourcePools.html" afterPath="$PROJECT_DIR$/app/templates/show_ipResourcePools.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_racks.html" afterPath="$PROJECT_DIR$/app/templates/show_racks.html" />
     </list>
     <ignored path="cmdb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,8 +29,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-135">
-              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+            <state relative-caret-position="555">
+              <caret line="1542" column="38" selection-start-line="1542" selection-start-column="38" selection-end-line="1542" selection-end-column="38" />
               <folding>
                 <element signature="e#15#118#0" expanded="true" />
               </folding>
@@ -658,7 +634,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="823" extended-state="1" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1089,8 +1065,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+        <state relative-caret-position="555">
+          <caret line="1542" column="38" selection-start-line="1542" selection-start-column="38" selection-end-line="1542" selection-end-column="38" />
           <folding>
             <element signature="e#15#118#0" expanded="true" />
           </folding>

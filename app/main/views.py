@@ -120,7 +120,8 @@ def delete_system_users(id):
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html')
+    #return render_template('index.html')
+    return redirect('main.show_devices')
 
 
 ##################################################################
@@ -214,7 +215,7 @@ def create_devicePorts():
         db.session.add(devicePorts)
         db.session.commit()
         flash(u'创建设备端口:{0}成功!'.format(form.name.data))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_devicePorts'))
     return render_template('create_devicePorts.html', form=form)
 
 
@@ -244,7 +245,7 @@ def edit_devicePorts(id):
         db.session.add(devicePorts)
         db.session.commit()
         flash(u'修改设备端口:{0}成功!'.format(devicePorts.name))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_devicePorts'))
 
     form.name.data = devicePorts.name
     form.netmask.data = devicePorts.netmask
@@ -297,7 +298,7 @@ def create_devicePortMap():
         db.session.add(devicePortMap)
         flash(u'创建端口映射成功!')
         db.session.commit()
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_devicePortMaps'))
     return render_template('create_devicePortMap.html', form=form)
 
 
@@ -329,7 +330,7 @@ def create_deviceMemorys():
         db.session.add(deviceMemorys)
         flash(u'创建设备内存:{0}成功!'.format(form.sn.data))
         db.session.commit()
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceMemorys'))
     return render_template('test.html', form=form)
 
 
@@ -349,7 +350,7 @@ def edit_deviceMemorys(id):
         db.session.add(deviceMemorys)
         db.session.commit()
         flash(u'修改设备内存:{0}成功!'.format(deviceMemorys.sn))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceMemorys'))
 
     form.slot_id.data = deviceMemorys.slot_id
     form.sn.data = deviceMemorys.sn
@@ -367,7 +368,7 @@ def delete_deviceMemorys(id):
     deviceMemorys = DeviceMemorys.query.get_or_404(id)
     db.session.delete(deviceMemorys)
     flash(u'内存: {0} 已删除!'.format(deviceMemorys.id))
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.show_deviceMemorys'))
 
 
 #######################################################################
@@ -403,7 +404,7 @@ def create_deviceDisks():
         db.session.add(deviceDisks)
         flash(u'创建设备磁盘:{0}成功!'.format(form.sn.data))
         db.session.commit()
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.create_deviceDisks'))
     return render_template('test.html', form=form)
 
 
@@ -429,7 +430,7 @@ def edit_deviceDisks(id):
         db.session.add(deviceDisks)
         db.session.commit()
         flash(u'修改设备内存:{0}成功!'.format(deviceDisks.sn))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.create_deviceDisks'))
 
     form.slot_id.data = deviceDisks.slot_id
     form.sn.data = deviceDisks.sn
@@ -453,7 +454,7 @@ def delete_deviceDisks(id):
     deviceDisks = DeviceDisks.query.get_or_404(id)
     db.session.delete(deviceDisks)
     flash(u'磁盘: {0} 已删除!'.format(deviceDisks.id))
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.create_deviceDisks'))
 
 
 #######################################################################
