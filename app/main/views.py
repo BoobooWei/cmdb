@@ -121,7 +121,7 @@ def delete_system_users(id):
 @login_required
 def index():
     #return render_template('index.html')
-    return redirect(url_for('main.show_devices'))
+    return redirect(url_for('main.show_devices', id=0))
 
 
 ##################################################################
