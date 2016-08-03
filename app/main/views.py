@@ -42,6 +42,7 @@ def edit_profile():
 @permission_required(Permission.USER_LOOK)
 def show_system_users():
     users = User.query.all()
+    current_user.Location = {'menu': 'users', 'active': 'users'}
     return render_template('show_system_users.html', users=users)
 
 
@@ -166,6 +167,7 @@ def edit_classType(id):
 @login_required
 def show_classType():
     classType = ClassType.query.all()
+    current_user.Location = {'menu': 'deviceAsset', 'active': 'classType'}
     return render_template('show_classType.html', classType=classType)
 
 
@@ -185,6 +187,7 @@ def delete_classType(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePorts():
+    current_user.Location = {'menu': 'device', 'active': 'ports'}
     devicePorts = DevicePorts.query.all()
     return render_template('show_devicePorts.html', devicePorts=devicePorts)
 
@@ -277,6 +280,7 @@ def delete_devicePorts(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePortMaps():
+    current_user.Location = {'menu': 'device', 'active': 'portmap'}
     devicePortMap = DevicePortMap.query.all()
     return render_template('test.html', devicePortMap=devicePortMap)
 
@@ -309,6 +313,7 @@ def create_devicePortMap():
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceMemorys():
+    current_user.Location = {'menu': 'device', 'active': 'memorys'}
     deviceMemorys = DeviceMemorys.query.all()
     return render_template('test.html', deviceMemorys=deviceMemorys)
 
@@ -377,6 +382,7 @@ def delete_deviceMemorys(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceDisks():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
     deviceDisks = DeviceDisks.query.all()
     return render_template('test.html', deviceDisks=deviceDisks)
 
@@ -464,6 +470,7 @@ def delete_deviceDisks(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePools():
+    current_user.Location = {'menu': 'device', 'active': 'pools'}
     devicePools = DevicePools.query.all()
     return render_template('show_devicePools.html', devicePools=devicePools)
 
@@ -526,6 +533,7 @@ def delete_devicePools(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePower():
+    current_user.Location = {'menu': 'device', 'active': 'powers'}
     devicePowers = DevicePower.query.all()
     return render_template('show_devicePowers.html', devicePowers=devicePowers)
 
@@ -605,6 +613,7 @@ def delete_devicePower(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceModels():
+    current_user.Location = {'menu': 'device', 'active': 'models'}
     deviceModels = DeviceModel.query.all()
     return render_template('show_deviceModels.html', deviceModels=deviceModels)
 
@@ -691,8 +700,8 @@ def delete_deviceModel(id):
 @login_required
 # @permission_required(Permission.ASSET_LOOK)
 def show_deviceAssets(id):
+    current_user.Location = {'menu': 'device', 'active': 'deviceAssets'}
     deviceAssets = Asset.query.filter(Asset.classType_id == id).all()
-    print deviceAssets
     return render_template('show_deviceAssets.html', deviceAssets=deviceAssets, id=id)
 
 
@@ -885,8 +894,10 @@ def show_devices(id):
 
 
     if id != 0:
+        current_user.Location = {'menu': 'device', 'active': 'devices', 'id': id}
         devices = Device.query.filter(Device.classType_id == id).all()
     else:
+        current_user.Location = {'menu': 'device', 'active': 'devices', 'id': id}
         devices = Device.query.all()
 
     return render_template('show_devices.html', devices=devices)
@@ -922,8 +933,10 @@ def delete_device(id):
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceNetworks(id):
     if id != 0:
+        current_user.Location = {'menu': 'device', 'active': 'networks', 'id': id}
         deviceNetworks = DeviceNetwork.query.filter(DeviceNetwork.classType_id == id).all()
     else:
+        current_user.Location = {'menu': 'device', 'active': 'networks', 'id': 0}
         deviceNetworks = DeviceNetwork.query.all()
 
     return render_template('show_deviceNetworks.html', deviceNetworks=deviceNetworks)
@@ -1024,8 +1037,10 @@ def delete_deviceNetwork(id):
 @permission_required(Permission.DEVICE_LOOK)
 def show_virtmachine(id):
     if id != 0:
+        current_user.Location = {'menu': 'device', 'active': 'virtmachine', 'id': id}
         virtMachine = DevicePools.query.get_or_404(id).devices.all()
     else:
+        current_user.Location = {'menu': 'device', 'active': 'virtmachine', 'id': id}
         virtMachine = VirtMachine.query.all()
     return render_template('show_virtmachine.html', virtMachine=virtMachine)
 
@@ -1154,6 +1169,7 @@ def show_racks():
     # items = pagination.items
     # return render_template('show_racks.html', items=items, endpoint='main.show_racks', pagination=pagination)
 
+    current_user.Location = {'menu': 'device', 'active': 'racks'}
     racks = Rack.query.all()
     return render_template('show_racks.html', racks=racks)
 
@@ -1278,6 +1294,7 @@ def delete_rack(id):
 @login_required
 @permission_required(Permission.IDC_LOOK)
 def show_idcs():
+    current_user.Location = {'menu': 'device', 'active': 'idcs'}
     idcs = Idc.query.all()
     return render_template('show_idcs.html', idcs=idcs)
 
@@ -1380,6 +1397,7 @@ def delete_idc(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_IpResourceManage(id):
+    current_user.Location = {'menu': 'ip', 'active': 'manage', 'id': id}
     ipResourceManage = IpResourceManage.query.filter(IpResourceManage.ipPool_id == id)
     return render_template('show_ipResourceManage.html', ipResourceManage=ipResourceManage)
 
@@ -1413,6 +1431,7 @@ def edit_IpResourceManage(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_IpResourcePools():
+    current_user.Location = {'menu': 'ip', 'active': 'pools'}
     ipResourcePools = IpResourcePools.query.all()
     return render_template('show_ipResourcePools.html', ipResourcePools=ipResourcePools)
 
