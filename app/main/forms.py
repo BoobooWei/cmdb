@@ -316,15 +316,15 @@ class EditDevicePortForm(Form):
             if DevicePorts.query.filter_by(mac=field.data).first():
                 raise ValidationError(u'mac地址已经被使用了')
         else:
-            if field.data != self.devicePorts.mac and DevicePorts.query.filter_by(DevicePorts.mac==field.data).first():
+            if field.data != self.devicePorts.mac and DevicePorts.query.filter(DevicePorts.mac==field.data).first():
                 raise ValidationError(u'mac地址已经被使用了')
 
     def validate_ip(self, field):
         if not self.devicePorts:
-            if DevicePorts.query.filter_by(DevicePorts.ip==field.data).first():
+            if DevicePorts.query.filter(DevicePorts.ip==field.data).first():
                 raise ValidationError(u'ip地址已经被使用了')
         else:
-            if field.data != self.devicePorts.ip and DevicePorts.query.filter_by(DevicePorts.ip == field.data).first():
+            if field.data != self.devicePorts.ip and DevicePorts.query.filter(DevicePorts.ip == field.data).first():
                 raise ValidationError(u'ip地址已经被使用了')
 
 class EditDeviceMemoryForm(Form):
