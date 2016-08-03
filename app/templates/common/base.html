@@ -124,7 +124,7 @@
                             class="badge bg-purple">{{ db.session.query(DevicePorts).count() }}</span></a></li>
                     <li {% if current_user.Location.active == 'powers' %}class="active"{% endif %}><a href="{{ url_for('main.show_devicePower') }}">电源管理<span
                             class="badge bg-purple">{{ db.session.query(DevicePower).count() }}</span></a></li>
-                    <li><a href="{{ url_for('main.show_devices', id=-1) }}">自动发现<span
+                    <li><a href="{{ url_for('main.show_devices', id=0) }}">自动发现<span
                             class="badge bg-purple">{{ db.session.query(Device).filter(Device.auto_discover == True).count() }}</span></a></li>
 
                     <li {% if current_user.Location.active == 'models' %}class="active"{% endif %}><a href="{{ url_for('main.show_deviceModels') }}">模块管理<span
