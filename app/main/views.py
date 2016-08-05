@@ -13,6 +13,7 @@ from ..email import send_email
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    current_user.Location = {'menu': '', 'active': ''}
     form = EditProfileForm()
     logs = Logger.query.order_by(Logger.logtime.desc()).all()
     if form.validate_on_submit():
@@ -50,6 +51,7 @@ def show_system_users():
 @login_required
 @permission_required(Permission.USER_EDIT)
 def create_system_users():
+    current_user.Location = {'menu': 'users', 'active': 'users'}
     form = EditProfileAdminForm(None)
     if form.validate_on_submit():
 
@@ -77,6 +79,7 @@ def create_system_users():
 @login_required
 @permission_required(Permission.USER_EDIT)
 def edit_system_users(id):
+    current_user.Location = {'menu': 'users', 'active': 'users'}
     user = User.query.get_or_404(id)
     form = EditProfileAdminForm(user)
     if form.validate_on_submit():
@@ -112,6 +115,7 @@ def edit_system_users(id):
 @login_required
 @permission_required(Permission.USER_DEL)
 def delete_system_users(id):
+    current_user.Location = {'menu': 'users', 'active': 'users'}
     user = User.query.get_or_404(id)
     db.session.delete(user)
     flash(u'删除用户:{0}成功!'.format(user.username))
@@ -130,6 +134,7 @@ def index():
 @main.route('/create-class.type', methods=['GET', 'POST'])
 @login_required
 def create_classType():
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'classType'}
     form = EditClassTypeForm(classType=None)
     if form.validate_on_submit():
         classType = ClassType()
@@ -146,6 +151,7 @@ def create_classType():
 @main.route('/edit-class.type/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_classType(id):
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'classType'}
     classType = ClassType.query.get_or_404(id)
     form = EditClassTypeForm(classType=classType)
     if form.validate_on_submit():
@@ -167,13 +173,14 @@ def edit_classType(id):
 @login_required
 def show_classType():
     classType = ClassType.query.all()
-    current_user.Location = {'menu': 'deviceAsset', 'active': 'classType'}
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'classType'}
     return render_template('show_classType.html', classType=classType)
 
 
 @main.route('/delete-class.type/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_classType(id):
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'classType'}
     classType = ClassType.query.get_or_404(id)
     db.session.delete(classType)
     flash(u'删除设备类型:{0}成功!'.format(classType.name))
@@ -197,6 +204,7 @@ def show_devicePorts():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_devicePorts():
+    current_user.Location = {'menu': 'device', 'active': 'ports'}
     form = EditDevicePortForm(None)
     if form.validate_on_submit():
         devicePorts = DevicePorts()
@@ -228,6 +236,7 @@ def create_devicePorts():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_devicePorts(id):
+    current_user.Location = {'menu': 'device', 'active': 'ports'}
     devicePorts = DevicePorts.query.get_or_404(id)
     form = EditDevicePortForm(devicePorts)
     if form.validate_on_submit():
@@ -269,6 +278,7 @@ def edit_devicePorts(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_devicePorts(id):
+    current_user.Location = {'menu': 'device', 'active': 'ports'}
     devicePorts = DevicePorts.query.get_or_404(id)
     db.session.delete(devicePorts)
     flash(u'删除设备端口:{0}成功!'.format(devicePorts.name))
@@ -289,6 +299,7 @@ def show_devicePortMaps():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_devicePortMap():
+    current_user.Location = {'menu': 'device', 'active': 'portmap'}
     form = EditDevicePortMapForm()
     if form.validate_on_submit():
         devicePortMap = DevicePortMap()
@@ -322,6 +333,7 @@ def show_deviceMemorys():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_deviceMemorys():
+    current_user.Location = {'menu': 'device', 'active': 'memorys'}
     form = EditDeviceMemoryForm()
     if form.validate_on_submit():
         deviceMemorys = DeviceMemorys()
@@ -343,6 +355,7 @@ def create_deviceMemorys():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_deviceMemorys(id):
+    current_user.Location = {'menu': 'device', 'active': 'memorys'}
     deviceMemorys = DeviceMemorys.query.get_or_404(id)
     form = EditDeviceMemoryForm()
     if form.validate_on_submit():
@@ -370,6 +383,7 @@ def edit_deviceMemorys(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceMemorys(id):
+    current_user.Location = {'menu': 'device', 'active': 'memorys'}
     deviceMemorys = DeviceMemorys.query.get_or_404(id)
     db.session.delete(deviceMemorys)
     flash(u'内存: {0} 已删除!'.format(deviceMemorys.id))
@@ -391,6 +405,7 @@ def show_deviceDisks():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_deviceDisks():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
     form = EditDeviceDiskForm()
     if form.validate_on_submit():
         deviceDisks = DeviceDisks()
@@ -418,6 +433,7 @@ def create_deviceDisks():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_deviceDisks(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
     deviceDisks = DeviceDisks.query.get_or_404(id)
     form = EditDeviceDiskForm()
     if form.validate_on_submit():
@@ -457,6 +473,7 @@ def edit_deviceDisks(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceDisks(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
     deviceDisks = DeviceDisks.query.get_or_404(id)
     db.session.delete(deviceDisks)
     flash(u'磁盘: {0} 已删除!'.format(deviceDisks.id))
@@ -470,7 +487,7 @@ def delete_deviceDisks(id):
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devicePools():
-    current_user.Location = {'menu': 'device', 'active': 'pools'}
+    current_user.Location = {'menu': 'virtmachine', 'active': 'pools'}
     devicePools = DevicePools.query.all()
     return render_template('show_devicePools.html', devicePools=devicePools)
 
@@ -479,6 +496,7 @@ def show_devicePools():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_devicePools():
+    current_user.Location = {'menu': 'virtmachine', 'active': 'pools'}
     form = EditDevicePoolsForm()
     if form.validate_on_submit():
         devicePools = DevicePools()
@@ -497,6 +515,7 @@ def create_devicePools():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_devicePools(id):
+    current_user.Location = {'menu': 'virtmachine', 'active': 'pools'}
     devicePools = DevicePools.query.get_or_404(id)
     form = EditDevicePoolsForm()
     if form.validate_on_submit():
@@ -521,6 +540,7 @@ def edit_devicePools(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_devicePools(id):
+    current_user.Location = {'menu': 'virtmachine', 'active': 'pools'}
     devicePools = DevicePools.query.get_or_404(id)
     db.session.delete(devicePools)
     flash(u'资源池: {0} 已删除!'.format(devicePools.id))
@@ -542,6 +562,7 @@ def show_devicePower():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_devicePower():
+    current_user.Location = {'menu': 'device', 'active': 'powers'}
     form = EditDevicePowerForm()
     if form.validate_on_submit():
         devicePower = DevicePower()
@@ -566,6 +587,7 @@ def create_devicePower():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_devicePower(id):
+    current_user.Location = {'menu': 'device', 'active': 'powers'}
     devicePower = DevicePower.query.get_or_404(id)
     form = EditDevicePowerForm()
     if form.validate_on_submit():
@@ -599,6 +621,7 @@ def edit_devicePower(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_devicePower(id):
+    current_user.Location = {'menu': 'device', 'active': 'powers'}
     devicePower = DevicePower.query.get_or_404(id)
     db.session.delete(devicePower)
     flash(u'电源管理: {0} 已删除!'.format(devicePower.ip))
@@ -622,6 +645,7 @@ def show_deviceModels():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_deviceModel():
+    current_user.Location = {'menu': 'device', 'active': 'models'}
     form = EditDeviceModelForm()
     if form.validate_on_submit():
         deviceModel = DeviceModel()
@@ -645,6 +669,7 @@ def create_deviceModel():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_deviceModel(id):
+    current_user.Location = {'menu': 'device', 'active': 'models'}
     deviceModel = DeviceModel.query.get_or_404(id)
     form = EditDeviceModelForm()
     if form.validate_on_submit():
@@ -678,7 +703,7 @@ def edit_deviceModel(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceModel(id):
-
+    current_user.Location = {'menu': 'device', 'active': 'models'}
     deviceModels = DeviceModel.query.get_or_404(id)
     devicePorts = DevicePorts.query.filter(DevicePorts.model_id == deviceModels.id).all()
 
@@ -700,7 +725,7 @@ def delete_deviceModel(id):
 @login_required
 # @permission_required(Permission.ASSET_LOOK)
 def show_deviceAssets(id):
-    current_user.Location = {'menu': 'device', 'active': 'deviceAssets'}
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'deviceAssets', 'id':id}
     deviceAssets = Asset.query.filter(Asset.classType_id == id).all()
     return render_template('show_deviceAssets.html', deviceAssets=deviceAssets, id=id)
 
@@ -710,6 +735,7 @@ def show_deviceAssets(id):
 @permission_required(Permission.ASSET_EDIT)
 def create_deviceAsset():
     form = EditAssetForm(None)
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'deviceAssets', id:0}
     if form.validate_on_submit():
         deviceAsset = Asset()
         deviceAsset.classType_id = form.classType_id.data
@@ -741,7 +767,9 @@ def create_deviceAsset():
 @login_required
 @permission_required(Permission.ASSET_EDIT)
 def edit_deviceAsset(id):
+
     deviceAsset = Asset.query.get_or_404(id)
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'deviceAssets', 'id': deviceAsset.classType_id}
     form = EditAssetForm(deviceAsset)
     if form.validate_on_submit():
         deviceAsset.classType_id = form.classType_id.data
@@ -792,6 +820,7 @@ def edit_deviceAsset(id):
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceAsset(id):
     deviceAsset = Asset.query.get_or_404(id)
+    current_user.Location = {'menu': 'deviceAssets', 'active': 'deviceAssets', 'id': deviceAsset.classType_id}
     db.session.delete(deviceAsset)
     flash(u'内存: {0} 已删除!'.format(deviceAsset.id))
     return redirect(url_for('main.show_deviceAssets', id=id))
@@ -804,6 +833,7 @@ def delete_deviceAsset(id):
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_device():
+    current_user.Location = {'menu': 'device', 'active': 'devices', 'id': 0}
     form = EditDeviceForm()
     if form.validate_on_submit():
         device = Device()
@@ -837,6 +867,7 @@ def create_device():
 @permission_required(Permission.DEVICE_EDIT)
 def edit_device(id):
     device = Device.query.get_or_404(id)
+    current_user.Location = {'menu': 'device', 'active': 'devices', 'id':device.classType_id}
     form = EditDeviceForm()
     if form.validate_on_submit():
         device.asset_id = form.asset_id.data
@@ -908,7 +939,7 @@ def show_devices(id):
 @permission_required(Permission.DEVICE_LOOK)
 def delete_device(id):
     device = Device.query.get_or_404(id)
-
+    current_user.Location = {'menu': 'device', 'active': 'devices', 'id':device.classType_id}
     deviceModel = db.session.query(DeviceModel).filter(DeviceModel.device_id == device.id).all()
     print deviceModel
     if deviceModel:
@@ -933,10 +964,10 @@ def delete_device(id):
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceNetworks(id):
     if id != 0:
-        current_user.Location = {'menu': 'device', 'active': 'networks', 'id': id}
+        current_user.Location = {'menu': 'deviceNetworks', 'active': 'deviceNetworks', 'id': id}
         deviceNetworks = DeviceNetwork.query.filter(DeviceNetwork.classType_id == id).all()
     else:
-        current_user.Location = {'menu': 'device', 'active': 'networks', 'id': 0}
+        current_user.Location = {'menu': 'deviceNetworks', 'active': 'deviceNetworks', 'id': 0}
         deviceNetworks = DeviceNetwork.query.all()
 
     return render_template('show_deviceNetworks.html', deviceNetworks=deviceNetworks)
@@ -946,6 +977,7 @@ def show_deviceNetworks(id):
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_deviceNetwork():
+    current_user.Location = {'menu': 'deviceNetworks', 'active': 'deviceNetworks', 'id':0}
     form = EditDeviceNetworkForm(None)
     if form.validate_on_submit():
         deviceNetwork = DeviceNetwork()
@@ -978,6 +1010,7 @@ def create_deviceNetwork():
 @permission_required(Permission.DEVICE_EDIT)
 def edit_deviceNetwork(id):
     deviceNetwork = DeviceNetwork.query.get_or_404(id)
+    current_user.Location = {'menu': 'deviceNetworks', 'active': 'deviceNetworks', 'id': deviceNetwork.classType_id}
     form = EditDeviceNetworkForm(deviceNetwork)
     if form.validate_on_submit():
 
@@ -1019,6 +1052,7 @@ def edit_deviceNetwork(id):
 @permission_required(Permission.DEVICE_DEL)
 def delete_deviceNetwork(id):
     deviceNetwork = DeviceNetwork.query.get_or_404(id)
+    current_user.Location = {'menu': 'deviceNetworks', 'active': 'deviceNetworks', 'id': deviceNetwork.classType_id}
     try:
         db.session.delete(deviceNetwork)
         db.session.commit()
@@ -1037,10 +1071,10 @@ def delete_deviceNetwork(id):
 @permission_required(Permission.DEVICE_LOOK)
 def show_virtmachine(id):
     if id != 0:
-        current_user.Location = {'menu': 'device', 'active': 'virtmachine', 'id': id}
+        current_user.Location = {'menu': 'virtmachine', 'active': 'virtmachine', 'id': id}
         virtMachine = DevicePools.query.get_or_404(id).devices.all()
     else:
-        current_user.Location = {'menu': 'device', 'active': 'virtmachine', 'id': id}
+        current_user.Location = {'menu': 'virtmachine', 'active': 'virtmachine', 'id': id}
         virtMachine = VirtMachine.query.all()
     return render_template('show_virtmachine.html', virtMachine=virtMachine)
 
@@ -1049,6 +1083,7 @@ def show_virtmachine(id):
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_virtmachine():
+    current_user.Location = {'menu': 'virtmachine', 'active': 'virtmachine', 'id': 0}
     form = EditVritMachineForm()
     if form.validate_on_submit():
         virtMachine = VirtMachine()
@@ -1088,6 +1123,7 @@ def create_virtmachine():
 @permission_required(Permission.DEVICE_EDIT)
 def edit_virtmachine(id):
     virtMachine = VirtMachine.query.get_or_404(id)
+    current_user.Location = {'menu': 'virtmachine', 'active': 'virtmachine', 'id': virtMachine.pool_id}
     form = EditVritMachineForm()
     if form.validate_on_submit():
         virtMachine.deviceType = form.deviceType.data
@@ -1145,7 +1181,9 @@ def edit_virtmachine(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_virtmachine(id):
+
     virtMachine = VirtMachine.query.get_or_404(id)
+    current_user.Location = {'menu': 'virtmachine', 'active': 'virtmachine', 'id': virtMachine.pool_id}
 
     try:
         db.session.delete(virtMachine)
@@ -1169,7 +1207,7 @@ def show_racks():
     # items = pagination.items
     # return render_template('show_racks.html', items=items, endpoint='main.show_racks', pagination=pagination)
 
-    current_user.Location = {'menu': 'device', 'active': 'racks'}
+    current_user.Location = {'menu': 'racks', 'active': 'racks'}
     racks = Rack.query.all()
     return render_template('show_racks.html', racks=racks)
 
@@ -1178,6 +1216,7 @@ def show_racks():
 @login_required
 @permission_required(Permission.RACK_EDIT)
 def create_rack():
+    current_user.Location = {'menu': 'racks', 'active': 'racks'}
     form = EditRackForm(rack=None)
     if form.validate_on_submit():
         rack = Rack()
@@ -1213,6 +1252,7 @@ def create_rack():
 @login_required
 @permission_required(Permission.RACK_EDIT)
 def edit_rack(id):
+    current_user.Location = {'menu': 'racks', 'active': 'racks'}
     rack = Rack.query.get_or_404(id)
     form = EditRackForm(rack)
     if form.validate_on_submit():
@@ -1266,6 +1306,7 @@ def edit_rack(id):
 @login_required
 @permission_required(Permission.RACK_DEL)
 def delete_rack(id):
+    current_user.Location = {'menu': 'racks', 'active': 'racks'}
     rack = Rack.query.get_or_404(id)
     try:
         devices = db.session.query(Device).filter(Device.rack_id == rack.id).all()
@@ -1294,7 +1335,7 @@ def delete_rack(id):
 @login_required
 @permission_required(Permission.IDC_LOOK)
 def show_idcs():
-    current_user.Location = {'menu': 'device', 'active': 'idcs'}
+    current_user.Location = {'menu': 'idcs', 'active': 'idcs'}
     idcs = Idc.query.all()
     return render_template('show_idcs.html', idcs=idcs)
 
@@ -1303,6 +1344,7 @@ def show_idcs():
 @login_required
 @permission_required(Permission.IDC_EDIT)
 def create_idc():
+    current_user.Location = {'menu': 'idcs', 'active': 'idcs'}
     form = EditIdcForm(idc=None)
     if form.validate_on_submit():
         idc = Idc()
@@ -1333,6 +1375,7 @@ def create_idc():
 @login_required
 @permission_required(Permission.IDC_EDIT)
 def edit_idc(id):
+    current_user.Location = {'menu': 'idcs', 'active': 'idcs'}
     idc = Idc.query.get_or_404(id)
     form = EditIdcForm(idc=idc)
 
@@ -1376,6 +1419,7 @@ def edit_idc(id):
 @login_required
 @permission_required(Permission.IDC_DEL)
 def delete_idc(id):
+    current_user.Location = {'menu': 'idcs', 'active': 'idcs'}
     idc = Idc.query.get_or_404(id)
 
     try:
@@ -1407,6 +1451,7 @@ def show_IpResourceManage(id):
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_IpResourceManage(id):
+    current_user.Location = {'menu': 'ip', 'active': 'manage', 'id': 0}
     ipResourceManage = IpResourceManage.query.get(id)
     form = EditIpResourceManageForm()
     if form.validate_on_submit():
@@ -1440,6 +1485,7 @@ def show_IpResourcePools():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def create_IpResourcePools():
+    current_user.Location = {'menu': 'ip', 'active': 'pools'}
     form = EditIpResourcePoolsForm()
     if form.validate_on_submit():
         ipResourcePools = IpResourcePools()
@@ -1462,6 +1508,7 @@ def create_IpResourcePools():
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
 def edit_IpResourcePools(id):
+    current_user.Location = {'menu': 'ip', 'active': 'pools'}
     ipResourcePools = IpResourcePools.query.get(id)
     form = EditIpResourcePoolsForm()
     if form.validate_on_submit():
@@ -1494,6 +1541,7 @@ def edit_IpResourcePools(id):
 @login_required
 @permission_required(Permission.DEVICE_DEL)
 def delete_IpResourcePools(id):
+    current_user.Location = {'menu': 'ip', 'active': 'pools'}
     ipResourcePools = IpResourcePools.query.get(id)
     db.session.query(IpResourceManage).filter(IpResourceManage.ipPool_id == ipResourcePools.id).delete()
     db.session.delete(ipResourcePools)
