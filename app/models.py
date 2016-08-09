@@ -804,11 +804,8 @@ class Device(db.Model):
         ip = None
         for devicePort in devicePorts:
             if devicePort.display:
-                if devicePort.type == 1:
-                    ip = '内网|{0}'.format(devicePort.ip)
-                else:
-                    ip = '公网|{0}'.format(devicePort.ip)
-
+                ip = devicePort.ip
+                print devicePort.ip
         json_device = {
                 'url': url_for('api.get_device', id=self.id, _external=True),
                 'id' : self.id,
@@ -825,6 +822,9 @@ class Device(db.Model):
                 'model' : deviceAsset.model,
                 'usedept' : deviceAsset.usedept,
                 'usestaff' : deviceAsset.usestaff,
+                'mainuses' : deviceAsset.mainuses,
+                'managedept' : deviceAsset.managedept,
+                'managestaff' : deviceAsset.managestaff,
                 'is_virtualization': self.is_virtualization,
                 'os': self.os,
                 'cpumodel': self.cpumodel,
@@ -835,8 +835,8 @@ class Device(db.Model):
                 'business': self.business,
                 'powerstatus': self.powerstatus,
                 'uuid' : self.uuid,
+                'instaff' : self.instaff,
                 'remarks': self.remarks,
-
         }
         return json_device
 
@@ -901,6 +901,7 @@ class VirtMachine(db.Model):
     mainuses = db.Column(db.String(128))  # 涓昏鐢ㄩ��
     managedept = db.Column(db.String(64))  # 绠＄悊閮ㄩ棬
     managestaff = db.Column(db.String(64))  # 绠＄悊浜�
+    uuid = db.Column(db.String(64))
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
@@ -928,6 +929,7 @@ class VirtMachine(db.Model):
             'mainues' : self.mainuses,
             'managedept' : self.managestaff,
             'managestaff' : self.managestaff,
+            'uuid' : self.uuid,
             'remarks' : self.remarks,
             'isdelete' : self.isdelete,
         }
