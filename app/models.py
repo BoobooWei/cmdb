@@ -661,7 +661,7 @@ class DevicePower(db.Model):
     def generate_password_token(self, password):
         from itsdangerous import JSONWebSignatureSerializer as Serializer
         s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'confirm': password})
+        return s.dumps({'password': password})
 
     @property
     def password(self):

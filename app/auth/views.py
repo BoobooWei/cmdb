@@ -76,6 +76,7 @@ def logout():
 @auth.route('/change-password', methods=['GET', 'POST'])
 @login_required
 def change_password():
+    current_user.Location = {'menu': '', 'active': ''}
     form = ChangePasswordForm()
     if form.validate_on_submit():
         if current_user.verify_password(form.old_password.data):
