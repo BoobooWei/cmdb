@@ -1166,6 +1166,7 @@ class Rack(db.Model):
         return '<Rack %r>' % self.idcname
 
 
+
 class Logger(db.Model):
     __tablename__ = 'logs'
     id = db.Column(db.Integer, primary_key=True)

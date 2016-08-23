@@ -1551,9 +1551,12 @@ def delete_IpResourcePools(id):
 
 
 
-@main.route('/xxx')
-def xxx():
-    return render_template('xxx.html')
+@main.route('/search-device.assets', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_DEL)
+def search_deviceAssets():
+    pass
+
 
 
 # @main.route('/test', methods=['GET', 'POST'])

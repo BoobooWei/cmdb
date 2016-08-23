@@ -542,3 +542,12 @@ class EditRackForm(Form):
         else:
             if field.data != self.rack.name and Rack.query.filter_by(name=field.data).first():
                 raise ValidationError(u'机柜名已经创建了')
+
+
+
+class EditSearchAssetForm(Form):
+    ip = StringField(u'目标IP地址段')
+    remote_user = StringField(u'远程用户')
+    remote_pass = StringField(u'远程密码')
+    sudo_user = StringField(u'sudo用户')
+    sudo_pass = StringField(u'sudo密码')

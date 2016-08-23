@@ -239,6 +239,7 @@
                     <li><a href="">类别管理</a></li>
                 </ul>
             </li>
+
             <li class="has-submenu {% if current_user.Location.menu =='users' %} active {% endif %}"><a href="#"><i
                     class="ion-document"></i> <span class="nav-label">用户管理</span><span
                     class="badge bg-pink">{{ db.session.query(User).count() }}</span></a>
