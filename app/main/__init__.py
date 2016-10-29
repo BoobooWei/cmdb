@@ -26,7 +26,8 @@ def models():
                 ClassType=ClassType, DeviceNetwork=DeviceNetwork,
                 DevicePower=DevicePower, DevicePorts=DevicePorts,
                 DeviceModel=DeviceModel, User=User, IpResourcePools=IpResourcePools,
-                IpResourceManage=IpResourceManage)
+                IpResourceManage=IpResourceManage, ServiceProvider=ServiceProvider,
+                ServiceProviderContact=ServiceProviderContact)
 
 
 @main.app_context_processor

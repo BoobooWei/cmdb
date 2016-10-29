@@ -83,127 +83,103 @@
     <nav class="navigation">
         <ul class="list-unstyled">
             <li class="active"><a href=""><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
-            <li class="has-submenu {% if current_user.Location.menu == 'deviceAssets' %}active{% endif %}">
+            <li class="has-submenu">
                 <a href="#"><i class="ion-flask"></i>
-                    <span class="nav-label">资产管理
-                        <span class="badge bg-purple">{{ db.session.query(Asset).count() }}</span>
-                    </span>
+                    <span class="nav-label">资产管理</span>
                 </a>
                 <ul class="list-unstyled">
                     {% for type in db.session.query(ClassType).all() %}
-                        <li
-                                {% if current_user.Location.active == 'deviceAssets' and current_user.Location.id == type.id %}
-                                    class="active"{% endif %}>
-                            <a href="{{ url_for('main.show_deviceAssets', id=type.id) }}">{{ type.name }}
-                                <span class="badge bg-purple">{{ db.session.query(Asset).filter(Asset.classType_id == type.id).count() }}</span>
-                            </a>
+                        <li>
+                            <a href="{{ url_for('main.show_deviceAssets', id=type.id) }}">{{ type.name }}</a>
                         </li>
                     {% endfor %}
-                    <li {% if current_user.Location.active == 'classType' %}class="active"{% endif %}>
-                        <a href="{{ url_for('main.show_classType') }}">类别管理
-                            <span class="badge bg-purple">1</span></a>
+                    <li>
+                        <a href="{{ url_for('main.show_classType') }}">类别管理</a>
                     </li>
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu == 'device' %} active {% endif %}"><a href="#"><i
-                    class="ion-settings"></i> <span class="nav-label">设备管理<span
-                    class="badge bg-purple">{{ db.session.query(Device).count() }}</span></span><span
-                    class="badge bg-success">New</span></a>
+            <li class="has-submenu"><a href="#"><i
+                    class="ion-settings"></i> <span class="nav-label">设备管理</span></a>
                 <ul class="list-unstyled">
 
-                    <li {% if current_user.Location.active == 'devices' and current_user.Location.id == 0 %}class="active"{% endif %}>
-                        <a href="{{ url_for('main.show_devices', id=0) }}">所有设备
-                            <span class="badge bg-purple">{{ db.session.query(Device).count() }}</span></a></li>
+                    <li>
+                        <a href="{{ url_for('main.show_devices', id=0) }}">所有设备</a>
+                    </li>
 
                     {% for type in db.session.query(ClassType).filter(ClassType.type == 1).all() %}
-                        <li {% if current_user.Location.active == 'devices' and current_user.Location.id == type.id %}
-                            class="active"{% endif %}>
-                            <a href="{{ url_for('main.show_devices', id=type.id) }}">{{ type.name }}
-                                <span class="badge bg-purple">{{ db.session.query(Device).filter(Device.classType_id == type.id).count() }}</span>
-                            </a>
+                        <li>
+                            <a href="{{ url_for('main.show_devices', id=type.id) }}">{{ type.name }}</a>
                         </li>
                     {% endfor %}
 
-                    <li {% if current_user.Location.active == 'ports' %}class="active"{% endif %}><a
-                            href="{{ url_for('main.show_devicePorts') }}">端口管理<span
-                            class="badge bg-purple">{{ db.session.query(DevicePorts).count() }}</span></a></li>
-                    <li {% if current_user.Location.active == 'powers' %}class="active"{% endif %}><a
-                            href="{{ url_for('main.show_devicePower') }}">电源管理<span
-                            class="badge bg-purple">{{ db.session.query(DevicePower).count() }}</span></a></li>
-                    <li><a href="{{ url_for('main.show_devices', id=0) }}">自动发现<span
-                            class="badge bg-purple">{{ db.session.query(Device).filter(Device.auto_discover == True).count() }}</span></a>
-                    </li>
-
-                    <li {% if current_user.Location.active == 'models' %}class="active"{% endif %}><a
-                            href="{{ url_for('main.show_deviceModels') }}">模块管理<span
-                            class="badge bg-purple">{{ db.session.query(DeviceModel).count() }}</span></a></li>
+                    <li><a
+                            href="{{ url_for('main.show_devicePorts') }}">端口管理</a></li>
+                    <li><a
+                            href="{{ url_for('main.show_devicePower') }}">电源管理</a></li>
+                    <li><a
+                            href="{{ url_for('main.show_devices', id=0) }}">自动发现</a></li>
+                    <li><a
+                            href="{{ url_for('main.show_deviceModels') }}">模块管理</a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu == 'virtmachine' %} active {% endif %}"><a href="#"><i
-                    class="ion-settings"></i> <span class="nav-label">虚拟化<span
-                    class="badge bg-purple">{{ db.session.query(VirtMachine).count() }}</span></span><span
-                    class="badge bg-success">New</span></a>
+            <li class="has-submenu"><a href="#"><i
+                    class="ion-settings"></i> <span class="nav-label">虚拟化</span></a>
                 <ul class="list-unstyled">
-                    <li {% if current_user.Location.active == 'virtmachine' and current_user.Location.id == 0 %}class="active"{% endif %}>
-                        <a href="{{ url_for('main.show_virtmachine',id=0) }}">
-                            所有虚拟机<span class="badge bg-purple">{{ db.session.query(VirtMachine).count() }}</span>
-                        </a>
+                    <li>
+                        <a href="{{ url_for('main.show_virtmachine',id=0) }}">所有虚拟机</a>
                     </li>
 
                     {% for type in db.session.query(DevicePools).all() %}
-                        <li {% if current_user.Location.active == 'virtmachine' and current_user.Location.id == type.id %} class="active"{% endif %}>
-                            <a href="{{ url_for('main.show_virtmachine', id=type.id) }}">资源池-{{ type.name }}
-                                <span class="badge bg-purple">{{ type.devices.count() }}</span>
-                            </a>
+                        <li>
+                            <a href="{{ url_for('main.show_virtmachine', id=type.id) }}">资源池==>{{ type.name }}</a>
 
                         </li>
                     {% endfor %}
 
                     <li {% if current_user.Location.active == 'pools' %} class="active" {% endif %}><a
-                            href="{{ url_for('main.show_devicePools') }}">资源池管理<span
-                            class="badge bg-purple">{{ db.session.query(DevicePools).count() }}</span></a></li>
+                            href="{{ url_for('main.show_devicePools') }}">资源池管理</a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu == 'deviceNetworks' %} active {% endif %}"><a
-                    href="#"><i class="ion-settings"></i> <span class="nav-label">网络设备<span
-                    class="badge bg-purple">{{ db.session.query(DeviceNetwork).count() }}</span></span>
-                <span class="badge bg-success">New</span></a>
+            <li class="has-submenu"><a
+                    href="#"><i class="ion-settings"></i> <span class="nav-label">网络设备</span></a>
                 <ul class="list-unstyled">
 
-                    <li {% if current_user.Location.active == 'deviceNetworks' and current_user.Location.id == 0 %}class="active"{% endif %}>
-                        <a href="{{ url_for('main.show_deviceNetworks', id=0) }}">所有网络设备
-                            <span class="badge bg-purple">{{ db.session.query(DeviceNetwork).count() }}</span>
-                        </a>
+                    <li>
+                        <a href="{{ url_for('main.show_deviceNetworks', id=0) }}">所有网络设备</a>
                     </li>
 
                     {% for type in db.session.query(ClassType).filter(ClassType.type == 2).all() %}
-                        <li
-                                {% if current_user.Location.active == 'deviceNetworks' and current_user.Location.id == type.id %}
-                                    class="active"{% endif %}>
-                            <a href="{{ url_for('main.show_deviceNetworks', id=type.id) }}">{{ type.name }}
-                                <span class="badge bg-purple">{{ db.session.query(DeviceNetwork).filter(DeviceNetwork.classType_id == type.id).count() }}</span>
-                            </a>
+                        <li>
+                            <a href="{{ url_for('main.show_deviceNetworks', id=type.id) }}">{{ type.name }}</a>
                         </li>
                     {% endfor %}
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu == 'idcs' %} active {% endif %}"><a
+            <li class="has-submenu"><a
                     href="{{ url_for('main.show_idcs') }}"><i class="ion-compose"></i> <span
-                    class="nav-label">机房管理<span
-                    class="badge bg-purple">{{ db.session.query(Idc).count() }}</span></span></a>
+                    class="nav-label">机房管理</span></a>
             </li>
-            <li class="has-submenu {% if current_user.Location.menu == 'racks' %} active {% endif %}"><a
+            <li class="has-submenu"><a
                     href="{{ url_for('main.show_racks') }}"><i class="ion-stats-bars"></i> <span
-                    class="nav-label">机柜管理</span><span
-                    class="badge bg-purple">{{ db.session.query(Rack).count() }}</span></a>
+                    class="nav-label">机柜管理</span></a>
+            </li>
+
+
+            <li class="has-submenu"><a href="#"><i class="ion-email"></i>
+                <span class="nav-label">供应商管理</span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('main.show_deviceServiceProviders') }}">供应商</a></li>
+                    <li><a href="{{ url_for('main.show_deviceServiceProviderContacts') }}">服务</a></li>
+
+                </ul>
             </li>
 
             <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span
-                    class="nav-label">数据库管理(开发中...)</span></a>
+                    class="nav-label">数据库管理</span></a>
                 <ul class="list-unstyled">
                     <li><a href="">Oracle</a></li>
                     <li><a href="">MySQL</a></li>
@@ -211,42 +187,53 @@
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu == 'ip' %} active {% endif %}"><a href="#"><i
-                    class="ion-location"></i> <span class="nav-label">IP资源管理</span></a>
+            <li class="has-submenu"><a href="#"><i class="ion-location"></i>
+                <span class="nav-label">IP资源管理</span></a>
                 <ul class="list-unstyled">
                     {% for pool in db.session.query(IpResourcePools).all() %}
-                        <li {% if current_user.Location.active == 'manage' and current_user.Location.id == pool.id %}
-                            class="active"{% endif %}><a
-                                href="{{ url_for('main.show_IpResourceManage', id=pool.id) }}">{{ pool.range }}</a></li>
+                        <li><a href="{{ url_for('main.show_IpResourceManage', id=pool.id) }}">{{ pool.range }}</a></li>
                     {% endfor %}
-                    <li {% if current_user.Location.active == 'pools' %} class="active" {% endif %}><a
-                            href="{{ url_for('main.show_IpResourcePools') }}">IP地址段管理</a></li>
+                    <li><a href="{{ url_for('main.show_IpResourcePools') }}">IP地址段管理</a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu"><a href="#"><i class="ion-location"></i> <span
-                    class="nav-label">设备权限管理(开发中...)</span></a>
+            <li class="has-submenu"><a href="#"><i class="ion-location"></i>
+                <span class="nav-label">设备权限管理</span></a>
                 <ul class="list-unstyled">
                     <li><a href="">网络设备权限</a></li>
                     <li><a href="">服务器权限</a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">配件管理(开发中...)</span><span
-                    class="badge bg-pink"></span></a>
+
+            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">耗材管理</span>
+                <span class="badge bg-pink"></span></a>
                 <ul class="list-unstyled">
                     <li><a href="">服务器磁盘</a></li>
                     <li><a href="">类别管理</a></li>
                 </ul>
             </li>
 
-            <li class="has-submenu {% if current_user.Location.menu =='users' %} active {% endif %}"><a href="#"><i
-                    class="ion-document"></i> <span class="nav-label">用户管理</span><span
-                    class="badge bg-pink">{{ db.session.query(User).count() }}</span></a>
+            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">配件管理</span>
+                <span class="badge bg-pink"></span></a>
                 <ul class="list-unstyled">
-                    <li {% if current_user.Location.active == 'users' %} class='active' {% endif %}><a
+                    <li><a href="">服务器磁盘</a></li>
+                    <li><a href="">类别管理</a></li>
+                </ul>
+            </li>
+
+
+            <li class="has-submenu"><a href="#"><i class="ion-email"></i>
+                <span class="nav-label">字典管理</span></a>
+                <ul class="list-unstyled">
+                    <li><a href="#">字典管理</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#"><i class="ion-document"></i> <span class="nav-label">用户管理</span></a>
+                <ul class="list-unstyled">
+                    <li><a
                             href="{{ url_for('main.show_system_users') }} ">用户管理
-                        <span class="badge bg-purple">{{ db.session.query(User).count() }}</span>
                     </a></li>
                     <li><a href="#">权限管理</a></li>
                 </ul>

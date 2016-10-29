@@ -19,7 +19,8 @@ def make_shell_context():
                 Logger=Logger, DevicePorts=DevicePorts, DeviceMemorys=DeviceMemorys,
                 DevicePools=DevicePools, DevicePower=DevicePower, VirtMachine=VirtMachine,
                 DevicePortMap=DevicePortMap, DeviceNetwork=DeviceNetwork, ClassType=ClassType,
-                DeviceModel=DeviceModel, IpResourcePools=IpResourcePools, IpResourceManage=IpResourceManage)
+                DeviceModel=DeviceModel, IpResourcePools=IpResourcePools, IpResourceManage=IpResourceManage,
+                ServiceProvider=ServiceProvider, ServiceProviderContact=ServiceProviderContact)
 
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)

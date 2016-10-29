@@ -1551,11 +1551,149 @@ def delete_IpResourcePools(id):
 
 
 
-@main.route('/search-device.assets', methods=['GET', 'POST'])
+
+
+@main.route('/show-device.service.providers', methods=['GET', 'POST'])
 @login_required
-@permission_required(Permission.DEVICE_DEL)
-def search_deviceAssets():
-    pass
+@permission_required(Permission.DEVICE_EDIT)
+def show_deviceServiceProviders():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    serviceProvider = ServiceProvider.query.all()
+    return render_template('show_deviceServiceProviders.html', serviceProvider=serviceProvider)
+
+
+
+@main.route('/create-device.service.provider', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_deviceServiceProvider():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    form = EditServiceProviderForm()
+    if form.validate_on_submit():
+
+        serviceProvider = ServiceProvider()
+        serviceProvider.serviceProvider = form.serviceProvider.data
+        serviceProvider.remarks = form.remarks.data
+        serviceProvider.instaff = current_user.username
+
+        db.session.add(serviceProvider)
+        flash(u'创建供应商:{0}成功!'.format(form.serviceProvider.data))
+        db.session.commit()
+        return redirect(url_for('main.show_deviceServiceProviders'))
+    return render_template('create_deviceServiceProvider.html', form=form)
+
+
+
+@main.route('/edit-device.service.provider/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_deviceServiceProvider(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    form = EditServiceProviderForm()
+    serviceProvider = ServiceProvider.query.get_or_404(id)
+    if form.validate_on_submit():
+
+        serviceProvider.serviceProvider = form.serviceProvider.data
+        serviceProvider.remarks = form.remarks.data
+
+        db.session.add(serviceProvider)
+        flash(u'创建供应商:{0}成功!'.format(form.serviceProvider.data))
+        db.session.commit()
+        return redirect(url_for('main.show_deviceServiceProviders'))
+
+    form.serviceProvider.data = serviceProvider.serviceProvider
+    form.remarks.data = ServiceProvider.remarks
+    return render_template('edit_deviceServiceProvider.html', form=form, serviceProvider=serviceProvider)
+
+
+
+@main.route('/delete-device.service.provider/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def delete_deviceServiceProvider(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    serviceProvider = ServiceProvider.query.get_or_404(id)
+    db.session.delete(serviceProvider)
+    db.session.commit()
+    return redirect(url_for('show_deviceServiceProviders'))
+
+
+
+@main.route('/show-device.service.provider_contacts', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def show_deviceServiceProviderContacts():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    serviceProviderContact = ServiceProviderContact.query.all()
+    return render_template('show_deviceServiceProvider_contacts.html', serviceProviderContact=serviceProviderContact)
+
+
+
+
+@main.route('/create-device.service.provider_contact', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def create_deviceServiceProviderContact():
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    form = EditServiceProviderContactForm()
+    if form.validate_on_submit():
+
+        serviceProviderContact = ServiceProviderContact()
+        serviceProviderContact.serviceProvider_id = form.serviceProvider_id.data
+        serviceProviderContact.service = form.service.data
+        serviceProviderContact.contact = form.contact.data
+        serviceProviderContact.instaff = current_user.username
+        serviceProviderContact.remarks = form.remarks.data
+        print serviceProviderContact.contact
+        db.session.add(serviceProviderContact)
+        db.session.commit()
+
+        flash(u'创建供应商服务:{0}成功!'.format(form.contact.data))
+        db.session.commit()
+        return redirect(url_for('main.show_deviceServiceProviderContacts'))
+    return render_template('create_deviceServiceProvider_contact.html', form=form)
+
+
+
+@main.route('/edit-device.service.provider_contact/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def edit_deviceServiceProviderContact(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    serviceProviderContact = ServiceProviderContact.query.get_or_404(id)
+    form = EditServiceProviderContactForm()
+    if form.validate_on_submit():
+
+        serviceProviderContact.serviceProvider_id = form.serviceProvider_id.data
+        serviceProviderContact.service = form.service.data
+        serviceProviderContact.contact = form.contact.data
+        serviceProviderContact.instaff = current_user.username
+        serviceProviderContact.remarks = form.remarks.data
+
+        db.session.add(serviceProviderContact)
+        db.session.commit()
+
+        flash(u'创建供应商服务:{0}成功!'.format(form.contact.data))
+        db.session.commit()
+        return redirect(url_for('main.show_deviceServiceProviderContacts'))
+
+    form.serviceProvider_id.data = serviceProviderContact.serviceProvider_id
+    form.service.data = serviceProviderContact.service
+    form.contact.data = serviceProviderContact.contact
+    form.remarks.data = serviceProviderContact.remarks
+    return render_template('edit_deviceServiceProvider_contact.html', form=form, serviceProviderContact=serviceProviderContact)
+
+
+
+@main.route('/delete-device.service.provider_contact/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_EDIT)
+def delete_deviceServiceProviderContact(id):
+    current_user.Location = {'menu': 'device', 'active': 'disks'}
+    serviceProviderContact = ServiceProviderContact.query.get_or_404(id)
+    db.session.delete(serviceProviderContact)
+    db.session.commit()
+    return redirect(url_for('main.show_deviceServiceProviderContacts'))
 
 
 
@@ -1631,7 +1769,3 @@ def for_admins_only():
 @permission_required(Permission.ADMINISTER)
 def for_moderators_only():
     return 'For moderators!'
-
-
-if __name__ == '__main__':
-    manager.run()

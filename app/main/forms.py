@@ -544,10 +544,23 @@ class EditRackForm(Form):
                 raise ValidationError(u'机柜名已经创建了')
 
 
+class EditServiceProviderContactForm(Form):
+    serviceProvider_id = SelectField(u'供应商', coerce=int)
+    service = SelectField(u'服务类型', coerce=int)
+    contact = StringField(u'联系方式')
+    remarks = TextAreaField(u'备注')                            # 备注
+    submit = SubmitField(u'提交')
 
-class EditSearchAssetForm(Form):
-    ip = StringField(u'目标IP地址段')
-    remote_user = StringField(u'远程用户')
-    remote_pass = StringField(u'远程密码')
-    sudo_user = StringField(u'sudo用户')
-    sudo_pass = StringField(u'sudo密码')
+    def __init__(self, *args, **kwargs):
+        super(EditServiceProviderContactForm, self).__init__(*args, **kwargs)
+
+        self.serviceProvider_id.choices = [(provider.id, provider.serviceProvider)
+                                           for provider in ServiceProvider.query.all()]
+
+        self.service.choices = [(1, u'金牌服务'), (2, u'银牌服务'), (3, u'铜牌服务'), (4, u'无服务')]
+
+
+class EditServiceProviderForm(Form):
+    serviceProvider = StringField(u'供应商名称', validators=[InputRequired(), Length(1,64)])
+    remarks = TextAreaField(u'备注')  # 备注
+    submit = SubmitField(u'提交')

@@ -401,7 +401,6 @@ class ClassType(db.Model):
     type = db.Column(db.Integer)      # 网络设备, 存储设备,  服务器,  资产
     remarks = db.Column(db.Text)  # 璧勪骇绫昏鏄�
     isdelete = db.Column(db.Boolean, default=False)  # 鏄惁鍒犻櫎
-    remarks = db.Column(db.Text)  # 澶囨敞
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
@@ -782,7 +781,7 @@ class Device(db.Model):
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
     disks = db.relationship('DeviceDisks', backref='device', lazy='dynamic')  # 鍏宠仈 Asset table
-    disksize = db.Column(db.String(64))
+    disksize = db.Column(db.String(64))        #磁盘容量
     memorys = db.relationship('DeviceMemorys', backref='device', lazy='dynamic')
     useracksize = db.Column(db.Integer)
     use = db.Column(db.String(64))     #用途
@@ -1070,6 +1069,33 @@ class IpResourceManage(db.Model):
     def __repr__(self):
         return '<ipManage %r:%r>' % (self.ip, self.status)
 
+
+
+class ServiceProviderContact(db.Model):
+    __tablename__ = 'ServiceProviderContact'
+    id = db.Column(db.Integer, primary_key=True)
+    serviceProvider_id = db.Column(db.ForeignKey('ServiceProvider.id'))
+    service = db.Column(db.Integer)                                              # (金牌服务, 银牌服务, 铜牌服务, 未购买服务)
+    contact = db.Column(db.String(32))
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+
+
+class ServiceProvider(db.Model):
+    __tablename__ = 'ServiceProvider'
+    id = db.Column(db.Integer, primary_key=True)
+    serviceProvider = db.Column(db.String(64))
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+
+
+class SparePart(db.Model):
+    __tablename__ = 'SparePart'
+    id = db.Column(db.Integer, primary_key=True)
 
 
 class Idc(db.Model):
